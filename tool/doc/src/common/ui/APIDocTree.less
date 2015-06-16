@@ -1,0 +1,50 @@
+.apidoctree {
+}
+.apidoctree-i {
+    position: relative;
+    padding-left: 1.3em;
+    line-height: 20px;
+}
+.apidoctree-thumb {
+    margin: -1px 0 0 -1em;
+    position: absolute;
+    cursor: pointer;
+    font-style: normal;
+    width: 1.5em; // 扩大鼠标点选区域增强用户体验
+    .user-select(none);
+
+    .apidoctree-expanded > &:after {
+        content: '▾';
+    }
+    .apidoctree-collapsed > &:after {
+        content: '▸';
+    }
+
+    &:hover {
+        color: #7DA7BA;
+    }
+}
+.apidoctree-text {
+    cursor: pointer;
+    display: block;
+    padding: 0 0.5em;
+
+    &-hover {
+        background: #5B5D6B;
+    }
+    &-active {
+        background: #EAB81A;
+        color: #000;
+        // .border-radius(2px); // 为了多选时选区连在一起的好看，不用radius。
+    }
+}
+.apidoctree-post {
+    display: block;
+    padding: 0 0.5em;
+}
+.apidoctree-disabled {
+    .apidoctree-text {
+        background: transparent;
+        color: #828599;
+    }
+}

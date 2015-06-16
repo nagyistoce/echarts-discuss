@@ -1,0 +1,83 @@
+@import "../../dep/est/1.2.1/src/all.less";
+@import "../common/commonNormalize.less";
+
+@import "../common/ui/APIDocTree.less";
+
+body {
+    padding: 20px;
+    margin: 0;
+    font-size: 14px;
+    background: #222;
+    color: #efe;
+}
+.ecdoc-api-tree-area {
+    width: 300px;
+    float: left;
+    overflow: hidden;
+}
+.ecdoc-api-desc-area {
+    margin-left: 305px;
+}
+.ecdoc-api-opt-path-sample {
+    position: fixed;
+    widows: 200px;
+    height: 400px;
+    right: 10px;
+    top: 10px;
+    border: 2px solid blue;
+    -webkit-box-shadow:  10px 10px 5px #888888;
+    box-shadow:  10px 10px 5px #888888;
+}
+
+.ecdoc-api-desc-cn,
+.ecdoc-api-desc-en {
+    // position:absolute;
+    position: fixed;
+    max-width: 200px;
+    top: 20px;
+    //background: #111;
+    background: #fff;
+    //border: 2px solid #999;
+    color: #111;
+    padding: 5px 10px;
+    line-height: 25px;
+    border-radius: 3px;
+    z-index: 99999;
+    .border-radius(4px);
+    .box-shadow(
+        rgba(0, 0, 0, 0.6) 0px 1px 3px,
+        rgba(255, 255, 255, 0.1) 0px 1px 0px inset,
+        rgba(0, 0, 0, 0.2) 0px -1px 0px inset
+    );
+}
+.ecdoc-api-desc-cn {
+    left: 400px;
+}
+.ecdoc-api-desc-en {
+    left: 680px;
+}
+
+/**
+ * 鼠标hover提示
+ */
+.dt-global-tooltip {
+    // position:absolute;
+    position: fixed!important;
+    top: 20px!important;
+    left: 400px!important;
+    max-width: 200px;
+    //background: #111;
+    background: #fff;
+    //border: 2px solid #999;
+    color: #111;
+    padding: 5px 10px;
+    line-height: 25px;
+    border-radius: 3px;
+    z-index: 99999;
+    .border-radius(4px);
+    .box-shadow(
+        rgba(0, 0, 0, 0.6) 0px 1px 3px,
+        rgba(255, 255, 255, 0.1) 0px 1px 0px inset,
+        rgba(0, 0, 0, 0.2) 0px -1px 0px inset
+    );
+}

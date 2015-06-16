@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="Echarts">
+    <title>Echarts</title>
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-6/esl.js"></script>
+    <link rel="stylesheet" href="APIDocSample.css" />
+</head>
+
+<body>
+
+    <div class="ecdoc-apidoc"></div>
+
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                jquery: 'http://apps.bdimg.com/libs/jquery/1.11.3/jquery.min',
+                dt: '../../dep/dt/0.0.1',
+                tpl: '../../dep/dt/0.0.1/tplLoader',
+                etpl: '../../dep/etpl/3.0.0/src/main'
+            }
+        });
+
+        require(['APIDocSample'], function (APIDocSample) {
+            var instance = new APIDocSample($('.ecdoc-apidoc'));
+            instance.traversalRun();
+        });
+    </script>
+</body>
+</html>
