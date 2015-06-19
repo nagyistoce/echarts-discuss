@@ -7,11 +7,11 @@ define(function (require) {
     var $ = require('jquery');
 
     /**
-     * 一个简易的“集合”
+     * A simple 'set'
      *
      * @public
      * @class
-     * @param {string|Array.<string>|Set} value 如'line'，或者['line', 'pie']，或者'line,pie'
+     * @param {string|Array.<string>|Set} value like: 'line', or ['line', 'pie'], or 'line,pie'
      */
     var Set = function (value) {
         this._valueSet = {};
@@ -47,11 +47,29 @@ define(function (require) {
         contains: function (value) {
             var inputSet = this._normalize(value);
             for (var key in inputSet) {
-                if (inputSet.hasOwnProperty(key) && !this._valueSet[key]) {
+                if (inputSet.hasOwnProperty(key) && !this._valueSet.hasOwnProperty(key)) {
                     return false;
                 }
             }
             return true;
+        },
+
+        /**
+         * Make intersection.
+         *
+         * @public
+         * @param {string|Array.<string>|Set} value
+         * @return {boolean}
+         */
+        intersects: function (value) {
+            var inputSet = this._normalize(value);
+            var intersection = [];
+            for (var key in inputSet) {
+                if (inputSet.hasOwnProperty(key) && this._valueSet.hasOwnProperty(key)) {
+                    intersection.push(key);
+                }
+            }
+            return new Set(intersection);
         },
 
         /**

@@ -101,10 +101,130 @@ define(function (require) {
     );
 
     /**
+     * option path 用于在 defaultJsonRenderer 绘制出的doctree中检索定义内容。
+     * 可以返回多个检索结果。
+     * option path 是类似于这样的东西：
+     *
+     * 'tooltip.formatter'
+     * 'axis[i].symbol'
+     *     当路途中有数组时，[i]表示直接进入数组元素定义继续检索。
+     * 'series[i](applicable:pie,line).itemStyle.normal.borderColor'
+     *     表示，解析到series[i]将当前context中applicable设置成pie。
+     *     context中的applicable用于oneOf的选取和properties限定。
+     *
+     * @public
+     * @param {Object} docTree
+     * @param {Object} args
+     * @param {string=} [args.optionPath] option path like 'aaa.bbb.cc', must be matched accurately.
+     * @param {string=} [args.propertyName] option path like 'bbb', using fuzzy mode.
+     * @param {string=} [args.anyText] option path like 'somesomesome', using fuzzy mode.
+     *                                 full text query (include descriptoin)
+     * @return {Array.<Object>} result
+     * @throws {Error}
+     */
+    schemaHelper.queryDocTree = function (docTree, args) {
+        args = args || {};
+        var context = {
+            originalDocTree: docTree,
+            result: [],
+            pathArr: args.optionPath ? parseOptionPath(args.optionPath, true) : null,
+            propertyName: args.propertyName && $.trim(args.propertyName) || null,
+            anyText: args.anyText && $.trim(args.anyText) || null
+        };
+
+        dtUtil.assert(context.pathArr || context.propertyName || context.anyText);
+
+        if (context.pathArr) {
+            queryRecursivelyByPath(docTree, context, 0, new Set());
+        }
+        else {
+            queryRecursivelyByContent(docTree, context);
+        }
+
+        return context.result;
+
+        function queryRecursivelyByPath(docTree, context, pathIndex, applicable) {
+            if (!dtUtil.isObject(docTree)
+                || !isApplicable(new Set(docTree.applicable), applicable)
+            ) {
+                return;
+            }
+
+            var pathItem = context.pathArr[pathIndex];
+            if (!pathItem) {
+                context.result.push(docTree);
+                return;
+            }
+
+            var subApplicable = applicable;
+            var pathItemApp = pathItem.context.applicable;
+            if (pathItemApp) {
+                subApplicable = new Set(pathItemApp);
+            }
+
+            for (var i = 0, len = (docTree.children || []).length; i < len; i++) {
+                var child = docTree.children[i];
+                if (docTree.isEnumParent) {
+                    queryRecursivelyByPath(child, context, pathIndex, subApplicable);
+                }
+                else {
+                    if (pathAccurateMatch(child, pathItem.propertyName, pathItem.arrayName)) {
+                        queryRecursivelyByPath(child, context, pathIndex + 1, subApplicable);
+                    }
+                }
+            }
+        }
+
+        function queryRecursivelyByContent(docTree, context) {
+            if (!dtUtil.isObject(docTree)) {
+                return;
+            }
+
+            if (context.propertyName) {
+                if (pathFuzzyMatch(docTree, context.propertyName)) {
+                    context.result.push(docTree);
+                    return;
+                }
+            }
+            else if (context.anyText) {
+                if (pathFuzzyMatch(docTree, context.anyText)
+                    || (docTree.descriptionCN && docTree.descriptionCN.indexOf(context.anyText) >= 0)
+                    || (docTree.descriptionCN && docTree.descriptionEN.indexOf(context.anyText) >= 0)
+                ) {
+                    context.result.push(docTree);
+                    return;
+                }
+            }
+
+            for (var i = 0, len = (docTree.children || []).length; i < len; i++) {
+                queryRecursivelyByContent(docTree.children[i], context);
+            }
+        }
+
+        function pathAccurateMatch(child, propertyName, arrayName) {
+            return (child.propertyName && child.propertyName === propertyName)
+                || (
+                    child.arrayName && isMatchArrayName(
+                        arrayName || propertyName, child.arrayName
+                    )
+                );
+        }
+
+        function pathFuzzyMatch(child, propertyName) {
+            return (child.propertyName && child.propertyName.indexOf(propertyName) >= 0)
+                || (child.arrayName && child.arrayName.indexOf(propertyName) >= 0);
+        }
+
+        function isMatchArrayName(nameShort, nameFull) {
+            return nameShort && nameFull
+                && nameFull.indexOf(nameShort) === 0
+                && /^(\[i\])*$/.test(nameFull.slice(nameShort.length));
+        }
+    };
+
+    /**
      * option path 用于在echarts option schema中检索定义内容。
      * 可以返回多个检索结果。
-     * schema中每一项都有对应的 option path。
-     * 在doc页面中，可以使用 option path 检索到对应的schema项。
      * option path 是类似于这样的东西：
      *
      * 'tooltip.formatter'
@@ -124,6 +244,7 @@ define(function (require) {
      * @param {string} optionPath option path like 'aaa.bbb.cc'
      * @param {string|Array.<string>} applicable
      * @return {Array.<Object>} result
+     * @throws {Error}
      */
     schemaHelper.querySchema = function (schema, optionPath) {
         var pathArr = parseOptionPath(optionPath);
@@ -190,7 +311,7 @@ define(function (require) {
             }
 
             querySchemaRecursively(
-                pathItem.enterArrayItems
+                pathItem.arrayName
                     ? schemaItem.items
                     : schemaItem.properties[pathItem.propertyName],
                 currPathArr.slice(1),
@@ -208,14 +329,14 @@ define(function (require) {
     function isApplicable(itemApplicable, contextApplicable) {
         return itemApplicable.isEmpty()
             || contextApplicable.isEmpty()
-            || contextApplicable.contains(itemApplicable);
+            || contextApplicable.intersects(itemApplicable).count() > 0;
     }
 
     /**
      * @inner
      */
-    function parseOptionPath(optionPath) {
-        dtUtil.assert(!!optionPath);
+    function parseOptionPath(optionPath, arrayOnlyAtom) {
+        dtUtil.assert(!!optionPath, 'optionPath is illegal: \'' + optionPath + '\'');
         var pathArr = optionPath.split(/\.|\[/);
         var retArr = [];
 
@@ -228,12 +349,16 @@ define(function (require) {
             var ctxVarName = regResult[3];
             var ctxVarValue = regResult[4];
 
-            dtUtil.assert(propertyName && (!ctxVar || (ctxVar && ctxVarName && ctxVarValue)));
+            dtUtil.assert(
+                propertyName && (!ctxVar || (ctxVar && ctxVarName && ctxVarValue)),
+                'optionPath is illegal: \'' + optionPath + '\''
+            );
 
             var pa = {context: {}};
+            var lastPa = retArr[retArr.length - 1];
 
             if (propertyName === 'i]') {
-                pa.enterArrayItems = true;
+                pa.arrayName = (lastPa.arrayName || lastPa.propertyName) + '[i]';
             }
             else {
                 pa.propertyName = propertyName;
@@ -243,6 +368,18 @@ define(function (require) {
                 pa.context[ctxVarName] = new Set(ctxVarValue);
             }
             retArr.push(pa);
+        }
+
+        if (arrayOnlyAtom) {
+            for (var i = 0, len = retArr.length; i < len;) {
+                var nextItem = retArr[i + 1];
+                if (nextItem && nextItem.arrayName) {
+                    retArr.splice(i, 1);
+                }
+                else {
+                    i++;
+                }
+            }
         }
 
         return retArr;
@@ -266,6 +403,7 @@ define(function (require) {
      *                                   enumInfo: {BuildDocInfo},
      *                                   refFrom {Array.<Object>},
      *                                   arrayFrom {Array.<Object>},
+     *                                   applicable: {string|Array.<string>}
      *                               }
      * @param {Object} renderBase
      */
@@ -469,7 +607,7 @@ define(function (require) {
         var subRenderBase;
 
         // FIXME
-        // ref
+        // ref description merge
 
         var prefix = '';
         var suffix = '';
@@ -492,40 +630,28 @@ define(function (require) {
         }
 
         if (selfInfo === BuildDocInfo.IS_OBJECT) {
-            subRenderBase = {
-                value: 'ecapidocid-' + dtUtil.localUID(),
+            subRenderBase = makeSubRenderBase(schemaItem, context, {
                 childrenPre: prefix + '{',
                 childrenPost: '}' + suffix + ',',
-                childrenBrief: childrenBrief,
-                descriptionCN: schemaItem.descriptionCN,
-                descriptionEN: schemaItem.descriptionEN,
-                tooltipEncodeHTML: false
-            };
+                childrenBrief: childrenBrief
+            });
             children.push(subRenderBase);
         }
         else if (selfInfo === BuildDocInfo.IS_ARRAY) {
             subRenderBase = renderBase;
         }
         else if (selfInfo === BuildDocInfo.IS_PRIMARY) {
-            subRenderBase = {
-                value: 'ecapidocid-' + dtUtil.localUID(),
-                text: prefix + schemaHelper.getDefaultValueBrief(schemaItem, context) + ',',
-                descriptionCN: schemaItem.descriptionCN,
-                descriptionEN: schemaItem.descriptionEN,
-                tooltipEncodeHTML: false
-            };
+            subRenderBase = makeSubRenderBase(schemaItem, context, {
+                text: prefix + schemaHelper.getDefaultValueBrief(schemaItem, context) + ','
+            });
             children.push(subRenderBase);
         }
         else if (enumInfo === BuildDocInfo.IS_ENUM_PARENT) { // selfInfo == undefined
-            subRenderBase = {
-                value: 'ecapidocid-' + dtUtil.localUID(),
+            subRenderBase = makeSubRenderBase(schemaItem, context, {
                 childrenPre: prefix,
                 childrenPost: suffix + ',',
-                childrenBrief: childrenBrief,
-                descriptionCN: schemaItem.descriptionCN,
-                descriptionEN: schemaItem.descriptionEN,
-                tooltipEncodeHTML: false
-            };
+                childrenBrief: childrenBrief
+            });
             children.push(subRenderBase);
         }
 
@@ -534,6 +660,28 @@ define(function (require) {
         }
 
         return subRenderBase;
+
+        function makeSubRenderBase(schemaItem, context, props) {
+            var sub = {
+                value: 'ecapidocid-' + dtUtil.localUID(),
+                isEnumParent: context.enumInfo === BuildDocInfo.IS_ENUM_PARENT,
+                applicable: new Set(context.applicable),
+                descriptionCN: schemaItem.descriptionCN,
+                descriptionEN: schemaItem.descriptionEN,
+                defaultValue: schemaItem['default'],
+                defaultExplanation: schemaItem.defaultExplanation,
+                tooltipEncodeHTML: false
+            };
+
+            if (context.relationInfo === BuildDocInfo.IS_ARRAY_ITEM) {
+                sub.arrayName = context.itemName + (new Array(context.arrayFrom.length + 1)).join('[i]');
+            }
+            else { // IS_OBJECT_ITEM
+                sub.propertyName = context.itemName; // For query.
+            }
+
+            return $.extend(sub, props);
+        }
     };
 
     /**

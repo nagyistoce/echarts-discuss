@@ -1,11 +1,13 @@
-.apidoctree {
+@import "./common.less";
+
+.dtui-treelist {
 }
-.apidoctree-i {
+.dtui-treelist-i {
     position: relative;
     padding-left: 1.3em;
     line-height: 20px;
 }
-.apidoctree-thumb {
+.dtui-treelist-thumb {
     margin: -1px 0 0 -1em;
     position: absolute;
     cursor: pointer;
@@ -13,10 +15,10 @@
     width: 1.5em; // 扩大鼠标点选区域增强用户体验
     .user-select(none);
 
-    .apidoctree-expanded > &:after {
+    .dtui-treelist-expanded > &:after {
         content: '▾';
     }
-    .apidoctree-collapsed > &:after {
+    .dtui-treelist-collapsed > &:after {
         content: '▸';
     }
 
@@ -24,26 +26,33 @@
         color: #7DA7BA;
     }
 }
-.apidoctree-text {
+.dtui-treelist-text {
     cursor: pointer;
     display: block;
     padding: 0 0.5em;
+    text-decoration: none;
+    color: #efe;
 
     &-hover {
         background: #5B5D6B;
     }
     &-active {
-        background: #EAB81A;
+        background: #FFE384;
+        color: #000;
+        // .border-radius(2px); // 为了多选时选区连在一起的好看，不用radius。
+    }
+    &-highlight {
+        background: #EAB810;
         color: #000;
         // .border-radius(2px); // 为了多选时选区连在一起的好看，不用radius。
     }
 }
-.apidoctree-post {
+.dtui-treelist-post {
     display: block;
     padding: 0 0.5em;
 }
-.apidoctree-disabled {
-    .apidoctree-text {
+.dtui-treelist-disabled {
+    .dtui-treelist-text {
         background: transparent;
         color: #828599;
     }

@@ -232,7 +232,7 @@
                     "type": "string",
                     "descriptionCN": "模式是时间类型，时间轴间隔根据时间跨度自动计算，可选为：'number'",
                     "descriptionEN": "When the type is time, interval of the timeline is calculated based on the time span. Can also be: 'number'.",
-                    "default": "'time'"
+                    "default": "time"
                 },
                 "notMerge": {
                     "type": "boolean",
@@ -298,7 +298,7 @@
                     "type": "color",
                     "descriptionCN": "背景颜色，默认透明。",
                     "descriptionEN": "The color of the background. Defaults to transparent.",
-                    "default": "'rgba(0,0,0,0)'"
+                    "default": "rgba(0,0,0,0)"
                 },
                 "borderWidth": {
                     "type": "number",
@@ -310,7 +310,7 @@
                     "type": "color",
                     "descriptionCN": "边框颜色。",
                     "descriptionEN": "The color of the border.",
-                    "default": "'#ccc'"
+                    "default": "#ccc"
                 },
                 "padding": {
                     "type": [
@@ -325,7 +325,7 @@
                     "type": "string",
                     "descriptionCN": "播放控制器位置，可选为：'left' | 'right' | 'none'",
                     "descriptionEN": "The position of play controller. Valid values are: 'left' | 'right' | 'none'",
-                    "default": "'left'"
+                    "default": "left"
                 },
                 "autoPlay": {
                     "type": "boolean",
@@ -526,7 +526,7 @@
                     "type": "string",
                     "descriptionCN": "轴点symbol，同serie.symbol",
                     "descriptionEN": "the symbol for timeline tick, same as serie.symbol.",
-                    "default": "'emptyDiamond'"
+                    "default": "emptyDiamond"
                 },
                 "symbolSize": {
                     "type": "number",
@@ -573,13 +573,13 @@
                     "type": "string",
                     "descriptionCN": "主标题文本，'\\n'指定换行",
                     "descriptionEN": "title text, '\\n' represents a line feed.",
-                    "default": "''"
+                    "default": ""
                 },
                 "link": {
                     "type": "string",
                     "descriptionCN": "主标题文本超链接",
                     "descriptionEN": "title text hyperlink.",
-                    "default": "''"
+                    "default": ""
                 },
                 "target": {
                     "type": "string",
@@ -591,13 +591,13 @@
                     "type": "string",
                     "descriptionCN": "副标题文本，'\\n'指定换行",
                     "descriptionEN": "subtitle text, '\\n' represents a line feed.",
-                    "default": "''"
+                    "default": ""
                 },
                 "sublink": {
                     "type": "string",
                     "descriptionCN": "副标题文本超链接",
                     "descriptionEN": "subtitle text hyperlink.",
-                    "default": "''"
+                    "default": ""
                 },
                 "subtarget": {
                     "type": "string",
@@ -612,7 +612,7 @@
                     ],
                     "descriptionCN": "水平安放位置，默认为左侧，可选为：'center' | 'left' | 'right' | <b>{number}</b>（x坐标，单位px）",
                     "descriptionEN": "horizontal position. Defaults to left. Valid values are: 'center' | 'left' | 'right' | <b>{number}</b>(x-coordinate, in px).",
-                    "default": "'left'"
+                    "default": "left"
                 },
                 "y": {
                     "type": [
@@ -621,7 +621,7 @@
                     ],
                     "descriptionCN": "垂直安放位置，默认为全图顶端，可选为：'top' | 'bottom' | 'center' | <b>{number}</b>（y坐标，单位px）",
                     "descriptionEN": "vertical position. Defaults to top. Valid values are: 'top' | 'bottom' | 'center' | <b>{number}</b>(y-coordinate, in px).",
-                    "default": "'top'"
+                    "default": "top"
                 },
                 "textAlign": {
                     "type": "string",
@@ -633,13 +633,13 @@
                     "type": "color",
                     "descriptionCN": "标题背景颜色，默认透明",
                     "descriptionEN": "The color of the title's background. Defaults to transparent.",
-                    "default": "'rgba(0,0,0,0)'"
+                    "default": "rgba(0,0,0,0)"
                 },
                 "borderColor": {
                     "type": "string",
                     "descriptionCN": "标题边框颜色",
                     "descriptionEN": "The color of the drawn border around the title.",
-                    "default": "'#ccc'"
+                    "default": "#ccc"
                 },
                 "borderWidth": {
                     "type": "number",
@@ -708,7 +708,7 @@
                     "type": "string",
                     "descriptionCN": "布局方式，默认为水平布局，可选为：'horizontal' | 'vertical'",
                     "descriptionEN": "layout manner. Defaults to horizontal. Valid values are: 'horizontal' | 'vertical'.",
-                    "default": "'horizontal'"
+                    "default": "horizontal"
                 },
                 "x": {
                     "type": [
@@ -717,7 +717,7 @@
                     ],
                     "descriptionCN": "水平安放位置，默认为全图居中，可选为：'center' | 'left' | 'right' | <b>{number}</b>（x坐标，单位px）",
                     "descriptionEN": "horizontal position. Defaults to center. Valid values are: 'center' | 'left' | 'right' | <b>{number}</b>(x-coordinate, in px).",
-                    "default": "'right'"
+                    "default": "right"
                 },
                 "y": {
                     "type": [
@@ -726,19 +726,19 @@
                     ],
                     "descriptionCN": "垂直安放位置，默认为全图顶端，可选为：'top' | 'bottom' | 'center' | <b>{number}</b>（y坐标，单位px）",
                     "descriptionEN": "vertical position. Defaults to top. Valid values are: 'top' | 'bottom' | 'center' | <b>{number}</b>(y-coordinate, in px).",
-                    "default": "'top'"
+                    "default": "top"
                 },
                 "backgroundColor": {
                     "type": "color",
                     "descriptionCN": "工具箱背景颜色，默认透明",
                     "descriptionEN": "The color of the toolbox's background. Defaults to transparent.",
-                    "default": "'rgba(0,0,0,0)'"
+                    "default": "rgba(0,0,0,0)"
                 },
                 "borderColor": {
                     "type": "color",
                     "descriptionCN": "工具箱边框颜色",
                     "descriptionEN": "The color of the drawn border around the toolbox.",
-                    "default": "'#ccc'"
+                    "default": "#ccc"
                 },
                 "borderWidth": {
                     "type": "number",
@@ -782,13 +782,13 @@
                     "type": "color",
                     "descriptionCN": "禁用颜色定义",
                     "descriptionEN": "Specifies the disable color.",
-                    "default": "'#ddd'"
+                    "default": "#ddd"
                 },
                 "effectiveColor": {
                     "type": "color",
                     "descriptionCN": "生效颜色定义",
                     "descriptionEN": "Specifies the effective color.",
-                    "default": "'red'"
+                    "default": "red"
                 },
                 "showTitle": {
                     "type": "boolean",
@@ -900,7 +900,7 @@
                     "type": "string",
                     "descriptionCN": "触发类型，默认数据触发，见下图，可选为：'item' | 'axis'",
                     "descriptionEN": "Type of trigger. Defaults to 'item'. See image below. Valid values are: 'item' | 'axis'.",
-                    "default": "'item'"
+                    "default": "item"
                 },
                 "position": {
                     "type": [
@@ -927,7 +927,7 @@
                     ],
                     "descriptionCN": "拖拽重计算独有，数据孤岛内容格式器：<b>{string}</b>（Template） | <b>{Function}</b>，见表格下方",
                     "descriptionEN": "island content formatter. For Drag-Recalculate only: <b>{string}</b> (Template) | <b>{Function}</b>. See below.",
-                    "default": "'{a} < br/>{b} : {c}'"
+                    "default": "{a} < br/>{b} : {c}"
                 },
                 "showDelay": {
                     "type": "number",
@@ -957,13 +957,13 @@
                     "type": "color",
                     "descriptionCN": "提示背景颜色，默认为透明度为0.7的黑色",
                     "descriptionEN": "The background color for the tooltip. Defaults to a black color (opacity to 30%).",
-                    "default": "'rgba(0,0,0,0.7)'"
+                    "default": "rgba(0,0,0,0.7)"
                 },
                 "borderColor": {
                     "type": "string",
                     "descriptionCN": "提示边框颜色",
                     "descriptionEN": "The color of the tooltip border.",
-                    "default": "'#333'"
+                    "default": "#333"
                 },
                 "borderRadius": {
                     "type": "number",
@@ -1095,7 +1095,7 @@
                     "type": "string",
                     "descriptionCN": "布局方式，默认为水平布局，可选为：'horizontal' | 'vertical'",
                     "descriptionEN": "layout manner, defaults to horizontal. Valid values are: 'horizontal' | 'vertical'.",
-                    "default": "'horizontal'"
+                    "default": "horizontal"
                 },
                 "x": {
                     "type": [
@@ -1104,7 +1104,7 @@
                     ],
                     "descriptionCN": "水平安放位置，默认为全图居中，可选为：'center' | 'left' | 'right' | <b>{number}</b>（x坐标，单位px）",
                     "descriptionEN": "horizontal position. Defaults to center. Valid values are: 'center' | 'left' | 'right' | <b>{number}</b>}(x-coordinate, in px).",
-                    "default": "'center'"
+                    "default": "center"
                 },
                 "y": {
                     "type": [
@@ -1113,19 +1113,19 @@
                     ],
                     "descriptionCN": "垂直安放位置，默认为全图顶端，可选为：'top' | 'bottom' | 'center' | <b>{number}</b>（y坐标，单位px）",
                     "descriptionEN": "vertical position. Defaults to top. Valid values are: 'top' | 'bottom' | 'center' | <b>{number}</b>(y-coordinate, in px).",
-                    "default": "'top'"
+                    "default": "top"
                 },
                 "backgroundColor": {
                     "type": "color",
                     "descriptionCN": "图例背景颜色，默认透明",
                     "descriptionEN": "The color of the legend's background. Defaults to transparent.",
-                    "default": "'rgba(0,0,0,0)'"
+                    "default": "rgba(0,0,0,0)"
                 },
                 "borderColor": {
                     "type": "string",
                     "descriptionCN": "图例边框颜色",
                     "descriptionEN": "The color of the drawn border around the legend.",
-                    "default": "'#ccc'"
+                    "default": "#ccc"
                 },
                 "borderWidth": {
                     "type": "number",
@@ -1226,7 +1226,7 @@
                     "type": "string",
                     "descriptionCN": "布局方式，默认为垂直布局，可选为：'horizontal' | 'vertical'",
                     "descriptionEN": "layout manner. Defaults to vertical. Valid values are: 'horizontal' | 'vertical'",
-                    "default": "'vertical'"
+                    "default": "vertical"
                 },
                 "x": {
                     "type": [
@@ -1235,7 +1235,7 @@
                     ],
                     "descriptionCN": "水平安放位置，默认为全图左对齐，可选为：'center' | 'left' | 'right' | <b>{number}</b>（x坐标，单位px）",
                     "descriptionEN": "horizontal position. Defaults to left. Valid values are: 'center' | 'left' | 'right' | <b>{number}</b>}(x-coordinate, in px).",
-                    "default": "'left'"
+                    "default": "left"
                 },
                 "y": {
                     "type": [
@@ -1244,19 +1244,19 @@
                     ],
                     "descriptionCN": "垂直安放位置，默认为全图底部，可选为：'top' | 'bottom' | 'center' | <b>{number}</b>（y坐标，单位px）",
                     "descriptionEN": "vertical position. Defaults to bottom. Valid values are: 'top' | 'bottom' | 'center' | <b>{number}</b>(y-coordinate, in px).",
-                    "default": "'bottom'"
+                    "default": "bottom"
                 },
                 "backgroundColor": {
                     "type": "color",
                     "descriptionCN": "值域控件背景颜色，默认透明",
                     "descriptionEN": "The color of the dataRange's background. Defaults to transparent.",
-                    "default": "'rgba(0,0,0,0)'"
+                    "default": "rgba(0,0,0,0)"
                 },
                 "borderColor": {
                     "type": "string",
                     "descriptionCN": "值域控件边框颜色",
                     "descriptionEN": "The color of the drawn border around the dataRange.",
-                    "default": "'#ccc'"
+                    "default": "#ccc"
                 },
                 "borderWidth": {
                     "type": "number",
@@ -1414,7 +1414,7 @@
                     "type": "string",
                     "descriptionCN": "布局方式，默认为水平布局，可选为：'horizontal' | 'vertical'",
                     "descriptionEN": "layout manner, defaults to horizontal. Valid values are: 'horizontal' | 'vertical'.",
-                    "default": "'horizontal'"
+                    "default": "horizontal"
                 },
                 "x": {
                     "type": "number",
@@ -1444,25 +1444,25 @@
                     "type": "color",
                     "descriptionCN": "背景颜色，默认透明",
                     "descriptionEN": "The color of the background. Defaults to transparent.",
-                    "default": "'rgba(0,0,0,0)'"
+                    "default": "rgba(0,0,0,0)"
                 },
                 "dataBackgroundColor": {
                     "type": "color",
                     "descriptionCN": "数据缩略背景颜色，仅以第一个系列的数据作为缩量图显示",
                     "descriptionEN": "The color of the dataZoom's background. Only the first series would be rendered as data background.",
-                    "default": "'#eee'"
+                    "default": "#eee"
                 },
                 "fillerColor": {
                     "type": "color",
                     "descriptionCN": "选择区域填充颜色",
                     "descriptionEN": "The fill color of the selected area.",
-                    "default": "'rgba(144,197,237,0.2)'"
+                    "default": "rgba(144,197,237,0.2)"
                 },
                 "handleColor": {
                     "type": "color",
                     "descriptionCN": "控制手柄颜色",
                     "descriptionEN": "The color of the control handle.",
-                    "default": "'rgba(70,130,180,0.8)'"
+                    "default": "rgba(70,130,180,0.8)"
                 },
                 "handleSize": {
                     "type": "number",
@@ -1548,7 +1548,7 @@
                     ],
                     "descriptionCN": "水平安放位置，默认为左侧，可选为：'center' | 'left' | 'right' | <b>{number}</b>（x坐标，单位px）",
                     "descriptionEN": "horizontal position. Defaults to left. Valid values are: 'center' | 'left' | 'right' | {number}(x-coordinate, in px).",
-                    "default": "'left'"
+                    "default": "left"
                 },
                 "y": {
                     "type": [
@@ -1557,7 +1557,7 @@
                     ],
                     "descriptionCN": "垂直安放位置，默认为全图顶端，可选为：'top' | 'bottom' | 'center' | <b>{number}</b>（y坐标，单位px）",
                     "descriptionEN": "vertical position. Defaults to top. Valid values are: 'top' | 'bottom' | 'center' | {number}(y-coordinate, in px).",
-                    "default": "'top'"
+                    "default": "top"
                 },
                 "width": {
                     "type": "number",
@@ -1575,13 +1575,13 @@
                     "type": "color",
                     "descriptionCN": "缩放漫游组件背景颜色，默认透明",
                     "descriptionEN": "The color of the background. Defaults to transparent.",
-                    "default": "'rgba(0,0,0,0)'"
+                    "default": "rgba(0,0,0,0)"
                 },
                 "borderColor": {
                     "type": "string",
                     "descriptionCN": "缩放漫游组件边框颜色",
                     "descriptionEN": "Color of the border.",
-                    "default": "'#ccc'"
+                    "default": "#ccc"
                 },
                 "borderWidth": {
                     "type": "number",
@@ -1602,13 +1602,13 @@
                     "type": "color",
                     "descriptionCN": "漫游组件文字填充颜色",
                     "descriptionEN": "The fill color of the text in the controller.",
-                    "default": "'#fff'"
+                    "default": "#fff"
                 },
                 "handleColor": {
                     "type": "color",
                     "descriptionCN": "控制手柄主体颜色",
                     "descriptionEN": "The main color of the control handle.",
-                    "default": "'#6495ed'"
+                    "default": "#6495ed"
                 },
                 "step": {
                     "type": "number",
@@ -1691,7 +1691,7 @@
                     "type": "color",
                     "descriptionCN": "背景颜色，默认透明。",
                     "descriptionEN": "Background color, defaults to transparent.",
-                    "default": "'rgba(0,0,0,0)'"
+                    "default": "rgba(0,0,0,0)"
                 },
                 "borderWidth": {
                     "type": "number",
@@ -1703,7 +1703,7 @@
                     "type": "color",
                     "descriptionCN": "边框颜色。",
                     "descriptionEN": "Color of the border.",
-                    "default": "'#ccc'"
+                    "default": "#ccc"
                 }
             }
         },
@@ -1754,7 +1754,7 @@
                     ],
                     "descriptionCN": "坐标轴名称，默认为空",
                     "descriptionEN": "name of the value axis. Defaults to null.",
-                    "default": "''"
+                    "default": ""
                 },
                 "nameLocation": {
                     "type": "string",
@@ -1764,7 +1764,7 @@
                     ],
                     "descriptionCN": "坐标轴名称位置，默认为'end'，可选为：'start' | 'end'",
                     "descriptionEN": "name location of the value axis. Defaults to 'end'. Valid values are: 'start' | 'end'.",
-                    "default": "'end'"
+                    "default": "end"
                 },
                 "nameTextStyle": {
                     "type": "Object",
@@ -1947,7 +1947,7 @@
                     ],
                     "descriptionCN": "小标记显示挑选间隔，默认为'auto'，可选为：\n                                 <br>'auto'（随axisLabel，自动隐藏显示不下的） | 0（全部显示） |\n                                 <br><b>{number}</b>（用户指定选择间隔）\n                                 <br><b>{function}</b>函数回调，传递参数[index，data[index]]，返回true显示，返回false隐藏",
                     "descriptionEN": "specifies the interval between axisTicks. Defaults to 'auto'. Valid values are:\n                                 <br>'auto' (automatically hide those that cannot be displayed) | 0 (unhide all) |\n                                 <br><b>{number}</b>(specified by the user).\n                                 <br><b>{function}</b>callback, paramater is [index，data[index]], return true to show and false to hide",
-                    "default": "'auto'"
+                    "default": "auto"
                 },
                 "onGap": {
                     "type": "boolean",
@@ -2002,7 +2002,7 @@
                     ],
                     "descriptionCN": "标签显示挑选间隔，默认为'auto'，可选为：\n                                <br>'auto'（自动隐藏显示不下的） | 0（全部显示） |\n                                <br><b>{number}</b>（用户指定选择间隔）\n                                <br><b>{function}</b>函数回调，传递参数[index，data[index]]，返回true显示，返回false隐藏",
                     "descriptionEN": "specifies the interval between axisLabels. Defaults to 'auto'. Valid values are:\n                                <br>'auto' (automatically hide those that cannot be displayed) | 0 (unhide all) |\n                                <br><b>{number}</b>(specified by the user).\n                                <br><b>{function}</b>callback, paramater is [index，data[index]], return true to show and false to hide",
-                    "default": "'auto'"
+                    "default": "auto"
                 },
                 "rotate": {
                     "type": "number",
@@ -2213,7 +2213,7 @@
                     "type": "string",
                     "descriptionCN": "极坐标的形状，'polygon'|'circle' 多边形|圆形",
                     "descriptionEN": "The shape of polar coordinates. Valid values are: 'polygon'|'circle'.",
-                    "default": "'polygon'"
+                    "default": "polygon"
                 },
                 "indicator": {
                     "type": "Array",
@@ -2462,7 +2462,7 @@
                     ],
                     "descriptionCN": "柱间距离，默认为柱形宽度的30%，可设固定值",
                     "descriptionEN": "the distance between each bar. Defaults to  barWidth * 30%. Can also set to be a fixed value.",
-                    "default": "'30%'"
+                    "default": "30%"
                 },
                 "barCategoryGap": {
                     "type": [
@@ -2474,7 +2474,7 @@
                     ],
                     "descriptionCN": "类目间柱形距离，默认为类目间距的20%，可设固定值",
                     "descriptionEN": "the distance between each bar cetegory. Defaults to  barCategoryWidth * 20%. Can also set to be a fixed value.",
-                    "default": "'20%'"
+                    "default": "20%"
                 },
                 "barMinHeight": {
                     "type": "number",
@@ -2518,34 +2518,6 @@
                             "descriptionCN": "标志图形类型，默认自动选择（8种类型循环使用，不显示标志图形可设为'none'），默认循环选择类型有：<br>\n                                'circle' | 'rectangle' | 'triangle' | 'diamond' |<br>\n                                'emptyCircle' | 'emptyRectangle' | 'emptyTriangle' | 'emptyDiamond'\n                                <br>另外，还支持五种更特别的标志图形'heart'（心形）、'droplet'（水滴）、'pin'（标注）、'arrow'（箭头）和'star'（五角星），这并不出现在常规的8类图形中，但无论是在系列级还是数据级上你都可以指定使用，同时，'star' + n（n>=3)可变化出N角星，如指定为'star6'则可以显示6角星\n                                <br>自1.3.5起支持symbol为自定义图片，格式为'image://' + '图片路径'， 如'image://../asset/ico/favicon.png'\n                                <br>详见例子 <a href=\"./example/line.html\" target=\"_blank\">this 》</a>",
                             "descriptionEN": "A predefined shape or symbol for the marker. The default symbol is automatically selected from (When all symbols are used, new symbols are pulled from the start again. Set it to'none' if you don't want to show the symbol): <br>\n                                'circle' | 'rectangle' | 'triangle' | 'diamond' |<br>\n                                'emptyCircle' | 'emptyRectangle' | 'emptyTriangle' | 'emptyDiamond'\n                                <br>Other possible values are 'heart', 'droplet', 'pin', 'arrow' and 'star'. Although They are not included in the regular eight symbols above, you can use them at both series and data level. In addition, you can use 'star' + n (n>=3) to get N-pointed star, like 'star6' for six-pointed star.\n                                <br>Since 1.3.5, ECharts added support for setting custom image as symbol. The URL to an image can be given on this form:'image://' + 'URL', such as 'image://../asset/ico/favicon.png'.\n                                <br>See <a href=\"./example/line.html#-en\" target=\"_blank\">example 》</a>",
                             "default": null
-                        },
-                        {
-                            "type": "string",
-                            "applicable": "radar",
-                            "descriptionCN": "同<a href=\"#SeriesCartesian\" title=\"\">series（直角系）</a>",
-                            "descriptionEN": "same as <a href=\"#SeriesCartesian\" title=\"\">series (Cartesian). </a>",
-                            "default": null
-                        },
-                        {
-                            "type": "string",
-                            "applicable": "force",
-                            "descriptionCN": "同<a href=\"#SeriesCartesian\" title=\"\">series（直角系）</a>",
-                            "descriptionEN": "as <a href=\"#SeriesCartesian\" title=\"\">series (Cartesian)</a>",
-                            "default": "'circle'"
-                        },
-                        {
-                            "type": "string",
-                            "applicable": "chord",
-                            "descriptionCN": "同<a href=\"#SeriesCartesian\" title=\"\">series（直角系）</a>, ribbonType为false时有效",
-                            "descriptionEN": "see <a href=\"#SeriesCartesian\" title=\"\">series(Cartesion)</a>, Only available if ribbonType is false",
-                            "default": "'circle'"
-                        },
-                        {
-                            "type": "string",
-                            "applicable": "tree",
-                            "descriptionCN": "同<a href=\"#SeriesCartesian\" title=\"\">series（直角系）</a>",
-                            "descriptionEN": "see <a href=\"#SeriesCartesian\" title=\"\">series (Cartesian) </a>",
-                            "default": "'circle'"
                         }
                     ]
                 },
@@ -2560,25 +2532,11 @@
                             "applicable": [
                                 "line",
                                 "scatter",
-                                "radar",
-                                "force",
-                                "chord",
-                                "tree"
+                                "radar"
                             ],
                             "descriptionCN": "标志图形大小，可计算特性启用情况建议增大以提高交互体验。可以是单个值，如果在 symbol 为图片的时候想要分别设置宽高防止图片被拉伸，可以使用数组，其中数组第一个值是高，第二个值是宽。 实现气泡图时symbolSize需为Function，气泡大小取决于该方法返回值，传入参数为当前数据项（value数组）。",
                             "descriptionEN": "size of the symbol. It is usually a number. But if you use an image as symbol. To prevent stretching of image caused by same width and height, you can use an array as symbolSize which first element is width and the second is height. When \"calculable\" is enabled, it's recommended to increase symbolSize for better interactive experience. When implementing a bubble chart, symbolSize should be a Function, and the bubble size depends on the return value of the method, the parameter passed in is the current data item (value array).",
-                            "default": "2 | 4"
-                        },
-                        {
-                            "type": [
-                                "number",
-                                "Function",
-                                "Array"
-                            ],
-                            "applicable": "radar",
-                            "descriptionCN": "同<a href=\"#SeriesCartesian\" title=\"\">series（直角系）</a>",
-                            "descriptionEN": "same as <a href=\"#SeriesCartesian\" title=\"\">series (Cartesian). </a>",
-                            "default": 2
+                            "defaultExplanation": "2 | 4"
                         },
                         {
                             "type": [
@@ -2620,13 +2578,6 @@
                             ],
                             "descriptionCN": "标志图形旋转角度[-180,180]",
                             "descriptionEN": "the angle by which the symbol is rotated. Valid range is: [-180,180]",
-                            "default": null
-                        },
-                        {
-                            "type": "number",
-                            "applicable": "radar",
-                            "descriptionCN": "同<a href=\"#SeriesCartesian\" title=\"\">series（直角系）</a>",
-                            "descriptionEN": "same as <a href=\"#SeriesCartesian\" title=\"\">series (Cartesian). </a>",
                             "default": null
                         }
                     ]
@@ -2914,7 +2865,7 @@
                     "applicable": "map",
                     "descriptionCN": "地图类型，支持world，china及全国34个省市自治区。省市自治区的mapType直接使用简体中文：\n                                <br>新疆， 西藏， 内蒙古， 青海， 四川， 黑龙江， 甘肃， 云南， 广西， 湖南， 陕西，\n                                <br>广东，吉林， 河北， 湖北， 贵州， 山东， 江西， 河南， 辽宁， 山西， 安徽， 福建，\n                                <br>浙江， 江苏，重庆， 宁夏， 海南， 台湾， 北京， 天津， 上海， 香港， 澳门'\n                                <br>支持子区域模式，通过主地图类型扩展出所包含的子区域地图，格式为'主地图类型|子区域名称'，如\n                                <br>'world|Brazil'，'china|广东'，详见例子 <a href=\"./example/map8.html\" target=\"_blank\">this 》</a>",
                     "descriptionEN": "map type, including World Map, China Map, Map of China Provinces & Cities. For the mapType of China Provinces & Cities, just use simplified Chinese.\n                                <br>新疆, 西藏, 内蒙古, 青海, 四川, 黑龙江, 甘肃, 云南, 广西, 湖南, 陕西,\n                                <br>广东, 吉林, 河北, 湖北, 贵州, 山东, 江西, 河南, 辽宁, 山西, 安徽, 福建,\n                                <br>浙江, 江苏, 重庆, 宁夏, 海南, 台湾, 北京, 天津, 上海, 香港, 澳门'\n                                <br>Supports sub-region mode, which develops sub-region maps from the main map types. The format is 'main map type | sub-region name', like\n                                <br>'world|Brazil', 'china|广东'. See <a href=\"./example/map8.html#-en\" target=\"_blank\">example 》</a>",
-                    "default": "'china'"
+                    "default": "china"
                 },
                 "hoverable": {
                     "type": "boolean",
@@ -2945,7 +2896,7 @@
                     "applicable": "map",
                     "descriptionCN": "地图数值计算方式，默认为加和，可选为：'sum'（总数） | 'average'（均值）",
                     "descriptionEN": "Calculation of map value. Defaults to sum. Valid values are: 'sum' | 'average'",
-                    "default": "'sum'"
+                    "default": "sum"
                 },
                 "mapValuePrecision": {
                     "type": "number",
@@ -3153,7 +3104,7 @@
                     "applicable": "force",
                     "descriptionCN": "力导向图的边两端图形样式，可指定为'arrow', 详见<a href=\"#SymbolList\">symbolList</a>",
                     "descriptionEN": "symbol of force's link. Can be specified as 'arrow', see <a href=\"#SymbolList\">symbolList</a>.",
-                    "default": "'none'"
+                    "default": "none"
                 },
                 "linkSymbolSize": {
                     "type": "Array",
@@ -3235,14 +3186,14 @@
                             "applicable": "chord",
                             "descriptionCN": "数据排序， 可以取none, ascending, descending",
                             "descriptionEN": "Data sorting. Can be one of none, ascending, descending.",
-                            "default": "'none'"
+                            "default": "none"
                         },
                         {
                             "type": "string",
                             "applicable": "funnel",
                             "descriptionCN": "数据排序， 可以取ascending, descending",
                             "descriptionEN": "Data sorting, can be one of ascending, descending",
-                            "default": "'descending'"
+                            "default": "descending"
                         }
                     ]
                 },
@@ -3251,7 +3202,7 @@
                     "applicable": "chord",
                     "descriptionCN": "数据排序（弦）， 可以取none, ascending, descending",
                     "descriptionEN": "Data sorting (chord). Can be one of none, ascending, descending.",
-                    "default": "'none'"
+                    "default": "none"
                 },
                 "endAngle": {
                     "type": "number",
@@ -3489,21 +3440,21 @@
                     "applicable": "funnel",
                     "descriptionCN": "水平方向对齐布局类型，默认居中对齐，可用选项还有：'left' | 'right' | 'center'",
                     "descriptionEN": "Horizontal layout style, default to 'center', other option can be: 'left' | 'right' | 'center'",
-                    "default": "'center'"
+                    "default": "center"
                 },
                 "minSize": {
                     "type": "string",
                     "applicable": "funnel",
                     "descriptionCN": "最小值min映射到总宽度的比例，如果需要最小值的图形并不是尖端三角，可设置minSize实现",
                     "descriptionEN": "The proportion of the minimum value 'min' to the total width. If the symbol of required min is not sharp triangle, you can set minSize to achieve it.",
-                    "default": "'0%'"
+                    "default": "0%"
                 },
                 "maxSize": {
                     "type": "string",
                     "applicable": "funnel",
                     "descriptionCN": "最大值max映射到总宽度的比例",
                     "descriptionEN": "The proportion of the maximum value 'max' to the total width.",
-                    "default": "'100%'"
+                    "default": "100%"
                 },
                 "gap": {
                     "type": "number",
@@ -3518,6 +3469,13 @@
                     "descriptionCN": "该事件类别的权重",
                     "descriptionEN": "Specifies the weight of this event's series.",
                     "default": 1
+                },
+                "root": {
+                    "type": "string",
+                    "applicable": "treemap",
+                    "descriptionCN": "当前显示的根节点的名字",
+                    "descriptionEN": "Name of root node",
+                    "default": ""
                 },
                 "rootLocation": {
                     "type": "Object",
@@ -3545,7 +3503,7 @@
                     "applicable": "tree",
                     "descriptionCN": "树的方向可选：'vertical' | 'horizontal' | 'radial'",
                     "descriptionEN": "direction of the tree, 'vertical' | 'horizontal' | 'radial'",
-                    "default": "'vertical'"
+                    "default": "vertical"
                 },
                 "textRotation": {
                     "type": "Array",
@@ -3611,7 +3569,7 @@
                     "descriptionCN": "标注类型，同series中的<a href=\"#Series\">symbol</a>",
                     "descriptionEN": "the symbol of markPoint, same as series' <a href=\"#Series\">symbol</a>.",
                     "$ref": "#definitions/seriesItem/properties/symbol",
-                    "default": "'pin'"
+                    "default": "pin"
                 },
                 "symbolSize": {
                     "type": [
@@ -4071,7 +4029,7 @@
                     ],
                     "descriptionCN": "边框颜色",
                     "descriptionEN": "color of border.",
-                    "default": "'#fff'"
+                    "default": "#fff"
                 },
                 "barBorderRadius": {
                     "type": [
@@ -4223,7 +4181,7 @@
                     "type": "string",
                     "descriptionCN": "线条样式，可选为：'solid' | 'dotted' | 'dashed'，\n                                树图还可以选：'curve' | 'broken'",
                     "descriptionEN": "line style. Valid values are: 'solid' | 'dotted' | 'dashed', and can be 'curve' | 'broken' in tree structures.",
-                    "default": "'solid'"
+                    "default": "solid"
                 },
                 "width": {
                     "type": "number",
@@ -4270,7 +4228,7 @@
                     "type": "string",
                     "descriptionCN": "填充样式，目前仅支持'default'(实填充)",
                     "descriptionEN": "Fill style, currently only supports 'default' (solid fill).",
-                    "default": "'default'"
+                    "default": "default"
                 }
             }
         },
@@ -4310,13 +4268,13 @@
                     "type": "color",
                     "descriptionCN": "填充颜色",
                     "descriptionEN": "fill color.",
-                    "default": "'#f08c2e'"
+                    "default": "#f08c2e"
                 },
                 "borderColor": {
                     "type": "color",
                     "descriptionCN": "描边颜色",
                     "descriptionEN": "stroke color.",
-                    "default": "'#5182ab'"
+                    "default": "#5182ab"
                 },
                 "borderWidth": {
                     "type": "number",
@@ -4333,13 +4291,13 @@
                     "type": "string",
                     "descriptionCN": "线条类型，可选为：'curve'（曲线） | 'line'（直线）",
                     "descriptionEN": "line style, can be: 'curve' | 'line'",
-                    "default": "'line'"
+                    "default": "line"
                 },
                 "color": {
                     "type": "color",
                     "descriptionCN": "线条颜色",
                     "descriptionEN": "color of the line",
-                    "default": "'#5182ab'"
+                    "default": "#5182ab"
                 },
                 "width": {
                     "type": "number",
@@ -4362,7 +4320,7 @@
                     "type": "string",
                     "descriptionCN": "修饰，仅对tooltip.textStyle生效",
                     "descriptionEN": "decoration. Applicable to tooltip.textStyle only.",
-                    "default": "'none'"
+                    "default": "none"
                 },
                 "align": {
                     "type": "string",
@@ -4380,7 +4338,7 @@
                     "type": "string",
                     "descriptionCN": "字体系列",
                     "descriptionEN": "font family.",
-                    "default": "'Arial, Verdana, sans-serif'"
+                    "default": "Arial, Verdana, sans-serif"
                 },
                 "fontSize": {
                     "type": "number",
@@ -4392,7 +4350,7 @@
                     "type": "string",
                     "descriptionCN": "样式，可选为：'normal' | 'italic' | 'oblique'",
                     "descriptionEN": "font style. Valid values are: 'normal' | 'italic' | 'oblique'.",
-                    "default": "'normal'"
+                    "default": "normal"
                 },
                 "fontWeight": {
                     "type": [
@@ -4401,7 +4359,7 @@
                     ],
                     "descriptionCN": "粗细，可选为：'normal' | 'bold' | 'bolder' | 'lighter' | 100 | 200 |... | 900",
                     "descriptionEN": "font weight. Valid values are: 'normal' | 'bold' | 'bolder' | 'lighter' | 100 | 200 |... | 900.",
-                    "default": "'normal'"
+                    "default": "normal"
                 }
             }
         },
@@ -4412,7 +4370,7 @@
                     "type": "string",
                     "descriptionCN": "显示话术 ，'\\n'指定换行",
                     "descriptionEN": "The loading text that appears when the chart is set into the loading state. \\n' represents a line feed.",
-                    "default": "'数据读取中...'"
+                    "default": "数据读取中..."
                 },
                 "x": {
                     "type": [
@@ -4421,7 +4379,7 @@
                     ],
                     "descriptionCN": "水平安放位置，默认为全图居中，可选为：'center' | 'left' | 'right' | <b>{number}</b>（x坐标，单位px）",
                     "descriptionEN": "horizontal position. Defaults to center. Valid values are: 'center' | 'left' | 'right' | <b>{number}</b>(x-coordinate, in px).",
-                    "default": "'center'"
+                    "default": "center"
                 },
                 "y": {
                     "type": [
@@ -4430,7 +4388,7 @@
                     ],
                     "descriptionCN": "垂直安放位置，默认为全图居中，可选为：'center' | 'bottom' | 'top' | <b>{number}</b>（y坐标，单位px）",
                     "descriptionEN": "vertical position. Defaults to center. Valid values are: 'center' | 'bottom' | 'top' | <b>{number}</b>(y-coordinate, in px).",
-                    "default": "'center'"
+                    "default": "center"
                 },
                 "textStyle": {
                     "type": "Object",
@@ -4446,7 +4404,7 @@
                     ],
                     "descriptionCN": "loading效果，可选为：'spin' | 'bar' | 'ring' | 'whirling' | 'dynamicLine' | 'bubble'，支持外部装载",
                     "descriptionEN": "loading effect. Valid values are: 'spin' | 'bar' | 'ring' | 'whirling' | 'dynamicLine' | 'bubble'. Supports external loading.",
-                    "default": "'spin'"
+                    "default": "spin"
                 },
                 "effectOption": {
                     "type": "Object",
@@ -4469,7 +4427,7 @@
                     "type": "string",
                     "descriptionCN": "显示话术 ，'\\n'指定换行",
                     "descriptionEN": "The loading text that appears when the chart is set into the loading state. \\n' represents a line feed.",
-                    "default": "'暂无数据'"
+                    "default": "暂无数据"
                 },
                 "x": {
                     "type": [
@@ -4478,7 +4436,7 @@
                     ],
                     "descriptionCN": "水平安放位置，默认为全图居中，可选为：'center' | 'left' | 'right' | <b>{number}</b>（x坐标，单位px）",
                     "descriptionEN": "horizontal position. Defaults to center. Valid values are: 'center' | 'left' | 'right' | <b>{number}</b>(x-coordinate, in px).",
-                    "default": "'center'"
+                    "default": "center"
                 },
                 "y": {
                     "type": [
@@ -4487,7 +4445,7 @@
                     ],
                     "descriptionCN": "垂直安放位置，默认为全图居中，可选为：'center' | 'bottom' | 'top' | <b>{number}</b>（y坐标，单位px）",
                     "descriptionEN": "vertical position. Defaults to center. Valid values are: 'center' | 'bottom' | 'top' | <b>{number}</b>(y-coordinate, in px).",
-                    "default": "'center'"
+                    "default": "center"
                 },
                 "textStyle": {
                     "type": "Object",
@@ -4503,7 +4461,7 @@
                     ],
                     "descriptionCN": "loading效果，可选为：'spin' | 'bar' | 'ring' | 'whirling' | 'dynamicLine' | 'bubble'，支持外部装载",
                     "descriptionEN": "loading effect. Valid values are: 'spin' | 'bar' | 'ring' | 'whirling' | 'dynamicLine' | 'bubble'. Supports external loading.",
-                    "default": "'bubble'"
+                    "default": "bubble"
                 },
                 "effectOption": {
                     "type": "Object",
@@ -4532,7 +4490,7 @@
                     "type": "string",
                     "descriptionCN": "同<a href=\"#SeriesCartesian\" title=\"\">series（直角系）</a>",
                     "descriptionEN": "See <a href=\"#SeriesCartesian\" title=\"\">series (Cartesian)</a>",
-                    "default": "'circle'"
+                    "default": "circle"
                 },
                 "symbolSize": {
                     "type": [
@@ -4582,7 +4540,7 @@
                     "type": "string",
                     "descriptionCN": "同<a href=\"#SeriesCartesian\" title=\"\">series（直角系）</a>",
                     "descriptionEN": "See <a href=\"#SeriesCartesian\" title=\"\">series (Cartesian)</a>",
-                    "default": "'circle'"
+                    "default": "circle"
                 },
                 "symbolSize": {
                     "type": [

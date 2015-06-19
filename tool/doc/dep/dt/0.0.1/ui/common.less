@@ -1,0 +1,25 @@
+.user-select(@type) {
+    -webkit-user-select: @type;
+       -moz-user-select: @type;
+        -ms-user-select: @type;
+            user-select: @type;
+}
+
+.border-radius(@radius: @default-border-radius) {
+    -webkit-border-radius: @radius;
+       -moz-border-radius: @radius;
+            border-radius: @radius;
+}
+
+.border-radius(@radius-x, @radius-y) {
+    .border-radius(@radius-x ~`"/"` @radius-y);
+}
+
+.box-shadow(@shadow: @default-box-shadow, ...) {
+    // @shadows:  ~`"@{arguments}"`;
+    // @shadows: ~`"@{arguments}".replace(/[\[\]]/g, "")`;
+    @shadows: ~`(function() { var args = "@{arguments}".replace(/[[\]]/g, ""); if(!args.match(/[^,]\s+[^,]/)) { args = args.replace(/,(?=[^()]*\))/g, "%est%").replace(/,/g, "").replace(/%est%/g, ","); } return args;})()`;
+    -webkit-box-shadow: @shadows;
+       -moz-box-shadow: @shadows;
+            box-shadow: @shadows;
+}

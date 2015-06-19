@@ -81,7 +81,22 @@ exports.getLocations = function () {
         {
             location: /\.css($|\?)/,
             handler: [
-                autoless()
+                // 先判断有没有less文件，如果没有再取css
+                function (context) {
+                    var docRoot  = context.conf.documentRoot;
+                    var pathname = context.request.pathname;
+                    var file = docRoot + pathname;
+
+                    var sourceFile = file.replace(/\.css$/, '.less');
+                    if (require('fs').existsSync(sourceFile)) {
+                        context.content = require('fs').readFileSync(sourceFile, 'utf8');
+                        less()(context);
+                    }
+                    else {
+                        context.header['content-type'] = 'text/css';
+                        context.content = require('fs').readFileSync(file, 'utf8');
+                    }
+                }
             ]
         },
         {

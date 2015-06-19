@@ -13,6 +13,6 @@ define(function (require) {
     var cptClasses = Component.cptClasses;
 
     // common component
-    cptClasses['APIDocTree'] = require('./APIDocTree');
+    cptClasses['TreeList'] = require('dt/ui/TreeList');
     // ... other components
 });

@@ -25,7 +25,7 @@ define(function (require) {
         $('#doc-ifr-cn').toggle();
         $('#doc-ifr-en').toggle();
     }
-
+去掉markpoint中的geocoord。
     function generateSchema() {
         var originData = originParse();
 
@@ -469,17 +469,46 @@ define(function (require) {
                 o[DF] = docUtil.parseToObject(defaultValueHTML);
             }
             else if (
-                (type.contains('string') || type.contains('color') || type.contains('Function'))
+                (type.contains('string') || type.contains('color'))
                 && defaultValueHTML.indexOf('各异') === -1
                 && defaultValueHTML.indexOf('\'|\'') === -1
                 && defaultValueHTML.indexOf('\' | \'') === -1
+                && (
+                    countQuote(defaultValueHTML) === 2
+                    || countDoubleQuote(defaultValueHTML) === 2
+                    || countQuote(defaultValueHTML) === 0
+                    || countDoubleQuote(defaultValueHTML) === 0
+                )
             ) {
-                o[DF] = defaultValueHTML;
+                var value = $.trim(defaultValueHTML);
+                if (value.charAt(0) === '\'' && value.charAt(value.length - 1) === '\'') {
+                    value = value.replace(/'/g, '');
+                }
+                if (value.charAt(0) === '"' && value.charAt(value.length - 1) === '"') {
+                    value = value.replace(/"/g, '');
+                }
+                o[DF] = value;
             }
             else {
                 o.defaultExplanation = defaultValueHTML;
             }
         });
+    }
+
+    function countQuote(str) {
+        var count = 0;
+        str.replace(/'/g, function () {
+            count++;
+        });
+        return count;
+    }
+
+    function countDoubleQuote(str) {
+        var count = 0;
+        str.replace(/"/g, function () {
+            count++;
+        });
+        return count;
     }
 
     function addRef(obj, refStr) {
@@ -985,9 +1014,14 @@ define(function (require) {
         // var symbols = schemaHelper.querySchema(schema, 'series[i](applicable=radar,force,chord)');
         // radar
         seriesProperties.symbol.oneOf[0].applicable.push('radar', 'force', 'chord', 'tree');
-        seriesProperties.symbolSize.oneOf[0].applicable.push('radar', 'force', 'chord', 'tree');
+        seriesProperties.symbolSize.oneOf[0].applicable.push('radar');
         seriesProperties.symbolRotate.oneOf[0].applicable.push('radar');
-        alert('删除symbol, symbolSize, symbolRotate的oneOf分支');
+        seriesProperties.symbol.oneOf = [seriesProperties.symbol.oneOf[0]];
+        dtUtil.assert(seriesProperties.symbolSize.oneOf[1].applicable === 'radar');
+        dtUtil.assert(seriesProperties.symbolRotate.oneOf[1].applicable === 'radar');
+        seriesProperties.symbolSize.oneOf.splice(1, 1);
+        seriesProperties.symbolRotate.oneOf.splice(1, 1);
+
 
         // chord and force
         addRef(seriesProperties.categories, '#definitions/dataCategories');

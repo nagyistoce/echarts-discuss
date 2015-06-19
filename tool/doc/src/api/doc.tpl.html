@@ -1,10 +1,11 @@
 {{ target: APIDocSample }}
 <div class="ecdoc-api-tree-area">
     <div class="ecdoc-api-tree" data-cpt="
-        type: 'APIDocTree',
+        type: 'TreeList',
         name: 'apiDocTree',
         viewModel: {
             selected: viewModel.apiTreeSelected,
+            highlighted: viewModel.apiTreeHighlighted,
             datasource: viewModel.apiTreeDatasource
         }">
     </div>
@@ -14,8 +15,55 @@
         <input type="text" value="">
     </div>
  -->
-    <div class="ecdoc-api-desc-cn">中文说明</div>
-    <div class="ecdoc-api-desc-en">Description in English</div>
+    <div class="ecdoc-api-default"><label>默认值</label><div></div></div>
+    <div class="ecdoc-api-default-explanation"><label>默认值补充说明</label><div></div></div>
+    <div class="ecdoc-api-desc-cn"><label>中文说明</label><div></div></div>
+    <div class="ecdoc-api-desc-en"><label>Description in English</label><div></div></div>
+    <div class="ecdoc-api-query-area">
+
+        <div class="query-tabs">
+            <div class="query-tab query-tab-by-path query-tab-active" data-box=".query-box-by-path">按path检索</div>
+            <div class="query-tab query-tab-by-property" data-box=".query-box-by-property">按属性名检索</div>
+            <div class="query-tab query-tab-by-full"  data-box=".query-box-by-full">全文检索</div>
+        </div>
+
+        <div class="query-collapse-radio">
+            <input type="radio" name="collapse-first" value="1" checked="checked" />每次折叠
+            <input type="radio" name="collapse-first" value="0" />每次不折叠
+            <input type="button" class="reset-btn" value="reset" />
+        </div>
+
+        <div class="query-box query-box-by-path" data-arg-name="optionPath">
+            <textarea class="query-input">
+series[i](applicable:pie,line).itemStyle.normal.borderColor
+            </textarea><input type="button" class="query-btn" value=" query btn "/>
+            <textarea class="query-input">
+series[i].symbol
+            </textarea><input type="button" class="query-btn" value=" query btn "/>
+            <textarea class="query-input">
+series[i].markLine(applicable:chord).itemStyle.emphasis.color
+            </textarea><input type="button" class="query-btn" value=" query btn "/>
+            <textarea class="query-input">
+series[i]
+            </textarea><input type="button" class="query-btn" value=" query btn "/>
+            <textarea class="query-input">
+series
+            </textarea><input type="button" class="query-btn" value=" query btn "/>
+        </div>
+
+        <div class="query-box query-box-by-property" data-arg-name="propertyName" style="display:none">
+            <textarea class="query-input">
+serie
+            </textarea><input type="button" class="query-btn" value=" query btn "/>
+        </div>
+
+        <div class="query-box query-box-by-full" data-arg-name="anyText" style="display:none">
+            <textarea class="query-input">
+折线图
+            </textarea><input type="button" class="query-btn" value=" query btn "/>
+        </div>
+
+    </div>
 </div>
 <div class="ecdoc-opt-path-sample">
 </div>
