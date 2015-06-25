@@ -553,7 +553,10 @@ define(function (require) {
             $toBeChangedItemEls
                 .removeClass(cssToRemove)
                 .addClass(cssToAdd);
-            this._resetItemText($toBeChangedItemEls);
+
+            if (type === 'expand') {
+                this._resetItemText($toBeChangedItemEls);
+            }
 
             if (type === 'expand') {
                 doWithoutAnimation($.proxy(doWithAnimation, this, doFinal));
@@ -575,6 +578,9 @@ define(function (require) {
             }
 
             function doFinal() {
+                if (type === 'collapse') {
+                    that._resetItemText($toBeChangedItemEls);
+                }
                 viewModel.resizeEvent({});
                 options.onSlideEnd && options.onSlideEnd();
             }
@@ -592,14 +598,16 @@ define(function (require) {
 
             if ($itemEl.hasClass(collapsedCss)) {
                 $itemEl.removeClass(collapsedCss).addClass(expandedCss);
-                $listEl.slideDown(SLIDE_INTERVAL, handleSlideEnd);
+                $listEl.slideDown(SLIDE_INTERVAL, $.proxy(handleSlideEnd, this, false));
+                this._resetItemText($itemEl);
             }
             else if ($itemEl.hasClass(expandedCss)) {
                 $itemEl.removeClass(expandedCss).addClass(collapsedCss);
-                $listEl.slideUp(SLIDE_INTERVAL, handleSlideEnd);
+                $listEl.slideUp(SLIDE_INTERVAL, $.proxy(handleSlideEnd, this, true));
             }
 
-            function handleSlideEnd() {
+            function handleSlideEnd(resetText) {
+                resetText && this._resetItemText($itemEl);
                 viewModel.resizeEvent({});
             }
         },
