@@ -14,5 +14,7 @@ define(function (require) {
 
     // common component
     cptClasses['TreeList'] = require('dt/ui/TreeList');
+    cptClasses['TextInput'] = require('dt/ui/TextInput');
+    cptClasses['CheckButton'] = require('dt/ui/CheckButton');
     // ... other components
 });

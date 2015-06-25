@@ -33,18 +33,19 @@
     text-decoration: none;
     color: #efe;
 
-    &-hover {
-        background: #5B5D6B;
-    }
-    &-active {
-        background: #FFE384;
-        color: #000;
-        // .border-radius(2px); // 为了多选时选区连在一起的好看，不用radius。
-    }
     &-highlight {
         background: #EAB810;
         color: #000;
         // .border-radius(2px); // 为了多选时选区连在一起的好看，不用radius。
+    }
+    &-active { // active （选中）优先级其次
+        background: #FFE384;
+        color: #000;
+        // .border-radius(2px); // 为了多选时选区连在一起的好看，不用radius。
+    }
+    &-hover { // hover 优先级最高
+        background: #5B5D6B;
+        color: #fff;
     }
 }
 .dtui-treelist-post {

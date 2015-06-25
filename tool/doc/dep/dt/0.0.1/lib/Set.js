@@ -11,7 +11,7 @@ define(function (require) {
      *
      * @public
      * @class
-     * @param {string|Array.<string>|Set} value like: 'line', or ['line', 'pie'], or 'line,pie'
+     * @param {string|Array.<string>|Set} value like: 'line', or ['line', 'pie'], or 'line, pie'
      */
     var Set = function (value) {
         this._valueSet = {};
@@ -37,6 +37,7 @@ define(function (require) {
          */
         reset: function (value) {
             this._valueSet = this._normalize(value);
+            return this;
         },
 
         /**
@@ -135,6 +136,9 @@ define(function (require) {
             }
             else if (type === 'string') {
                 value = value.split(',');
+                for (var i = 0, len = value.length; i < len; i++) {
+                    value[i] = $.trim(value[i]);
+                }
             }
             else if (type !== 'array') {
                 throw new Error();

@@ -6,14 +6,14 @@
             "properties": {
                 "backgroundColor": {
                     "type": "color",
-                    "descriptionCN": "全图默认背景，（详见<a href=\"#BackgroundColor\" title=\"\">backgroundColor</a>），支持rgba，默认为无，透明",
-                    "descriptionEN": "The background color or gradient for the outer chart area, (see <a href=\"#BackgroundColor\" title=\"\">backgroundColor</a>). Support rgba and defaults to null, transprent.",
+                    "descriptionCN": "全图默认背景，支持rgba，默认为无，透明",
+                    "descriptionEN": "The background color or gradient for the outer chart area. Support rgba and defaults to null, transprent.",
                     "default": "rgba(0,0,0,0)"
                 },
                 "color": {
                     "type": "Array",
-                    "descriptionCN": "数值系列的颜色列表，（详见<a href=\"#Color\" title=\"\">color</a>），可配数组，eg：['#87cefa', 'rgba(123,123,123,0.5)','...']，当系列数量个数比颜色列表长度大时将循环选取",
-                    "descriptionEN": "List of color for the array series, (see <a href=\"#Color\" title=\"\">color</a>), possible array is: ['#87cefa', 'rgba(123,123,123,0.5)','...']. When there are more series than colors in the list, new colors are pulled from the start again.",
+                    "descriptionCN": "数值系列的颜色列表，可配数组，eg：['#87cefa', 'rgba(123,123,123,0.5)','...']，当系列数量个数比颜色列表长度大时将循环选取",
+                    "descriptionEN": "List of color for the array series, possible array is: ['#87cefa', 'rgba(123,123,123,0.5)','...']. When there are more series than colors in the list, new colors are pulled from the start again.",
                     "default": [
                         "#ff7f50",
                         "#87cefa",
@@ -42,13 +42,13 @@
                         "boolean",
                         "string"
                     ],
-                    "descriptionCN": "非IE8-支持渲染为图片，（详见<a href=\"#RenderAsImage\" title=\"\">renderAsImage</a>）非IE8-支持渲染为图片，可设为true或指定图片格式（png | jpeg），渲染为图片后实例依然可用（如setOption，resize等），但各种交互失效",
-                    "descriptionEN": "Allows rendering as image in any browser but IE8-, (see <a href=\"#RenderAsImage\" title=\"\">renderAsImage</a>).supports render as image in non-IE8- browsers, can be set to true or specify image formats (png | jpeg). After rendered as image, the instance is still available (such as setOption, resize, etc.), but its various interactions will become invalid.",
+                    "descriptionCN": "非IE8-支持渲染为图片非IE8-支持渲染为图片，可设为true或指定图片格式（png | jpeg），渲染为图片后实例依然可用（如setOption，resize等），但各种交互失效",
+                    "descriptionEN": "Allows rendering as image in any browser but IE8-.supports render as image in non-IE8- browsers, can be set to true or specify image formats (png | jpeg). After rendered as image, the instance is still available (such as setOption, resize, etc.), but its various interactions will become invalid.",
                     "default": false
                 },
                 "calculable": {
                     "type": "boolean",
-                    "descriptionCN": "是否启用拖拽重计算特性，默认关闭，（详见<a href=\"#calculable\" title=\"\">calculable</a>，相关的还有\n                                <a href=\"#CalculableColor\" title=\"\">calculableColor</a>，\n                                <a href=\"#CalculableHolderColor\" title=\"\">calculableHolderColor</a>，\n                                <a href=\"#NameConnector\" title=\"\">nameConnector</a>，\n                                <a href=\"#ValueConnector\" title=\"\">valueConnector</a>）",
+                    "descriptionCN": "是否启用拖拽重计算特性，默认关闭，相关的还有\n                                <a href=\"#CalculableColor\" title=\"\">calculableColor</a>，\n                                <a href=\"#CalculableHolderColor\" title=\"\">calculableHolderColor</a>，\n                                <a href=\"#NameConnector\" title=\"\">nameConnector</a>，\n                                <a href=\"#ValueConnector\" title=\"\">valueConnector</a>）",
                     "descriptionEN": "Specifies whether the drag-recalculate feature will be enabled. Defaults to false. (See <a href=\"#calculable\" title=\"\">calculable</a>, and other related properties like\n                                <a href=\"#CalculableColor\" title=\"\">calculableColor</a>,\n                                <a href=\"#CalculableHolderColor\" title=\"\">calculableHolderColor</a>,\n                                <a href=\"#NameConnector\" title=\"\">nameConnector</a>,\n                                <a href=\"#ValueConnector\" title=\"\">valueConnector</a>).",
                     "default": false
                 },
@@ -60,56 +60,56 @@
                 },
                 "timeline": {
                     "type": "Object",
-                    "descriptionCN": "时间轴（详见<a href=\"#Timeline\" title=\"\">timeline</a>），每个图表最多仅有一个时间轴控件",
-                    "descriptionEN": "Timeline (see <a href=\"#Timeline\" title=\"\">timeline</a>), at most one timeline control is allowed in one chart.",
+                    "descriptionCN": "时间轴，每个图表最多仅有一个时间轴控件",
+                    "descriptionEN": "Timeline, at most one timeline control is allowed in one chart.",
                     "$ref": "#definitions/timeline"
                 },
                 "title": {
                     "type": "Object",
-                    "descriptionCN": "标题（详见<a href=\"#Title\" title=\"\">title</a>），每个图表最多仅有一个标题控件",
-                    "descriptionEN": "Title, (see <a href=\"#Title\" title=\"\">title</a>), at most one title control is allowed in one chart.",
+                    "descriptionCN": "标题，每个图表最多仅有一个标题控件",
+                    "descriptionEN": "Title, at most one title control is allowed in one chart.",
                     "$ref": "#definitions/title"
                 },
                 "toolbox": {
                     "type": "Object",
-                    "descriptionCN": "工具箱（详见<a href=\"#Toolbox\" title=\"\">toolbox</a>），每个图表最多仅有一个工具箱",
-                    "descriptionEN": "Toolbox, (see <a href=\"#Toolbox\" title=\"\">toolbox</a>), at most one toolbox is allowed in one chart.",
+                    "descriptionCN": "工具箱，每个图表最多仅有一个工具箱",
+                    "descriptionEN": "Toolbox, at most one toolbox is allowed in one chart.",
                     "$ref": "#definitions/toolbox"
                 },
                 "tooltip": {
                     "type": "Object",
-                    "descriptionCN": "提示框（详见<a href=\"#Tooltip\" title=\"\">tooltip</a>），鼠标悬浮交互时的信息提示",
-                    "descriptionEN": "Tooltip, (see <a href=\"#Tooltip\" title=\"\">tooltip</a>),  A small \"hover box\" with detailed information about the item being hovered over.",
+                    "descriptionCN": "提示框，鼠标悬浮交互时的信息提示",
+                    "descriptionEN": "Tooltip,  A small \"hover box\" with detailed information about the item being hovered over.",
                     "$ref": "#definitions/tooltip"
                 },
                 "legend": {
                     "type": "Object",
-                    "descriptionCN": "图例（详见<a href=\"#Legend\" title=\"\">legend</a>），每个图表最多仅有一个图例，混搭图表共享",
-                    "descriptionEN": "Legend, (see <a href=\"#Legend\" title=\"\">legend</a>), at most one legend is allowed in one single/combination chart.",
+                    "descriptionCN": "图例，每个图表最多仅有一个图例，混搭图表共享",
+                    "descriptionEN": "Legend, at most one legend is allowed in one single/combination chart.",
                     "$ref": "#definitions/legend"
                 },
                 "dataRange": {
                     "type": "Object",
-                    "descriptionCN": "值域选择（详见<a href=\"#DataRange\" title=\"\">dataRange</a>）,值域范围",
-                    "descriptionEN": "DataRange, (see <a href=\"#DataRange\" title=\"\">dataRange</a>), data range.",
+                    "descriptionCN": "值域选择,值域范围",
+                    "descriptionEN": "DataRange, data range.",
                     "$ref": "#definitions/dataRange"
                 },
                 "dataZoom": {
                     "type": "Object",
-                    "descriptionCN": "数据区域缩放（详见<a href=\"#DataZoom\" title=\"\">dataZoom</a>）,数据展现范围选择",
-                    "descriptionEN": "DataZoom, (see <a href=\"#DataZoom\" title=\"\">dataZoom</a>), data zoom.",
+                    "descriptionCN": "数据区域缩放,数据展现范围选择",
+                    "descriptionEN": "DataZoom, data zoom.",
                     "$ref": "#definitions/dataZoom"
                 },
                 "roamController": {
                     "type": "Object",
-                    "descriptionCN": "漫游缩放组件（详见<a href=\"#RoamController\" title=\"\">roamController</a>）,搭配地图使用",
-                    "descriptionEN": "zoom and roam controller, (see <a href=\"#RoamController\" title=\"\">roamController</a>), use for the map.",
+                    "descriptionCN": "漫游缩放组件,搭配地图使用",
+                    "descriptionEN": "zoom and roam controller, use for the map.",
                     "$ref": "#definitions/roamController"
                 },
                 "grid": {
                     "type": "Object",
-                    "descriptionCN": "直角坐标系内绘图网格（详见<a href=\"#Grid\" title=\"\">grid</a>）",
-                    "descriptionEN": "A network of regularly spaced lines on a Cartesian coordinate system, (see <a href=\"#Grid\" title=\"\">grid</a>).",
+                    "descriptionCN": "直角坐标系内绘图网格",
+                    "descriptionEN": "A network of regularly spaced lines on a Cartesian coordinate system.",
                     "$ref": "#definitions/grid"
                 },
                 "xAxis": {
@@ -117,8 +117,8 @@
                         "Array",
                         "Object"
                     ],
-                    "descriptionCN": "直角坐标系中横轴数组（详见<a href=\"#Xaxis\" title=\"\">xAxis</a>），数组中每一项代表一条横轴坐标轴，标准（1.0）中规定最多同时存在2条横轴",
-                    "descriptionEN": "The horizontal axis array of a two-dimensional plot in Cartesian coordinates, (see <a href=\"#Xaxis\" title=\"\">xAxis</a>), and each item in the array represents one horizontal axis. According to Standard (1.0), at most two horizontal axes are allowed in one chart.",
+                    "descriptionCN": "直角坐标系中横轴数组，数组中每一项代表一条横轴坐标轴，标准（1.0）中规定最多同时存在2条横轴",
+                    "descriptionEN": "The horizontal axis array of a two-dimensional plot in Cartesian coordinates, and each item in the array represents one horizontal axis. According to Standard (1.0), at most two horizontal axes are allowed in one chart.",
                     "$ref": "#definitions/axis"
                 },
                 "yAxis": {
@@ -126,20 +126,20 @@
                         "Array",
                         "Object"
                     ],
-                    "descriptionCN": "直角坐标系中纵轴数组（详见<a href=\"#Yaxis\" title=\"\">yAxis</a>），数组中每一项代表一条纵轴坐标轴，标准（1.0）中规定最多同时存在2条纵轴",
-                    "descriptionEN": "The vertical axis array of a two-dimensional plot in Cartesian coordinates, (see <a href=\"#Yaxis\" title=\"\">yAxis</a>), and each item in the array represents one vertical axis. According to Standard (1.0), at most two vertical axes are allowed in one chart.",
+                    "descriptionCN": "直角坐标系中纵轴数组，数组中每一项代表一条纵轴坐标轴，标准（1.0）中规定最多同时存在2条纵轴",
+                    "descriptionEN": "The vertical axis array of a two-dimensional plot in Cartesian coordinates, and each item in the array represents one vertical axis. According to Standard (1.0), at most two vertical axes are allowed in one chart.",
                     "$ref": "#definitions/axis"
                 },
                 "series": {
                     "type": "Array",
-                    "descriptionCN": "驱动图表生成的数据内容（详见<a href=\"#Series\" title=\"\">series</a>），数组中每一项代表一个系列的特殊选项及数据",
-                    "descriptionEN": "The data array generated by data-driven chart, (see <a href=\"#Series\" title=\"\">series</a>). Each item in the array stands for a series' options and data.",
+                    "descriptionCN": "驱动图表生成的数据内容，数组中每一项代表一个系列的特殊选项及数据",
+                    "descriptionEN": "The data array generated by data-driven chart. Each item in the array stands for a series' options and data.",
                     "$ref": "#definitions/series"
                 },
                 "symbolList": {
                     "type": "Array",
-                    "descriptionCN": "undefined默认标志图形类型列表，循环使用",
-                    "descriptionEN": "undefinedAn array containing the default symbols. When all symbols are used, new symbols are pulled from the start again",
+                    "descriptionCN": "默认标志图形类型列表，循环使用",
+                    "descriptionEN": "An array containing the default symbols. When all symbols are used, new symbols are pulled from the start again",
                     "default": [
                         "circle",
                         "rectangle",
@@ -347,8 +347,8 @@
                 },
                 "lineStyle": {
                     "type": "Object",
-                    "descriptionCN": "时间轴轴线样式，lineStyle控制线条样式，（详见<a href=\"#LineStyle\" title=\"\">lineStyle</a>）",
-                    "descriptionEN": "Sets the line style of the timeline, (see <a href=\"#LineStyle\" title=\"\">lineStyle</a>).",
+                    "descriptionCN": "时间轴轴线样式，lineStyle控制线条样式",
+                    "descriptionEN": "Sets the line style of the timeline.",
                     "$ref": "#definitions/lineStyle",
                     "default": {
                         "color": "#666",
@@ -393,8 +393,8 @@
                         },
                         "textStyle": {
                             "type": "Object",
-                            "descriptionCN": "文字样式（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>）",
-                            "descriptionEN": "text style (see <a href=\"#TextStyle\" title=\"\">textStyle</a>)",
+                            "descriptionCN": "文字样式",
+                            "descriptionEN": "text style",
                             "$ref": "#definitions/textStyle",
                             "default": {
                                 "color": "#333"
@@ -664,8 +664,8 @@
                 },
                 "textStyle": {
                     "type": "Object",
-                    "descriptionCN": "主标题文本样式（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>）",
-                    "descriptionEN": "the style of title text, (see <a href=\"#TextStyle\" title=\"\">textStyle</a>).",
+                    "descriptionCN": "主标题文本样式",
+                    "descriptionEN": "the style of title text.",
                     "$ref": "#definitions/textStyle",
                     "default": {
                         "fontSize": 18,
@@ -675,8 +675,9 @@
                 },
                 "subtextStyle": {
                     "type": "Object",
-                    "descriptionCN": "副标题文本样式（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>）",
-                    "descriptionEN": "the style of subtitle text, (see <a href=\"#TextStyle\" title=\"\">textStyle</a>).",
+                    "descriptionCN": "副标题文本样式",
+                    "descriptionEN": "the style of subtitle text.",
+                    "$ref": "#definitions/textStyle",
                     "default": {
                         "color": "#aaa"
                     }
@@ -798,7 +799,7 @@
                 },
                 "textStyle": {
                     "type": "Object",
-                    "descriptionCN": "工具箱提示文字样式，（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>）",
+                    "descriptionCN": "工具箱提示文字样式",
                     "descriptionEN": "the style of toolbox text, (See <a href=\"#TextStyle\" title=\"\">textStyle</a>).",
                     "$ref": "#definitions/textStyle",
                     "default": {}
@@ -1062,8 +1063,9 @@
                 },
                 "textStyle": {
                     "type": "Object",
-                    "descriptionCN": "文本样式，默认为白色字体（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>）",
-                    "descriptionEN": "style for the tooltip text. Defaults to white, (see <a href=\"#TextStyle\" title=\"\">textStyle</a>).",
+                    "descriptionCN": "文本样式，默认为白色字体",
+                    "descriptionEN": "style for the tooltip text. Defaults to white.",
+                    "$ref": "#definitions/textStyle",
                     "default": {
                         "color": "#fff"
                     }
@@ -1162,8 +1164,8 @@
                 },
                 "textStyle": {
                     "type": "Object",
-                    "descriptionCN": "默认只设定了图例文字颜色（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>） ，更个性化的是，要指定文字颜色跟随图例，可设color为'auto'",
-                    "descriptionEN": "We only set the default color of legend text, (see <a href=\"#TextStyle\" title=\"\">textStyle</a>). If you want the legend text to take the color of the legend, you can set color to 'auto'.",
+                    "descriptionCN": "默认只设定了图例文字颜色 ，更个性化的是，要指定文字颜色跟随图例，可设color为'auto'",
+                    "descriptionEN": "We only set the default color of legend text. If you want the legend text to take the color of the legend, you can set color to 'auto'.",
                     "$ref": "#definitions/textStyle",
                     "default": {
                         "color": "#333"
@@ -1380,8 +1382,8 @@
                 },
                 "textStyle": {
                     "type": "Object",
-                    "descriptionCN": "默认只设定了值域控件文字颜色（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>）",
-                    "descriptionEN": "We only set the default color of dataRange text, (see<a href=\"#TextStyle\" title=\"\">textStyle</a>).",
+                    "descriptionCN": "默认只设定了值域控件文字颜色",
+                    "descriptionEN": "We only set the default color of dataRange text.",
                     "$ref": "#definitions/textStyle",
                     "default": {
                         "color": "#333"
@@ -1707,20 +1709,46 @@
                 }
             }
         },
+        "axis": {
+            "type": "Array",
+            "items": {
+                "$ref": "#definitions/axisItem"
+            }
+        },
         "axisItem": {
             "type": "Object",
             "properties": {
                 "type": {
-                    "type": "string",
-                    "descriptionCN": "坐标轴类型，横轴默认为类目型'category'，纵轴默认为数值型'value'",
-                    "descriptionEN": "type of the coordinate axis. By default, x-axis is 'category', y-axis is 'value'.",
-                    "defaultByApplicable": {
-                        "category": "category",
-                        "value": "value",
-                        "time": "time",
-                        "log": "log"
-                    },
-                    "defaultExplanation": "'category' | 'value' | 'time' | 'log'"
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "applicable": "category",
+                            "descriptionCN": "坐标轴类型，横轴默认为类目型'category'，纵轴默认为数值型'value'",
+                            "descriptionEN": "type of the coordinate axis. By default, x-axis is 'category', y-axis is 'value'.",
+                            "default": "category"
+                        },
+                        {
+                            "type": "string",
+                            "applicable": "value",
+                            "descriptionCN": "坐标轴类型，横轴默认为类目型'category'，纵轴默认为数值型'value'",
+                            "descriptionEN": "type of the coordinate axis. By default, x-axis is 'category', y-axis is 'value'.",
+                            "default": "value"
+                        },
+                        {
+                            "type": "string",
+                            "applicable": "time",
+                            "descriptionCN": "坐标轴类型，横轴默认为类目型'category'，纵轴默认为数值型'value'",
+                            "descriptionEN": "type of the coordinate axis. By default, x-axis is 'category', y-axis is 'value'.",
+                            "default": "time"
+                        },
+                        {
+                            "type": "string",
+                            "applicable": "log",
+                            "descriptionCN": "坐标轴类型，横轴默认为类目型'category'，纵轴默认为数值型'value'",
+                            "descriptionEN": "type of the coordinate axis. By default, x-axis is 'category', y-axis is 'value'.",
+                            "default": "log"
+                        }
+                    ]
                 },
                 "show": {
                     "type": "boolean",
@@ -1916,8 +1944,8 @@
                 },
                 "lineStyle": {
                     "type": "Object",
-                    "descriptionCN": "属性lineStyle控制线条样式，（详见<a href=\"#LineStyle\" title=\"\">lineStyle</a>）",
-                    "descriptionEN": "controls the line style, (see <a href=\"#LineStyle\" title=\"\">lineStyle</a>).",
+                    "descriptionCN": "属性lineStyle控制线条样式",
+                    "descriptionEN": "controls the line style.",
                     "$ref": "#definitions/lineStyle",
                     "default": {
                         "color": "#48b",
@@ -1972,8 +2000,8 @@
                 },
                 "lineStyle": {
                     "type": "Object",
-                    "descriptionCN": "属性lineStyle控制线条样式，（详见<a href=\"#LineStyle\" title=\"\">lineStyle</a>）",
-                    "descriptionEN": "controls the line style, (see<a href=\"#LineStyle\" title=\"\">lineStyle</a>).",
+                    "descriptionCN": "属性lineStyle控制线条样式",
+                    "descriptionEN": "controls the line style.",
                     "$ref": "#definitions/lineStyle",
                     "default": {
                         "color": "#333",
@@ -2033,8 +2061,8 @@
                 },
                 "textStyle": {
                     "type": "Object",
-                    "descriptionCN": "文本样式（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>），其中当坐标轴为数值型和时间型时，color接受方法回调，实现个性化的颜色定义，support <a href=\"https://github.com/ecomfe/echarts/issues/226\" target=\"_blank\">#226 »</a>",
-                    "descriptionEN": "text style (see <a href=\"#TextStyle\" title=\"\">textStyle</a>). If the axis is value or time axis, color accepts method callback to achieve custom color definition, support <a href=\"https://github.com/ecomfe/echarts/issues/226\" target=\"_blank\">#226 »</a>",
+                    "descriptionCN": "文本样式，其中当坐标轴为数值型和时间型时，color接受方法回调，实现个性化的颜色定义，support <a href=\"https://github.com/ecomfe/echarts/issues/226\" target=\"_blank\">#226 »</a>",
+                    "descriptionEN": "text style. If the axis is value or time axis, color accepts method callback to achieve custom color definition, support <a href=\"https://github.com/ecomfe/echarts/issues/226\" target=\"_blank\">#226 »</a>",
                     "$ref": "#definitions/textStyle",
                     "default": {
                         "color": "#333"
@@ -2062,8 +2090,8 @@
                 },
                 "lineStyle": {
                     "type": "Object",
-                    "descriptionCN": "属性lineStyle控制线条样式，（详见<a href=\"#LineStyle\" title=\"\">lineStyle</a>）",
-                    "descriptionEN": "controls the line style ,(see <a href=\"#LineStyle\" title=\"\">lineStyle</a>).",
+                    "descriptionCN": "属性lineStyle控制线条样式",
+                    "descriptionEN": "controls the line style .",
                     "$ref": "#definitions/lineStyle",
                     "default": {
                         "color": [
@@ -2193,8 +2221,8 @@
                 },
                 "splitLine": {
                     "type": "Object",
-                    "descriptionCN": "分隔线，默认显示，属性show控制显示与否，属性lineStyle（详见<a href=\"#LineStyle\" title=\"\">lineStyle</a>）控制线条样式",
-                    "descriptionEN": "split line. Defaults to show. The property \"show\" specifies whether to show splitLine or not. The property \"lineStyle\" (see <a href=\"#LineStyle\" title=\"\">lineStyle</a>) controls line style for splitLine.",
+                    "descriptionCN": "分隔线，默认显示，属性show控制显示与否，属性lineStyle控制线条样式",
+                    "descriptionEN": "split line. Defaults to show. The property \"show\" specifies whether to show splitLine or not. The property \"lineStyle\" controls line style for splitLine.",
                     "$ref": "#definitions/axisSplitLine",
                     "default": {
                         "show": true
@@ -2202,8 +2230,8 @@
                 },
                 "splitArea": {
                     "type": "Object",
-                    "descriptionCN": "分隔区域，默认不显示，属性show控制显示与否，属性areaStyle（详见<a href=\"#AreaStyle\" title=\"\">areaStyle</a>）控制区域样式",
-                    "descriptionEN": "split area. Defaults to hide. The property \"show\" specifies whether to show splitArea or not. The property \"areaStyle\" (see <a href=\"#AreaStyle\" title=\"\">areaStyle</a>) controls area style for splitArea.",
+                    "descriptionCN": "分隔区域，默认不显示，属性show控制显示与否，属性areaStyle控制区域样式",
+                    "descriptionEN": "split area. Defaults to hide. The property \"show\" specifies whether to show splitArea or not. The property \"areaStyle\" controls area style for splitArea.",
                     "$ref": "#definitions/axisSplitArea",
                     "default": {
                         "show": true
@@ -2223,44 +2251,130 @@
                 }
             }
         },
+        "series": {
+            "type": "Array",
+            "items": {
+                "$ref": "#definitions/seriesItem"
+            }
+        },
         "seriesItem": {
             "type": "Object",
             "properties": {
-                "zlevel": {
-                    "type": "number",
-                    "descriptionCN": "通用",
-                    "descriptionEN": "universal",
-                    "default": 0
-                },
-                "z": {
-                    "type": "number",
-                    "descriptionCN": "通用",
-                    "descriptionEN": "universal",
-                    "default": 2
-                },
                 "type": {
-                    "type": "string",
-                    "descriptionCN": "通用",
-                    "descriptionEN": "universal",
-                    "defaultByApplicable": {
-                        "line": "line",
-                        "bar": "bar",
-                        "scatter": "scatter",
-                        "k": "k",
-                        "pie": "pie",
-                        "radar": "radar",
-                        "chord": "chord",
-                        "force": "force",
-                        "map": "map",
-                        "gauge": "gauge",
-                        "funnel": "funnel",
-                        "eventRiver": "eventRiver",
-                        "venn": "venn",
-                        "treemap": "treemap",
-                        "tree": "tree",
-                        "wordCloud": "wordCloud"
-                    },
-                    "default": null
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "line",
+                            "default": "line"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "bar",
+                            "default": "bar"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "scatter",
+                            "default": "scatter"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "k",
+                            "default": "k"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "pie",
+                            "default": "pie"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "radar",
+                            "default": "radar"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "chord",
+                            "default": "chord"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "force",
+                            "default": "force"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "map",
+                            "default": "map"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "gauge",
+                            "default": "gauge"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "funnel",
+                            "default": "funnel"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "eventRiver",
+                            "default": "eventRiver"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "venn",
+                            "default": "venn"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "treemap",
+                            "default": "treemap"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "tree",
+                            "default": "tree"
+                        },
+                        {
+                            "type": "string",
+                            "descriptionCN": "通用",
+                            "descriptionEN": "universal",
+                            "applicable": "wordCloud",
+                            "default": "wordCloud"
+                        }
+                    ]
                 },
                 "name": {
                     "type": "string",
@@ -2394,20 +2508,6 @@
                             "default": []
                         }
                     ]
-                },
-                "markPoint": {
-                    "type": "Object",
-                    "descriptionCN": "通用",
-                    "descriptionEN": "universal",
-                    "$ref": "#definitions/markPoint",
-                    "default": {}
-                },
-                "markLine": {
-                    "type": "Object",
-                    "descriptionCN": "通用",
-                    "descriptionEN": "universal",
-                    "$ref": "#definitions/markLine",
-                    "default": {}
                 },
                 "stack": {
                     "type": "string",
@@ -2979,16 +3079,16 @@
                         {
                             "type": "Array",
                             "applicable": "force",
-                            "descriptionCN": "节点分类, 详见图数据结构表示中的<a href=\"#categories\">categories</a>",
-                            "descriptionEN": "Categories of nodes in the force-directed chart, see <a href=\"#categories\">categories</a>",
+                            "descriptionCN": "节点分类,",
+                            "descriptionEN": "Categories of nodes in the force-directed chart",
                             "$ref": "#definitions/dataCategories",
                             "default": null
                         },
                         {
                             "type": "Array",
                             "applicable": "chord",
-                            "descriptionCN": "节点分类, 详见图数据结构表示中的<a href=\"#categories\">categories</a>",
-                            "descriptionEN": "Categories of nodes in the chord chart, see <a href=\"#categories\">categories</a>",
+                            "descriptionCN": "节点分类,",
+                            "descriptionEN": "Categories of nodes in the chord chart",
                             "$ref": "#definitions/dataCategories",
                             "default": null
                         }
@@ -2999,16 +3099,16 @@
                         {
                             "type": "Array",
                             "applicable": "force",
-                            "descriptionCN": "力导向图的边数据, 和matrix二选一 详见图数据结构表示中的<a href=\"#GraphLinks\">links</a>",
-                            "descriptionEN": "link data in the force-directed chart. see <a href=\"#GraphLinks\">links</a>",
+                            "descriptionCN": "力导向图的边数据, 和matrix二选一",
+                            "descriptionEN": "link data in the force-directed chart.",
                             "$ref": "#definitions/dataGraphLinks",
                             "default": []
                         },
                         {
                             "type": "Array",
                             "applicable": "chord",
-                            "descriptionCN": "和弦图的边数据, 和matrix二选一 详见图数据结构表示中的<a href=\"#GraphLinks\">links</a>",
-                            "descriptionEN": "link data in the chord chart. see <a href=\"#GraphLinks\">links</a>",
+                            "descriptionCN": "和弦图的边数据, 和matrix二选一",
+                            "descriptionEN": "link data in the chord chart.",
                             "$ref": "#definitions/dataGraphLinks",
                             "default": []
                         }
@@ -3102,8 +3202,9 @@
                 "linkSymbol": {
                     "type": "string",
                     "applicable": "force",
-                    "descriptionCN": "力导向图的边两端图形样式，可指定为'arrow', 详见<a href=\"#SymbolList\">symbolList</a>",
-                    "descriptionEN": "symbol of force's link. Can be specified as 'arrow', see <a href=\"#SymbolList\">symbolList</a>.",
+                    "descriptionCN": "力导向图的边两端图形样式，可指定为'arrow',",
+                    "descriptionEN": "symbol of force's link. Can be specified as 'arrow'.",
+                    "$ref": "#definitions/option/properties/symbolList",
                     "default": "none"
                 },
                 "linkSymbolSize": {
@@ -3256,43 +3357,47 @@
                 },
                 "axisLine": {
                     "type": "Object",
-                    "applicable": "gauge",
-                    "descriptionCN": "坐标轴线，默认显示\n                                <br><br>属性show控制显示与否，\n                                <br><br>属性lineStyle（详见<a href=\"#LineStyle\" title=\"\">lineStyle</a>）控制线条样式，\n                                <br><br>比较特殊的是这里的lineStyle.color是一个二维数组，用于把仪表盘轴线分成若干份，\n                                <br><br>并且可以给每一份指定具体的颜色，格式为:[[百分比, 颜色值], [...]]",
-                    "descriptionEN": "axis line. Defaults to show.\n                                <br><br>The property \"show\" specifies whether to show axisLine or not.\n                                <br><br>The property \"lineStyle\" (see <a href=\"#LineStyle\" title=\"\">lineStyle</a>) controls line style for axisLine.\n                                <br><br>What makes this particular lineStyle.color  different is that it is a two-dimensional array that can be used to divide the gauge axis into several parts,\n                                <br><br>and designate a specific color to each part on this form: [[percent, color value], [...]].",
-                    "default": {
-                        "show": true,
+                    "setApplicable": "gauge/axisLine",
+                    "descriptionCN": "坐标轴线，默认显示",
+                    "descriptionEN": "axis line. Defaults to show.",
+                    "properties": {
+                        "show": {
+                            "type": "boolean",
+                            "default": true,
+                            "descriptionCN": "显示与否",
+                            "descriptionEN": "The property \"show\" specifies whether to show axisLine or not."
+                        },
                         "lineStyle": {
-                            "color": [
-                                [
-                                    0.2,
-                                    "#228b22"
-                                ],
-                                [
-                                    0.8,
-                                    "#48b"
-                                ],
-                                [
-                                    1,
-                                    "#ff4500"
-                                ]
-                            ],
-                            "width": 30
+                            "$ref": "#definitions/lineStyle"
                         }
                     }
                 },
                 "axisTick": {
                     "type": "Object",
-                    "applicable": "gauge",
-                    "descriptionCN": "坐标轴小标记，默认显示\n                                <br><br>属性show控制显示与否，\n                                <br><br>属性lineStyle（详见<a href=\"#LineStyle\" title=\"\">lineStyle</a>）控制线条样式，\n                                <br><br>属性splitNumber控制每份split细分多少段\n                                <br><br>属性length控制线长",
-                    "descriptionEN": "axis tick. Defaults to hide.\n                                <br><br>The property \"show\" specifies whether to show axisTick or not;\n                                <br><br>The property \"lineStyle\"(see <a href=\"#LineStyle\" title=\"\">lineStyle</a>) controls line style for axisTick;\n                                <br><br>The property \"splitNumber\" controls the number of segments;\n                                <br><br>The property \"length\" controls line length for axisTick.",
-                    "default": {
-                        "show": true,
-                        "splitNumber": 5,
-                        "length": 8,
+                    "setApplicable": "gauge/axisTick",
+                    "descriptionCN": "坐标轴小标记，默认显示 ",
+                    "descriptionEN": "axis tick. Defaults to show. ",
+                    "properties": {
+                        "show": {
+                            "type": "boolean",
+                            "default": true,
+                            "descriptionCN": "显示与否",
+                            "descriptionEN": "The property \"show\" specifies whether to show axisLine or not."
+                        },
                         "lineStyle": {
-                            "color": "#eee",
-                            "width": 1,
-                            "type": "solid"
+                            "$ref": "#definitions/lineStyle"
+                        },
+                        "splitNumber": {
+                            "type": "number",
+                            "default": 5,
+                            "descriptionCN": "属性splitNumber控制每份split细分多少段",
+                            "descriptionEN": "The property \"splitNumber\" controls the number of segments;"
+                        },
+                        "length": {
+                            "type": "number",
+                            "default": 8,
+                            "descriptionCN": "属性length控制线长",
+                            "descriptionEN": "The property \"length\" controls line length for axisTick."
                         }
                     }
                 },
@@ -3301,6 +3406,7 @@
                     "applicable": "gauge",
                     "descriptionCN": "坐标轴文本标签（详见<a href=\"#AxisAxislabel\" title=\"\">axis.axislabel</a>）\n                                <br><br>属性formatter可以格式化文本标签，\n                                <br><br>属性textStyle（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>）控制文本样式",
                     "descriptionEN": "axis label, (see <a href=\"#AxisAxislabel\" title=\"\">axis.axislabel</a>).\n                                <br><br>The property \"formatter\" controls axisLabel formatting;\n                                <br><br>The property \"textStyle\" (see <a href=\"#TextStyle\" title=\"\">textStyle</a>) controls text style for axisLabel.",
+                    "$ref": "#definitions/axisAxisLabel",
                     "default": {
                         "show": true,
                         "formatter": null,
@@ -3534,6 +3640,32 @@
                         "chord",
                         "force"
                     ]
+                },
+                "markPoint": {
+                    "type": "Object",
+                    "descriptionCN": "通用",
+                    "descriptionEN": "universal",
+                    "$ref": "#definitions/markPoint",
+                    "default": {}
+                },
+                "markLine": {
+                    "type": "Object",
+                    "descriptionCN": "通用",
+                    "descriptionEN": "universal",
+                    "$ref": "#definitions/markLine",
+                    "default": {}
+                },
+                "z": {
+                    "type": "number",
+                    "descriptionCN": "通用",
+                    "descriptionEN": "universal",
+                    "default": 2
+                },
+                "zlevel": {
+                    "type": "number",
+                    "descriptionCN": "通用",
+                    "descriptionEN": "universal",
+                    "default": 0
                 }
             },
             "enumerateBy": [
@@ -3674,13 +3806,6 @@
                     "$ref": "#definitions/itemStyle",
                     "defaultExplanation": "{...}"
                 },
-                "geoCoord": {
-                    "type": "Object",
-                    "descriptionCN": "地图特有，标注图形定位坐标，同series中的<a href=\"#Series\">geoCoord</a>",
-                    "descriptionEN": "applicable to maps only. Specifies the location of the the markPoint symbol, same as series' <a href=\"#Series\">geoCoord</a>.",
-                    "$ref": "#definitions/seriesItem/properties/geoCoord",
-                    "default": {}
-                },
                 "data": {
                     "oneOf": [
                         {
@@ -3722,7 +3847,10 @@
                         }
                     ]
                 }
-            }
+            },
+            "setApplicable": [
+                "markPoint"
+            ]
         },
         "markLine": {
             "type": "Object",
@@ -3882,13 +4010,6 @@
                     "$ref": "#definitions/itemStyle",
                     "defaultExplanation": "{...}"
                 },
-                "geoCoord": {
-                    "type": "Object",
-                    "descriptionCN": "地图特有，标线图形定位坐标，同series中的<a href=\"#Series\">geoCoord</a>",
-                    "descriptionEN": "applicable to maps only. Specifies the location of the the markLine symbol, same as series' <a href=\"#Series\">geoCoord</a>",
-                    "$ref": "#definitions/seriesItem/properties/geoCoord",
-                    "default": {}
-                },
                 "data": {
                     "oneOf": [
                         {
@@ -3930,6 +4051,28 @@
                         }
                     ]
                 }
+            },
+            "setApplicable": [
+                "markLine"
+            ]
+        },
+        "itemStyle": {
+            "type": "Object",
+            "descriptionCN": "图形样式",
+            "descriptionEN": "item style",
+            "properties": {
+                "normal": {
+                    "type": "Object",
+                    "descriptionCN": "默认样式",
+                    "descriptionEN": "normal item style",
+                    "$ref": "#definitions/itemStyleItem"
+                },
+                "emphasis": {
+                    "type": "Object",
+                    "descriptionCN": "强调样式（悬浮时样式）",
+                    "descriptionEN": "emphasis item style (when hovered)",
+                    "$ref": "#definitions/itemStyleItem"
+                }
             }
         },
         "itemStyleItem": {
@@ -3950,8 +4093,8 @@
                         "line",
                         "markLine"
                     ],
-                    "descriptionCN": "线条样式，详见<a href=\"#LineStyle\" title=\"\">lineStyle</a>",
-                    "descriptionEN": "line style, see <a href=\"#LineStyle\" title=\"\">lineStyle</a>.",
+                    "descriptionCN": "线条样式",
+                    "descriptionEN": "line style.",
                     "$ref": "#definitions/lineStyle",
                     "defaultExplanation": "图表各异"
                 },
@@ -3961,8 +4104,8 @@
                         "line",
                         "map"
                     ],
-                    "descriptionCN": "区域样式，详见<a href=\"#AreaStyle\" title=\"\">areaStyle</a>",
-                    "descriptionEN": "area style, see <a href=\"#AreaStyle\" title=\"\">areaStyle</a>.",
+                    "descriptionCN": "区域样式",
+                    "descriptionEN": "area style.",
                     "$ref": "#definitions/areaStyle",
                     "defaultExplanation": "图表各异"
                 },
@@ -3971,8 +4114,8 @@
                     "applicable": [
                         "chord"
                     ],
-                    "descriptionCN": "弦样式，详见<a href=\"#ChordStyle\" title=\"\">chordStyle</a>",
-                    "descriptionEN": "chord style, see <a href=\"#ChordStyle\" title=\"\">chordStyle</a>.",
+                    "descriptionCN": "弦样式",
+                    "descriptionEN": "chord style.",
                     "$ref": "#definitions/chordStyle",
                     "defaultExplanation": "图表各异"
                 },
@@ -3981,8 +4124,8 @@
                     "applicable": [
                         "force"
                     ],
-                    "descriptionCN": "节点样式，详见<a href=\"#NodeStyle\" title=\"\">nodeStyle</a>",
-                    "descriptionEN": "node style, see <a href=\"#NodeStyle\" title=\"\">nodeStyle</a>.",
+                    "descriptionCN": "节点样式",
+                    "descriptionEN": "node style.",
                     "$ref": "#definitions/nodeStyle",
                     "defaultExplanation": "图表各异"
                 },
@@ -3991,8 +4134,8 @@
                     "applicable": [
                         "force"
                     ],
-                    "descriptionCN": "边样式，详见<a href=\"#LinkStyle\" title=\"\">linkStyle</a>",
-                    "descriptionEN": "link style, see <a href=\"#LinkStyle\" title=\"\">linkStyle</a>.",
+                    "descriptionCN": "边样式",
+                    "descriptionEN": "link style.",
                     "$ref": "#definitions/linkStyle",
                     "defaultExplanation": "图表各异"
                 },
@@ -4125,8 +4268,8 @@
                 },
                 "textStyle": {
                     "type": "Object",
-                    "descriptionCN": "标签的文本样式（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>）",
-                    "descriptionEN": "style for label text, (see <a href=\"#TextStyle\" title=\"\">textStyle</a>).",
+                    "descriptionCN": "标签的文本样式",
+                    "descriptionEN": "style for label text.",
                     "$ref": "#definitions/textStyle",
                     "default": null
                 },
@@ -4161,8 +4304,8 @@
                 },
                 "lineStyle": {
                     "type": "Object",
-                    "descriptionCN": "线条样式，详见<a href=\"#LineStyle\" title=\"\">lineStyle</a>",
-                    "descriptionEN": "line style, see <a href=\"#LineStyle\" title=\"\">lineStyle</a>.",
+                    "descriptionCN": "线条样式",
+                    "descriptionEN": "line style.",
                     "$ref": "#definitions/lineStyle",
                     "defaultExplanation": "各异"
                 }
@@ -4172,10 +4315,41 @@
             "type": "Object",
             "properties": {
                 "color": {
-                    "type": "color",
-                    "descriptionCN": "颜色",
-                    "descriptionEN": "color",
-                    "defaultExplanation": "各异"
+                    "oneOf": [
+                        {
+                            "type": "color",
+                            "descriptionCN": "颜色",
+                            "descriptionEN": "color",
+                            "defaultExplanation": "各异"
+                        },
+                        {
+                            "type": "Array",
+                            "applicable": "gauge/axisLine",
+                            "default": [
+                                [
+                                    0.2,
+                                    "#228b22"
+                                ],
+                                [
+                                    0.8,
+                                    "#48b"
+                                ],
+                                [
+                                    1,
+                                    "#ff4500"
+                                ]
+                            ],
+                            "descriptionCN": "这里的lineStyle.color是一个二维数组，用于把仪表盘轴线分成若干份，并且可以给每一份指定具体的颜色，格式为:[[百分比, 颜色值], [...]]",
+                            "descriptionEN": " it is a two-dimensional array that can be used to divide the gauge axis into several parts, and designate a specific color to each part on this form: [[percent, color value], [...]]."
+                        },
+                        {
+                            "type": "color",
+                            "applicable": "gauge/axisTick",
+                            "default": "#eee",
+                            "descriptionCN": "颜色",
+                            "descriptionEN": "color"
+                        }
+                    ]
                 },
                 "type": {
                     "type": "string",
@@ -4184,10 +4358,28 @@
                     "default": "solid"
                 },
                 "width": {
-                    "type": "number",
-                    "descriptionCN": "线宽",
-                    "descriptionEN": "width of the line.",
-                    "defaultExplanation": "各异"
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "descriptionCN": "线宽",
+                            "descriptionEN": "width of the line.",
+                            "defaultExplanation": "各异"
+                        },
+                        {
+                            "type": "number",
+                            "applicable": "gauge/axisLine",
+                            "default": 30,
+                            "descriptionCN": "线宽",
+                            "descriptionEN": "width of the line."
+                        },
+                        {
+                            "type": "number",
+                            "applicable": "gauge/axisTick",
+                            "default": 1,
+                            "descriptionCN": "线宽",
+                            "descriptionEN": "width of the line."
+                        }
+                    ]
                 },
                 "shadowColor": {
                     "type": "color",
@@ -4392,8 +4584,8 @@
                 },
                 "textStyle": {
                     "type": "Object",
-                    "descriptionCN": "显示话术的文本样式（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>）",
-                    "descriptionEN": "style for the loading text, (see <a href=\"#TextStyle\" title=\"\">textStyle</a>).",
+                    "descriptionCN": "显示话术的文本样式",
+                    "descriptionEN": "style for the loading text.",
                     "$ref": "#definitions/textStyle",
                     "default": null
                 },
@@ -4449,8 +4641,8 @@
                 },
                 "textStyle": {
                     "type": "Object",
-                    "descriptionCN": "显示话术的文本样式（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>）",
-                    "descriptionEN": "style for the loading text, (see <a href=\"#TextStyle\" title=\"\">textStyle</a>).",
+                    "descriptionCN": "显示话术的文本样式",
+                    "descriptionEN": "style for the loading text.",
                     "$ref": "#definitions/textStyle",
                     "default": null
                 },
@@ -4533,7 +4725,8 @@
                 "ignore": {
                     "type": "boolean",
                     "descriptionCN": "是否忽略该节点",
-                    "descriptionEN": "If ignore the node",
+                    "descriptionEN": "Specifies whether to neglect the node.",
+                    "applicable": "force",
                     "default": false
                 },
                 "symbol": {
@@ -4554,13 +4747,43 @@
                 "category": {
                     "type": "number",
                     "descriptionCN": "节点的 category index",
-                    "descriptionEN": "Category index of node",
-                    "default": 0
+                    "descriptionEN": "Category index of the node.",
+                    "applicable": "force",
+                    "defaultExplanation": ""
                 },
                 "itemStyle": {
                     "type": "Object",
                     "descriptionCN": "详见 <a href=\"#ItemStyle\">itemStyle</a>，注意力导向图单个节点的 itemStyle 中没有 nodeStyle 的配置项，而是直接使用 normal(emphasis) 下的 color, borderWidth 和 borderColor",
                     "descriptionEN": "see <a href=\"#ItemStyle\">itemStyle</a>. Notice that itemStyle in a single node of force has no nodeStyle under the normal(emphasis) option. Instead itemStyle.normal(emphasis).color|borderWidth|borderColor will be used",
+                    "$ref": "#definitions/itemStyle",
+                    "defaultExplanation": ""
+                },
+                "initial": {
+                    "type": "Array",
+                    "descriptionCN": "强制指定节点的初始值，在不指定的时候会在某个范围内随机生成",
+                    "descriptionEN": "Forces to specify the initial value of the node. When not specified, it will be randomly generated within a certain range.",
+                    "applicable": "force",
+                    "defaultExplanation": ""
+                },
+                "fixX": {
+                    "type": "boolean",
+                    "descriptionCN": "是否固定节点在 X 轴上的值，配合 initial 使用",
+                    "descriptionEN": "Specifies whether to fix the X-value of the node. Works with initial.",
+                    "applicable": "force",
+                    "default": false
+                },
+                "fixY": {
+                    "type": "boolean",
+                    "descriptionCN": "是否固定节点在 Y 轴上的值，配合 initial 使用",
+                    "descriptionEN": "Specifies whether to fix the Y-value of the node. Works with initial.",
+                    "applicable": "force",
+                    "default": false
+                },
+                "draggable": {
+                    "type": "boolean",
+                    "descriptionCN": "节点是否能被拖拽",
+                    "descriptionEN": "Specifies whether the node is draggable.",
+                    "applicable": "force",
                     "defaultExplanation": ""
                 }
             }
@@ -4597,37 +4820,6 @@
                     "descriptionCN": "see <a href=\"#LinkStyle\">linkStyle</a>",
                     "descriptionEN": "see <a href=\"#LinkStyle\">linkStyle</a>",
                     "defaultExplanation": ""
-                }
-            }
-        },
-        "axis": {
-            "type": "Array",
-            "items": {
-                "$ref": "#definitions/axisItem"
-            }
-        },
-        "series": {
-            "type": "Array",
-            "items": {
-                "$ref": "#definitions/seriesItem"
-            }
-        },
-        "itemStyle": {
-            "type": "Object",
-            "descriptionCN": "图形样式",
-            "descriptionEN": "item style",
-            "properties": {
-                "normal": {
-                    "type": "Object",
-                    "descriptionCN": "默认样式",
-                    "descriptionEN": "normal item style",
-                    "$ref": "#definitions/itemStyleItem"
-                },
-                "emphasis": {
-                    "type": "Object",
-                    "descriptionCN": "强调样式（悬浮时样式）",
-                    "descriptionEN": "emphasis item style (when hovered)",
-                    "$ref": "#definitions/itemStyleItem"
                 }
             }
         }

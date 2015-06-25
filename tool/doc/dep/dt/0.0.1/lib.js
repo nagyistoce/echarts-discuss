@@ -3,26 +3,28 @@
  */
 define(function (require) {
 
-    var util = {};
+    var lib = {
+        Set: require('./lib/Set')
+    };
 
     extend(
-        util,
+        lib,
 
         // helpers
-        require('./util/base'),
-        require('./util/json'),
-        require('./util/dataDriven'),
-        require('./util/objectAccess'),
-        require('./util/objectOriented'),
-        require('./util/model'),
-        require('./util/event'),
-        require('./util/enumeration'),
-        require('./util/tooltip'),
-        require('./util/disable'),
-        require('./util/number'),
-        require('./util/throttle'),
-        require('./util/htmlCleaner'),
-        require('./util/others')
+        require('./lib/base'),
+        require('./lib/json'),
+        require('./lib/dataDriven'),
+        require('./lib/objectAccess'),
+        require('./lib/objectOriented'),
+        require('./lib/model'),
+        require('./lib/event'),
+        require('./lib/enumeration'),
+        require('./lib/tooltip'),
+        require('./lib/disable'),
+        require('./lib/number'),
+        require('./lib/throttle'),
+        require('./lib/htmlCleaner'),
+        require('./lib/others')
     );
 
     /**
@@ -46,5 +48,5 @@ define(function (require) {
         return target;
     }
 
-    return util;
+    return lib;
 });

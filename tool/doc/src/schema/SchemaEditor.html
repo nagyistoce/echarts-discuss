@@ -7,18 +7,15 @@
     <meta name="description" content="Echarts">
     <title>Echarts</title>
     <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-6/esl.js"></script>
-    <!-- // <script src="../../dep/esl/1.8.2/esl.js"></script> -->
-    <link rel="stylesheet" type="text/css" href="APIDocSample.css" />
+    <link rel="stylesheet" type="text/css" href="SchemaEditor.css" />
 </head>
 
 <body>
-
-    <div class="ecdoc-apidoc"></div>
+    <div class="ecdoc-scmedt"></div>
 
     <script type="text/javascript">
         require.config({
             paths: {
-                // jquery: 'http://apps.bdimg.com/libs/jquery/1.11.3/jquery.min',
                 jquery: '../../dep/jquery/1.11.0/jquery.min',
                 dt: '../../dep/dt/0.0.1',
                 tpl: '../../dep/dt/0.0.1/tplLoader',
@@ -26,8 +23,8 @@
             }
         });
 
-        require(['APIDocSample'], function (APIDocSample) {
-            var instance = new APIDocSample($('.ecdoc-apidoc'));
+        require(['SchemaEditor'], function (SchemaEditor) {
+            var instance = new SchemaEditor($('.ecdoc-scmedt'));
             instance.traversalRun();
         });
     </script>

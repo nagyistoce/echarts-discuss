@@ -5,7 +5,7 @@
 define(function (require) {
 
     var etpl = require('etpl');
-    var dtUtil = require('./util');
+    var dtLib = require('./lib');
     var tpl = {};
 
     etpl.config({
@@ -38,12 +38,12 @@ define(function (require) {
         if (val == null && !transNull) {
             val = '';
         }
-        if (dtUtil.obTypeOf(val)) {
+        if (dtLib.obTypeOf(val)) {
             val = val();
         }
         val = String(val);
 
-        return useRaw ? val : dtUtil.encodeHTML(val);
+        return useRaw ? val : dtLib.encodeHTML(val);
     }
 
 

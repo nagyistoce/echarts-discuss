@@ -6,9 +6,8 @@ define(function (require) {
 
     var $ = require('jquery');
     var schemaHelper = require('../common/schemaHelper');
-    var dtUtil = require('dt/util');
+    var dtLib = require('dt/lib');
     var docUtil = require('../common/docUtil');
-    var Set = require('../common/Set');
 
     var docMainCN = $($('#doc-ifr-cn')[0].contentWindow.document.body);
     var docMainEN = $($('#doc-ifr-en')[0].contentWindow.document.body);
@@ -25,7 +24,7 @@ define(function (require) {
         $('#doc-ifr-cn').toggle();
         $('#doc-ifr-en').toggle();
     }
-去掉markpoint中的geocoord。
+
     function generateSchema() {
         var originData = originParse();
 
@@ -184,7 +183,7 @@ define(function (require) {
                     txtArr[1] = 'Object';
                 }
                 else {
-                    dtUtil.assert(false);
+                    dtLib.assert(false);
                 }
             }
             var o = {};
@@ -227,10 +226,10 @@ define(function (require) {
                         break;
                     }
                 }
-                dtUtil.assert(typeGot);
+                dtLib.assert(typeGot);
             }
 
-            dtUtil.assert(resultArr.length);
+            dtLib.assert(resultArr.length);
             if (resultArr.length === 1) {
                 return resultArr[0];
             }
@@ -352,7 +351,7 @@ define(function (require) {
                     ret = $(el).parent().next();
                 }
             });
-            dtUtil.assert(ret && ret.length);
+            dtLib.assert(ret && ret.length);
             return ret;
         }
         else {
@@ -376,7 +375,7 @@ define(function (require) {
             if (originData.hasOwnProperty(name)) {
                 schema.definitions[name] = {
                     type: 'Object',
-                    properties: dtUtil.clone(originData[name])
+                    properties: dtLib.clone(originData[name])
                 };
             }
         }
@@ -395,13 +394,67 @@ define(function (require) {
         completeSeriesOthers(schema);
         completeMarkPoint(schema);
         completeMarkLine(schema);
+        completeLineStyle(schema);
         completeItemStyle(schema);
         completeOthers(schema);
         setDefault(schema);
+        resetDescForRef(schema);
 
         schemaHelper.validateSchema(schema);
 
         return schema;
+    }
+
+    function resetDescForRef(schema) {
+        schemaHelper.travelSchema(schema, function (o) {
+            // 豁免
+            if (o.descriptionCN && (
+                    o.descriptionCN.indexOf('主元素的缓动效果') >= 0
+                    || o.descriptionCN.indexOf('时间轴上多个option切换时是否进行merge操作') >= 0
+                    || o.descriptionCN.indexOf('时间轴标签文本') >= 0
+                    || o.descriptionCN.indexOf('启用功能，目前支持featu') >= 0
+                    || o.descriptionCN.indexOf('内容格式器：') >= 0
+                    || o.descriptionCN.indexOf('坐标轴指示器，默') >= 0
+                    || o.descriptionCN.indexOf('自定义分割方式，支持不等') >= 0
+                    || o.descriptionCN.indexOf('详见下方') >= 0
+                    || o.descriptionCN.indexOf('类目型坐标轴文本标签数组，指定label内容') >= 0
+                    || o.descriptionCN.indexOf('系列中的数据内容数组，折线图以及') >= 0
+                    || o.descriptionCN.indexOf('标志图形类型，默认自动选择（8种') >= 0
+                    || o.descriptionCN.indexOf('地图类型，支持world，ch') >= 0
+                    || o.descriptionCN.indexOf('坐标轴线，默认显示') >= 0
+                    || o.descriptionCN.indexOf('坐标轴小标记，默认显示') >= 0
+                    || o.descriptionCN.indexOf('主分隔线，默认显示') >= 0
+                    || o.descriptionCN.indexOf('仪表盘标题') >= 0
+                    || o.descriptionCN.indexOf('仪表盘详情') >= 0
+                    || o.descriptionCN.indexOf('loading效果选项，') >= 0
+                    || o.descriptionCN.indexOf('坐标轴文本标签') >= 0
+                )
+            ) {
+                return;
+            }
+
+            if (o['$ref'] && o.descriptionCN) {
+                if (o.descriptionCN.indexOf('详见')) {
+                    o.descriptionCN = o.descriptionCN.replace(/，?\s*（?详见(\s*|[^<>]{1,10})<a[^<>]+>[^<>]+<\/a>）?/g, '');
+                    o.descriptionEN = o.descriptionEN.replace(/,?\s*\(?see(\s*|[^<>]{1,10})<a[^<>]+>[^<>]+<\/a>\)?/g, '');
+                }
+            }
+            if (o.descriptionCN) {
+                if (o.descriptionCN.indexOf('全图默认背景') >= 0
+                    || o.descriptionCN.indexOf('数值系列的颜色列表') >= 0
+                    || o.descriptionCN.indexOf('非IE8-支持渲染为图片') >= 0
+                    || o.descriptionCN.indexOf('是否启用拖拽重计算特性') >= 0
+                    || o.descriptionCN.indexOf('副标题文本样式') >= 0
+                ) {
+                    o.descriptionCN = o.descriptionCN.replace(/，?\s*（?详见\s*<a[^<>]+>[^<>]+<\/a>）?/g, '');
+                    o.descriptionEN = o.descriptionEN.replace(/,?\s*\(?see\s*<a[^<>]+>[^<>]+<\/a>\)?/g, '');
+                }
+                dtLib.assert(o.descriptionCN.indexOf('详见') <= 0);
+            }
+            if (o.descriptionCN) {
+                dtLib.assert(o.descriptionCN.indexOf('详见') <= 0);
+            }
+        });
     }
 
     function setDefault(schema) {
@@ -412,13 +465,13 @@ define(function (require) {
                 delete o.applicable;
             }
             else if ($.isArray(o.applicable)) {
-                var indexOfAll = dtUtil.arrayIndexOf(o.applicable, 'all');
+                var indexOfAll = dtLib.arrayIndexOf(o.applicable, 'all');
                 if (indexOfAll >= 0) {
                     if (o.applicable.length === 1) {
                         delete o.applicable;
                     }
                     else {
-                        dtUtil.assert(false);
+                        dtLib.assert(false);
                     }
                 }
             }
@@ -426,8 +479,8 @@ define(function (require) {
             if (o.defaultValueHTML == null) {
                 return;
             }
-            dtUtil.assert(o.type);
-            var type = new Set(o.type);
+            dtLib.assert(o.type);
+            var type = new dtLib.Set(o.type);
             var defaultValueHTML = $.trim(o.defaultValueHTML);
             delete o.defaultValueHTML;
 
@@ -445,27 +498,27 @@ define(function (require) {
                     }
                 }
                 else {
-                    dtUtil.assert(false);
+                    dtLib.assert(false);
                 }
             }
             else if (defaultValueHTML === 'true' || defaultValueHTML === 'false') {
-                dtUtil.assert(type.contains('boolean'));
+                dtLib.assert(type.contains('boolean'));
                 o[DF] = defaultValueHTML === 'true' ? true : false;
             }
             else if (defaultValueHTML.indexOf('<pre>') === 0) {
-                dtUtil.assert(type.contains('Object') || type.contains('Array'));
-                dtUtil.assert(defaultValueHTML.indexOf('</pre>') === defaultValueHTML.length - '</pre>'.length);
+                dtLib.assert(type.contains('Object') || type.contains('Array'));
+                dtLib.assert(defaultValueHTML.indexOf('</pre>') === defaultValueHTML.length - '</pre>'.length);
                 var str = defaultValueHTML.replace('<pre>', '').replace('</pre>', '');
                 o[DF] = docUtil.parseToObject(str);
             }
             else if (defaultValueHTML.indexOf('{') === 0 && defaultValueHTML !== '{...}') {
-                dtUtil.assert(type.contains('Object'));
-                dtUtil.assert(defaultValueHTML.indexOf('}') === defaultValueHTML.length - 1);
+                dtLib.assert(type.contains('Object'));
+                dtLib.assert(defaultValueHTML.indexOf('}') === defaultValueHTML.length - 1);
                 o[DF] = docUtil.parseToObject(defaultValueHTML);
             }
             else if (defaultValueHTML.indexOf('[') === 0) {
-                dtUtil.assert(type.contains('Array'));
-                dtUtil.assert(defaultValueHTML.indexOf(']') === defaultValueHTML.length - 1);
+                dtLib.assert(type.contains('Array'));
+                dtLib.assert(defaultValueHTML.indexOf(']') === defaultValueHTML.length - 1);
                 o[DF] = docUtil.parseToObject(defaultValueHTML);
             }
             else if (
@@ -568,8 +621,8 @@ define(function (require) {
                 'circle', 'rectangle', 'triangle', 'diamond', 'emptyCircle',
                 'emptyRectangle', 'emptyTriangle', 'emptyDiamond'
         ]);
-        optionProperties.symbolList.descriptionCN += '默认标志图形类型列表，循环使用';
-        optionProperties.symbolList.descriptionEN += ''
+        optionProperties.symbolList.descriptionCN = '默认标志图形类型列表，循环使用';
+        optionProperties.symbolList.descriptionEN = ''
             + 'An array containing the default symbols. '
             + 'When all symbols are used, new symbols are pulled from the start again';
 
@@ -796,6 +849,7 @@ define(function (require) {
     function completeTitle(schema) {
         var titlePorperties = schema.definitions.title.properties;
         addRef(titlePorperties.textStyle, '#definitions/textStyle');
+        addRef(titlePorperties.subtextStyle, '#definitions/textStyle');
     }
 
     function completeToolbox(schema) {
@@ -805,6 +859,7 @@ define(function (require) {
 
     function completeTooltip(schema) {
         var properties = schema.definitions.tooltip.properties;
+        addRef(properties.textStyle, '#definitions/textStyle');
         properties.axisPointer.properties = {
             type: {
                 type: 'string',
@@ -882,6 +937,8 @@ define(function (require) {
             }
         };
 
+        schema.definitions = docUtil.changeIterationSequence(schema.definitions, 'axis', 'before', 'axisItem');
+
         schema.definitions.axisItem.enumerateBy = schemaHelper.EC_AXIS_APPLICABLE.slice();
 
         var axisProperties = schema.definitions.axisItem.properties;
@@ -930,14 +987,12 @@ define(function (require) {
 
         // defaultByApplicable
         var one = axisProperties.type;
-        var defaultValueHTML = one.defaultValueHTML;
-        var defaultByApplicable = one.defaultByApplicable = {};
-
+        axisProperties.type = {oneOf: []};
         for (var j = 0; j < schemaHelper.EC_AXIS_APPLICABLE.length; j++) {
             var app = schemaHelper.EC_AXIS_APPLICABLE[j];
-            if (defaultValueHTML.indexOf(app) >= 0) {
-                defaultByApplicable[app] = app;
-            }
+            axisProperties.type.oneOf.push(
+                dtLib.assign(dtLib.clone(one), {'defaultValueHTML': app, applicable: app})
+            );
         }
     }
 
@@ -971,10 +1026,12 @@ define(function (require) {
                 '$ref': '#definitions/seriesItem'
             }
         };
+        schema.definitions = docUtil.changeIterationSequence(schema.definitions, 'series', 'before', 'seriesItem');
     }
 
     function completeSeriesOthers(schema) {
-        var seriesProperties = schema.definitions.seriesItem.properties;
+        var seriesItem = schema.definitions.seriesItem;
+        var seriesProperties = seriesItem.properties;
 
         schema.definitions.seriesItem.enumerateBy = schemaHelper.EC_SERIES_APPLICABLE.slice();
 
@@ -1017,8 +1074,8 @@ define(function (require) {
         seriesProperties.symbolSize.oneOf[0].applicable.push('radar');
         seriesProperties.symbolRotate.oneOf[0].applicable.push('radar');
         seriesProperties.symbol.oneOf = [seriesProperties.symbol.oneOf[0]];
-        dtUtil.assert(seriesProperties.symbolSize.oneOf[1].applicable === 'radar');
-        dtUtil.assert(seriesProperties.symbolRotate.oneOf[1].applicable === 'radar');
+        dtLib.assert(seriesProperties.symbolSize.oneOf[1].applicable === 'radar');
+        dtLib.assert(seriesProperties.symbolRotate.oneOf[1].applicable === 'radar');
         seriesProperties.symbolSize.oneOf.splice(1, 1);
         seriesProperties.symbolRotate.oneOf.splice(1, 1);
 
@@ -1052,21 +1109,116 @@ define(function (require) {
 
             var nodeDataProp = schema.definitions.dataNodeData.properties;
 
-            for (var i = 0; i < tableInfo.length; i++) {
-                var line = tableInfo[i];
-                line.applicable = 'force';
-                nodeDataProp.push(line);
+            for (var name in tableInfo) {
+                if (tableInfo.hasOwnProperty(name)) {
+                    var line = tableInfo[name];
+                    line.applicable = 'force';
+                    nodeDataProp[name] = line;
+                }
             }
+
+            nodeDataProp.itemStyle['$ref'] = '#definitions/itemStyle';
         }
+
+// FIXME
+// 还有好几个gauge的属性没有拆，麻烦。
+
+        // gauge
+        seriesProperties.axisLine = {
+            type: 'Object',
+            setApplicable: 'gauge/axisLine',
+            descriptionCN: '坐标轴线，默认显示',
+            descriptionEN: 'axis line. Defaults to show.',
+            properties: {
+                show: {
+                    type: 'boolean',
+                    'default': true,
+                    descriptionCN: '显示与否',
+                    descriptionEN: 'The property "show" specifies whether to show axisLine or not.'
+                },
+                lineStyle: {
+                    '$ref': '#definitions/lineStyle'
+                }
+            }
+        };
+        seriesProperties.axisTick = {
+            type: 'Object',
+            setApplicable: 'gauge/axisTick',
+            descriptionCN: '坐标轴小标记，默认显示 ',
+            descriptionEN: 'axis tick. Defaults to show. ',
+            properties: {
+                show: {
+                    type: 'boolean',
+                    'default': true,
+                    descriptionCN: '显示与否',
+                    descriptionEN: 'The property "show" specifies whether to show axisLine or not.'
+                },
+                lineStyle: {
+                    '$ref': '#definitions/lineStyle'
+                },
+                splitNumber: {
+                    type: 'number',
+                    'default': 5,
+                    descriptionCN: '属性splitNumber控制每份split细分多少段',
+                    descriptionEN: 'The property "splitNumber" controls the number of segments;'
+                },
+                length: {
+                    type: 'number',
+                    'default': 8,
+                    descriptionCN: '属性length控制线长',
+                    descriptionEN: 'The property "length" controls line length for axisTick.'
+                }
+            }
+        };
+        seriesProperties.axisLabel['$ref'] = '#definitions/axisAxisLabel';
+        seriesProperties.splitLine = {
+            type: 'Object',
+            setApplicable: 'gauge/splitLine',
+            descriptionCN: '主分隔线，默认显示 ',
+            descriptionEN: 'split line. Defaults to show. ',
+            properties: {
+                show: {
+                    type: 'boolean',
+                    'default': true,
+                    descriptionCN: '显示与否',
+                    descriptionEN: 'The property "show" specifies whether to show splitLine or not.'
+                },
+                length: {
+                    type: 'number',
+                    'default': 30,
+                    descriptionCN: '控制线的长度',
+                    descriptionEN: 'The property "length" controls line length for splitLine.'
+                },
+                lineStyle: {
+                    '$ref': '#definitions/lineStyle'
+                }
+            }
+        };
+
+        // linkSymbol for force
+        seriesProperties.linkSymbol['$ref'] = '#definitions/option/properties/symbolList';
 
         // defaultByApplicable
         var one = seriesProperties.type;
-        var defaultByApplicable = one.defaultByApplicable = {};
-
+        seriesProperties.type = {oneOf: []};
         for (var j = 0; j < schemaHelper.EC_SERIES_APPLICABLE.length; j++) {
             var app = schemaHelper.EC_SERIES_APPLICABLE[j];
-            defaultByApplicable[app] = app;
+            seriesProperties.type.oneOf.push(
+                dtLib.assign(dtLib.clone(one), {'defaultValueHTML': app, applicable: app})
+            );
         }
+
+        // re order
+        dtLib.assert(seriesProperties.z);
+        dtLib.assert(seriesProperties.zlevel);
+        dtLib.assert(seriesProperties.type);
+        dtLib.assert(seriesProperties.markPoint);
+        dtLib.assert(seriesProperties.markLine);
+        seriesProperties = seriesItem.properties = docUtil.changeIterationSequence(seriesProperties, 'markPoint', 'last');
+        seriesProperties = seriesItem.properties = docUtil.changeIterationSequence(seriesProperties, 'markLine', 'last');
+        seriesProperties = seriesItem.properties = docUtil.changeIterationSequence(seriesProperties, 'z', 'last');
+        seriesProperties = seriesItem.properties = docUtil.changeIterationSequence(seriesProperties, 'zlevel', 'last');
+        seriesProperties = seriesItem.properties = docUtil.changeIterationSequence(seriesProperties, 'type', 'first');
     }
 
     function completeSeriesData(schema) {
@@ -1079,37 +1231,37 @@ define(function (require) {
         var descEN = findDesc(docMainEN);
         var data;
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         seriesProperties.data.oneOf.push(data);
         data.applicable = 'all';
         data.descriptionCN = descCN.allDesc;
         data.descriptionEN = descEN.allDesc;
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         seriesProperties.data.oneOf.push(data);
         data.applicable = ['line', 'bar'];
         data.descriptionCN = descCN.cartesianDesc;
         data.descriptionEN = descEN.cartesianDesc;
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         seriesProperties.data.oneOf.push(data);
         data.applicable = 'scatter';
         data.descriptionCN = descCN.scatterDesc;
         data.descriptionEN = descEN.scatterDesc;
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         seriesProperties.data.oneOf.push(data);
         data.applicable = 'k';
         data.descriptionCN = descCN.kDesc;
         data.descriptionEN = descEN.kDesc;
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         seriesProperties.data.oneOf.push(data);
         data.applicable = 'pie';
         data.descriptionCN = descCN.pieDesc;
         data.descriptionEN = descEN.pieDesc;
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         seriesProperties.data.oneOf.push(data);
         data.applicable = 'map';
         data.descriptionCN = descCN.mapDesc;
@@ -1182,11 +1334,14 @@ define(function (require) {
     function completeMarkPoint(schema) {
         var properties = schema.definitions.markPoint.properties;
 
+        schema.definitions.markPoint.setApplicable = ['markPoint'];
         addRef(properties.symbol, '#definitions/seriesItem/properties/symbol');
         addRef(properties.symbolSize, '#definitions/seriesItem/properties/symbolSize');
         addRef(properties.symbolRotate, '#definitions/seriesItem/properties/symbolRotate');
         addRef(properties.itemStyle, '#definitions/itemStyle');
-        addRef(properties.geoCoord, '#definitions/seriesItem/properties/geoCoord');
+
+        // geoCoord in markpoint in map, delete.
+        delete properties.geoCoord;
 
         // effect
         properties.effect.properties = {
@@ -1253,25 +1408,25 @@ define(function (require) {
         var descEN = findDesc(docMainEN);
         properties.data = {oneOf: []};
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         properties.data.oneOf.push(data);
         data.applicable = 'all';
         data.descriptionCN = '标注图形数据';
         data.descriptionEN = 'data of markPoint';
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         properties.data.oneOf.push(data);
         data.applicable = ['pie', 'radar', 'force', 'chord'];
         data.descriptionCN = descCN.pieLike;
         data.descriptionEN = descEN.pieLike;
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         properties.data.oneOf.push(data);
         data.applicable = ['line', 'bar', 'k', 'scatter'];
         data.descriptionCN = descCN.lineLike;
         data.descriptionEN = descEN.lineLike;
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         properties.data.oneOf.push(data);
         data.applicable = 'map';
         data.descriptionCN = descCN.mapLike;
@@ -1302,11 +1457,14 @@ define(function (require) {
     function completeMarkLine(schema) {
         var properties = schema.definitions.markLine.properties;
 
+        schema.definitions.markLine.setApplicable = ['markLine'];
         addRef(properties.symbol, '#definitions/seriesItem/properties/symbol');
         addRef(properties.symbolSize, '#definitions/seriesItem/properties/symbolSize');
         addRef(properties.symbolRotate, '#definitions/seriesItem/properties/symbolRotate');
         addRef(properties.itemStyle, '#definitions/itemStyle');
-        addRef(properties.geoCoord, '#definitions/seriesItem/properties/geoCoord');
+
+        // geoCoord in markpoint in map, delete.
+        delete properties.geoCoord;
 
         // bundling
         properties.bundling.properties = {
@@ -1377,25 +1535,25 @@ define(function (require) {
         var descEN = findDesc(docMainEN);
         properties.data = {oneOf: []};
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         properties.data.oneOf.push(data);
         data.applicable = 'all';
         data.descriptionCN = '标注图形数据';
         data.descriptionEN = 'data of markLine';
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         properties.data.oneOf.push(data);
         data.applicable = ['pie', 'radar', 'force', 'chord'];
         data.descriptionCN = descCN.pieLike;
         data.descriptionEN = descEN.pieLike;
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         properties.data.oneOf.push(data);
         data.applicable = ['line', 'bar', 'k', 'scatter'];
         data.descriptionCN = descCN.lineLike;
         data.descriptionEN = descEN.lineLike;
 
-        data = dtUtil.clone(originData);
+        data = dtLib.clone(originData);
         properties.data.oneOf.push(data);
         data.applicable = 'map';
         data.descriptionCN = descCN.mapLike;
@@ -1423,6 +1581,71 @@ define(function (require) {
         }
     }
 
+    function completeLineStyle(schema) {
+        var props = schema.definitions.lineStyle.properties;
+        var origin;
+
+        origin = props.color;
+        props.color = {
+            oneOf: [
+                origin,
+                {
+                    type: 'Array',
+                    applicable: 'gauge/axisLine',
+                    'default': [
+                        [0.2, '#228b22'],
+                        [0.8, '#48b'],
+                        [1, '#ff4500']
+                    ],
+                    descriptionCN: '这里的lineStyle.color是一个二维数组，用于把仪表盘轴线分成若干份，并且可以给每一份指定具体的颜色，格式为:[[百分比, 颜色值], [...]]',
+                    descriptionEN: ' it is a two-dimensional array that can be used to divide the gauge axis into several parts, and designate a specific color to each part on this form: [[percent, color value], [...]].'
+                },
+                {
+                    type: 'color',
+                    applicable: ['gauge/axisTick'],
+                    'default': '#eee',
+                    descriptionCN: '颜色',
+                    descriptionEN: 'color'
+                },
+                {
+                    type: 'color',
+                    applicable: ['gauge/splitLine'],
+                    'default': '#eee',
+                    descriptionCN: '颜色',
+                    descriptionEN: 'color'
+                }
+            ]
+        };
+
+        origin = props.width;
+        props.width = {
+            oneOf: [
+                origin,
+                {
+                    type: 'number',
+                    applicable: 'gauge/axisLine',
+                    'default': 30,
+                    descriptionCN: '线宽',
+                    descriptionEN: 'width of the line.'
+                },
+                {
+                    type: 'number',
+                    applicable: 'gauge/axisTick',
+                    'default': 1,
+                    descriptionCN: '线宽',
+                    descriptionEN: 'width of the line.'
+                },
+                {
+                    type: 'number',
+                    applicable: 'gauge/splitLine',
+                    'default': 2,
+                    descriptionCN: '线宽',
+                    descriptionEN: 'width of the line.'
+                }
+            ]
+        };
+    }
+
     function completeItemStyle(schema) {
         schema.definitions.itemStyle = {
             type: 'Object',
@@ -1443,6 +1666,8 @@ define(function (require) {
                 }
             }
         };
+
+        schema.definitions = docUtil.changeIterationSequence(schema.definitions, 'itemStyle', 'before', 'itemStyleItem');
 
         var properties = schema.definitions.itemStyleItem.properties;
 

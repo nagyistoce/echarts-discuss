@@ -5,9 +5,9 @@
 define(function (require) {
 
     var $ = require('jquery');
-    var dtUtil = require('dt/util');
-    var Component = require('dt/ui/Component');
-    var encodeHTML = dtUtil.encodeHTML;
+    var lib = require('../lib');
+    var Component = require('./Component');
+    var encodeHTML = lib.encodeHTML;
 
     // Constant
     var PATH_ATTR = 'data-item-path';
@@ -26,8 +26,8 @@ define(function (require) {
             viewModel: function () {
                 return {
                     /**
-                     * 如果是dtUtil.ob则表示单选，其值对应于datasource中的value，表示选中的项。
-                     * 如果是dtUtil.obArray则表示多选，其中：obArray中每项是value
+                     * 如果是lib.ob则表示单选，其值对应于datasource中的value，表示选中的项。
+                     * 如果是lib.obArray则表示多选，其中：obArray中每项是value
                      * 可在valueInfo中设置参数：{
                      *     noAnimation: boolean 关闭动画，默认false
                      *     scrollToTarget: boolean 是否滚屏到第一个目标，默认false。
@@ -43,17 +43,17 @@ define(function (require) {
                      *     var dataItem = ob.peekValueInfo('dataItem');
                      * });
                      */
-                    selected: dtUtil.ob(),
+                    selected: lib.ob(),
                     /**
                      * hovered
                      * 可在valueInfo中设置参数以及监听：同viewModel.selected
                      */
-                    hovered: dtUtil.ob(),
+                    hovered: lib.ob(),
                     /**
                      * highlighted
                      * 可在valueInfo中设置参数：同viewModel.selected
                      */
-                    highlighted: dtUtil.obArray(),
+                    highlighted: lib.obArray(),
                     /**
                      * @type {Array.<Object>}
                      *
@@ -75,7 +75,7 @@ define(function (require) {
                     /**
                      * 大小改变事件。展开折叠时触发。
                      */
-                    resizeEvent: dtUtil.ob()
+                    resizeEvent: lib.ob()
                 };
             },
             viewModelPublic: ['selected', 'hovered', 'highlighted', 'resizeEvent']
@@ -86,8 +86,8 @@ define(function (require) {
          */
         _init: function () {
             var viewModel = this._viewModel();
-            dtUtil.assert(dtUtil.obTypeOf(viewModel.selected));
-            dtUtil.assert(dtUtil.obTypeOf(viewModel.highlighted) === 'obArray');
+            lib.assert(lib.obTypeOf(viewModel.selected));
+            lib.assert(lib.obTypeOf(viewModel.highlighted) === 'obArray');
 
             this._initContent();
             this._initTooltip();
@@ -193,7 +193,7 @@ define(function (require) {
             };
             var that = this;
 
-            this._disposable(dtUtil.bindTooltip({
+            this._disposable(lib.bindTooltip({
                 bindEl: this.el(),
                 followMouse: true,
                 selector: '.' + this._getCss('text'),
@@ -270,7 +270,7 @@ define(function (require) {
                 if (viewModel.disabled()) {
                     return;
                 }
-                var obType = dtUtil.obTypeOf(viewModel.selected);
+                var obType = lib.obTypeOf(viewModel.selected);
                 var dataItem = that._findDataItemByPath(
                     viewModel.datasource, $(this).attr(PATH_ATTR), true
                 );
@@ -278,7 +278,7 @@ define(function (require) {
 
                 if (obType === 'obArray') { // 多选
                     var selected = viewModel.selected();
-                    var index = dtUtil.arrayIndexOf(selected, value);
+                    var index = lib.arrayIndexOf(selected, value);
                     if (index >= 0) {
                         selected.splice(index, 1);
                     }
@@ -317,16 +317,16 @@ define(function (require) {
          */
         _updateSelectedByModel: function (nextValue, ob) {
             var viewModel = this._viewModel();
-            var obType = dtUtil.obTypeOf(viewModel.selected);
+            var obType = lib.obTypeOf(viewModel.selected);
             var activeCss = this._getCss('textActive');
             var expandList = [];
             var that = this;
 
-            dtUtil.assert(obType !== 'obArray' || $.isArray(nextValue));
+            lib.assert(obType !== 'obArray' || $.isArray(nextValue));
 
             this._travelItemText(function ($text, thisValue) {
                 if (obType === 'obArray'
-                    ? dtUtil.arrayIndexOf(nextValue, thisValue) >= 0 // 多选情况
+                    ? lib.arrayIndexOf(nextValue, thisValue) >= 0 // 多选情况
                     : thisValue === nextValue // 单选情况
                 ) {
                     $text.addClass(activeCss);
@@ -359,7 +359,7 @@ define(function (require) {
             var that = this;
 
             this._travelItemText(function ($text, thisValue) {
-                if (dtUtil.arrayIndexOf(nextValue, thisValue) >= 0) {
+                if (lib.arrayIndexOf(nextValue, thisValue) >= 0) {
                     $text.addClass(highlightedCss);
                     if (!ob.peekValueInfo('preventExpand')) {
                         highlightList.push(that._findItemEl($text));
@@ -409,7 +409,7 @@ define(function (require) {
 
             function doFinal() {
                 var scrollTarget = $($itemEls[0]);
-                if (options.scrollToTarget && scrollTarget) {
+                if (options.scrollToTarget && scrollTarget.length) {
                     $('html,body').animate({scrollTop: scrollTarget.offset().top - 30});
                 }
                 options.onSlideEnd && options.onSlideEnd();
@@ -629,7 +629,16 @@ define(function (require) {
         },
 
         /**
-         * 深度优先遍历treeList。
+         * 深度优先遍历treeListData。@see _travelData
+         *
+         * @public
+         */
+        travelData: function (callbacks) {
+            return this._travelData(this._viewModel().datasource, callbacks);
+        },
+
+        /**
+         * 深度优先遍历treeListData。
          *
          * @private
          * @param {Array.<Object>} treeList 被遍历的对象。
@@ -688,7 +697,7 @@ define(function (require) {
             }
 
             return forOutput
-                ? dtUtil.assign({}, dataItem, null, ['children'])
+                ? lib.assign({}, dataItem, null, ['children'])
                 : dataItem;
         },
 

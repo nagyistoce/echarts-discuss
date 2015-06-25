@@ -211,15 +211,25 @@ body {
 .ecdoc-api-link a:visited {
   color: #fff;
 }
-.ecdoc-api-tree-area {
-  width: 340px;
+.ecdoc-scmedt-head-desc {
+  width: 320px;
+  border: 1px solid #555;
+  padding: 10px;
+  margin: 10px;
+  font-size: 12px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.ecdoc-scmedt-tree-area {
+  width: 700px;
   float: left;
   overflow: hidden;
 }
-.ecdoc-api-desc-area {
+.ecdoc-scmedt-desc-area {
   margin-left: 305px;
 }
-.ecdoc-api-opt-path-sample {
+.ecdoc-scmedt-opt-path-sample {
   position: fixed;
   widows: 200px;
   height: 400px;
@@ -228,6 +238,10 @@ body {
   border: 2px solid blue;
   -webkit-box-shadow: 10px 10px 5px #888888;
   box-shadow: 10px 10px 5px #888888;
+}
+.dtui-txipt-type-textarea {
+  width: 314px;
+  height: 200px;
 }
 .ecdoc-scmedt-panel {
   position: fixed;
@@ -252,7 +266,7 @@ body {
   background: #fff;
   color: #000;
   height: 30px;
-  width: 400px;
+  width: 280px;
   display: block;
   margin: 0;
 }
@@ -260,76 +274,20 @@ body {
   background: #fff;
   color: #000;
 }
-.ecdoc-scmedt-query-box .query-mode {
-  margin-top: 8px;
-  font-size: 12px;
-  text-align: center;
-}
-.ecdoc-api-type,
-.ecdoc-api-desc-cn,
-.ecdoc-api-desc-en,
-.ecdoc-api-default,
-.ecdoc-api-default-explanation,
-.ecdoc-api-query-area {
-  max-width: 200px;
-}
-.ecdoc-api-type label,
-.ecdoc-api-desc-cn label,
-.ecdoc-api-desc-en label,
-.ecdoc-api-default label,
-.ecdoc-api-default-explanation label,
-.ecdoc-api-query-area label {
-  background: #EAB81A;
-  padding: 3px 5px;
-  color: #000;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-}
-.ecdoc-api-type div,
-.ecdoc-api-desc-cn div,
-.ecdoc-api-desc-en div,
-.ecdoc-api-default div,
-.ecdoc-api-default-explanation div,
-.ecdoc-api-query-area div {
-  word-break: break-all;
-  word-wrap: break-word;
-}
-.ecdoc-api-desc-cn {
-  top: 340px;
-  left: 400px;
-}
-.ecdoc-api-desc-en {
-  top: 340px;
-  left: 680px;
-}
-.ecdoc-api-default {
-  top: 120px;
-  left: 540px;
-}
-.ecdoc-api-default-explanation {
-  top: 120px;
-  left: 680px;
-}
-.ecdoc-api-type {
-  top: 120px;
-  left: 400px;
-}
-.ecdoc-api-query-area {
+.ecdoc-scmedt-edit-area {
   top: 20px;
   bottom: 20px;
   right: 30px;
-  max-width: 280px;
-  width: 280px;
+  width: 350px;
   overflow: auto;
 }
-.ecdoc-api-query-area .query-input {
+.ecdoc-scmedt-edit-area .query-input {
   border: 1px solid #888;
   padding: 5px;
   margin-top: 10px;
   min-height: 60px;
 }
-.ecdoc-api-query-area .query-btn {
+.ecdoc-scmedt-edit-area .query-btn {
   margin: 3px;
   cursor: pointer;
   padding: 3px 5px;
@@ -337,12 +295,12 @@ body {
   background: green;
   color: #fff;
 }
-.ecdoc-api-query-area .query-tabs {
+.ecdoc-scmedt-edit-area .query-tabs {
   padding-bottom: 10px;
   border-bottom: 1px solid green;
   overflow: hidden;
 }
-.ecdoc-api-query-area .query-tab {
+.ecdoc-scmedt-edit-area .query-tab {
   padding: 0 2px;
   float: left;
   border: 1px solid green;
@@ -350,17 +308,55 @@ body {
   cursor: pointer;
   font-size: 12px;
 }
-.ecdoc-api-query-area .query-tab-active {
+.ecdoc-scmedt-edit-area .query-tab-active {
   background: green;
   color: #fff;
 }
-.ecdoc-api-query-area .reset-btn {
+.ecdoc-scmedt-edit-area .reset-btn {
   padding: 3px 5px;
   margin-left: 7px;
   font-size: 14px;
   cursor: pointer;
   background: green;
   color: #fff;
+}
+.ecdoc-scmedt-edit-area .ecdoc-scmedt-typesel {
+  border-bottom: 1px solid #828599;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+.ecdoc-scmedt-edit-area .ecdoc-scmedt-block-label {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  vertical-align: middle;
+  min-width: 150px;
+}
+.ecdoc-scmedt-edit-area .ecdoc-scmedt-block-line .dtui-txipt-type-text {
+  width: 150px;
+}
+.ecdoc-scmedt-edit-area .expalanation {
+  height: 60px;
+}
+.ecdoc-scmedt-edit-area .label-continue {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  vertical-align: middle;
+}
+.ecdoc-scmedt-edit-area .desc-rendered-cn,
+.ecdoc-scmedt-edit-area .desc-rendered-en {
+  min-height: 200px;
+  background: #fff;
+  border: 1px solid #979bb2;
+  color: #000;
+  margin: 5px;
+  padding: 5px;
+}
+.ecdoc-scmedt-edit-area .desc-rendered-cn td,
+.ecdoc-scmedt-edit-area .desc-rendered-en td {
+  border: 1px solid #222;
+  padding: 2px;
 }
 /**
  * 鼠标hover提示

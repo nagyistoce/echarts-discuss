@@ -1,0 +1,99 @@
+@import "./common.less";
+
+@wave-check-button-item-border-color: #828599;
+@wave-check-button-item-font-color: #828599;
+@wave-check-button-item-font-color: #828599;
+@wave-check-button-item-font-hover-color: #F0F0F0;
+@wave-check-button-item-border-active-color: #D2D2D2;
+@wave-check-button-item-font-active-color: #F0F0F0;
+@wave-check-button-item-border-disabled-color: #828599;
+@wave-check-button-item-font-disabled-color: #828599;
+@wave-check-button-item-border-hover-color: #828599;
+@wave-check-button-item-font-hover-color: #828599;
+
+
+.dtui-chkbtn {
+}
+.dtui-chkbtn-i {
+    display: inline-block;
+    // vertical-align: middle;
+    .user-select(none);
+
+    i {
+        display: none;
+        // vertical-align: middle;
+        // display: inline-block;
+        // position: relative;
+        // font-style: normal;
+        // width: @wave-op-pannel-small-round-btn-size;
+        // height: @wave-op-pannel-small-round-btn-size;
+        // .border-radius(@wave-op-pannel-small-round-btn-size / 2);
+        // background: #FFF;
+        // cursor: pointer;
+    }
+    em {
+        display: none;
+        // display: block;
+        // font-style: normal;
+        // margin: 1px 0 0 1px;
+        // width: @wave-op-pannel-small-round-btn-size - 2px;
+        // height: @wave-op-pannel-small-round-btn-size - 2px;
+        // .border-radius(@wave-op-pannel-small-round-btn-size / 2 - 1px);
+        // background: @wave-op-pannel-bg-mid-color;
+    }
+    span {
+        display: inline-block;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: middle;
+        text-align: center;
+        min-width: 46px;
+        cursor: pointer;
+        margin: 0 10px 0 0;
+        padding: 2px 4px;
+        .border-radius(2px);
+
+        // border: 1px solid @wave-check-button-item-border-color;
+        background: #5e5e5e;
+        // color: @wave-check-button-item-font-color;
+        color: #aaa;
+    }
+}
+.dtui-chkbtn-i-hover {
+    i {
+    }
+    em {
+        // background: @wave-op-pannel-btn-active-1-color;
+    }
+    span {
+        // border-color: @wave-check-button-item-border-hover-color;
+        // color: @wave-check-button-item-font-hover-color;
+    }
+}
+.dtui-chkbtn-i-active {
+    i {
+    }
+    em {
+        // background: @wave-op-pannel-btn-active-1-color;
+    }
+    span {
+        // border-color: @wave-check-button-item-border-active-color;
+        background: #eee;
+        color: #000;
+        // color: @wave-check-button-item-font-active-color;
+    }
+}
+.dtui-chkbtn-disabled {
+    i {
+        // background: @wave-operation-panel-disabled-color;
+        cursor: default;
+    }
+    em {
+        // background: @wave-operation-panel-disabled-color;
+    }
+    span {
+        // border-color: @wave-check-button-item-border-disabled-color;
+        // color: @wave-check-button-item-font-disabled-color;
+        cursor: default;
+    }
+}

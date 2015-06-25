@@ -6,12 +6,13 @@ define(function (require) {
     var $ = require('jquery');
     var Component = require('dt/ui/Component');
     var schemaHelper = require('../common/schemaHelper');
-    var dtUtil = require('dt/util');
+    var dtLib = require('dt/lib');
 
-    require('../common/ui/componentConfig');
+    require('../common/componentConfig');
 
-    var SCHEMA_URL = '../migrate/optionSchema.json';
+    var SCHEMA_URL = '../../optionSchema.json';
     var TPL_TARGET = 'APIDocSample';
+    var SELECTOR_TYPE = '.ecdoc-api-type div';
     var SELECTOR_DESC_CN = '.ecdoc-api-desc-cn div';
     var SELECTOR_DESC_EN = '.ecdoc-api-desc-en div';
     var SELECTOR_DEFAULT = '.ecdoc-api-default div';
@@ -32,13 +33,13 @@ define(function (require) {
     var APIDocSample = Component.extend({
 
         _define: {
-            tpl: require('tpl!./doc.tpl.html'),
+            tpl: require('tpl!./APIDocSample.tpl.html'),
             css: 'ecdoc-apidoc',
             viewModel: function () {
                 return {
                     apiTreeDatasource: null,
-                    apiTreeSelected: dtUtil.ob(),
-                    apiTreeHighlighted: dtUtil.obArray()
+                    apiTreeSelected: dtLib.ob(),
+                    apiTreeHighlighted: dtLib.obArray()
                 };
             }
         },
@@ -79,35 +80,37 @@ define(function (require) {
             );
 
             this._initQueryArea();
+            this._initQueryBox();
         },
 
-        _makeTestData: function() {
-            var apiTreeDatasource = this._viewModel().apiTreeDatasource = [];
+        _initQueryBox: function () {
+            var queryInput = this._sub('queryInput');
+            var queryMode = this._sub('queryMode');
+            queryInput.viewModel('value').subscribe(queryBoxGo, this);
+            var checked = queryMode.viewModel('checked');
 
-            // For test
-            apiTreeDatasource.push({
-                value: 'root',
-                text: 'option = ',
-                tooltip: 'option root',
-                childrenPre: '{',
-                childrenPost: '}',
-                children: [
-                    makeItem([makeItem(), makeItem(), makeItem()]),
-                    makeItem(),
-                    makeItem([makeItem(), makeItem()])
-                ]
-            });
+            checked.subscribe(onModeChanged, this);
+            onModeChanged.call(this, checked());
 
-            function makeItem(children) {
-                return {
-                    value: 'option = ',
-                    text: 'asdf' + Math.random(),
-                    childrenPre: ': {',
-                    childrenPost: '}',
-                    childrenBrief: ' ... ',
-                    children: children
-                };
+            function onModeChanged(nextValue) {
+                var dataItem = queryMode.getDataItem(nextValue);
+                queryInput.viewModel('placeholder')(dataItem.placeholder);
             }
+
+            function queryBoxGo(queryStr) {
+                if (queryStr) {
+                    this.doQuery(queryStr, checked());
+                }
+            }
+
+            $(document).keypress(function (e) {
+                var tagName = (e.target.tagName || '').toLowerCase();
+                if (e.which === 47 && tagName !== 'input' && tagName !== 'textarea') { // "/"键
+                    queryInput.focus();
+                    queryInput.select();
+                    e.preventDefault();
+                }
+            });
         },
 
         _updateDesc: function (persistent, nextValue, ob) {
@@ -115,9 +118,10 @@ define(function (require) {
             var treeItem = ob.peekValueInfo('dataItem');
             if (treeItem) {
                 var desc = {
+                    type: treeItem.type || [],
                     cnDesc: treeItem.descriptionCN || '无说明',
                     enDesc: treeItem.descriptionEN || 'No description',
-                    defaultValue: dtUtil.encodeHTML(stringifyValue(treeItem.defaultValue)) || '',
+                    defaultValue: dtLib.encodeHTML(stringifyValue(treeItem.defaultValue)) || '',
                     defaultExplanation: treeItem.defaultExplanation || ''
                 };
 
@@ -132,6 +136,7 @@ define(function (require) {
             }
 
             function doShow(desc) {
+                $el.find(SELECTOR_TYPE)[0].innerHTML = desc.type;
                 $el.find(SELECTOR_DESC_CN)[0].innerHTML = desc.cnDesc;
                 $el.find(SELECTOR_DESC_EN)[0].innerHTML = desc.enDesc;
                 $el.find(SELECTOR_DEFAULT)[0].innerHTML = desc.defaultValue;

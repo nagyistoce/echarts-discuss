@@ -6,7 +6,7 @@
 define(function (require) {
 
     var $ = require('jquery');
-    var lib = require('dt/util');
+    var lib = require('dt/lib');
     var tpl = require('dt/tpl');
     var getByPath = lib.getByPath;
     var setByPath = lib.setByPath;

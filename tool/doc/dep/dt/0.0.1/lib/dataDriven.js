@@ -22,7 +22,6 @@ define(function (require) {
     // ko只提供了observable和computed的区分，
     // 没有提供observable和observableArray的区分，所以加标志。
     var OB_TYPE_PROP = '\x0E__ob__type__';
-    var OB_VALUE_INFO_PROP = '\x0E__ob__val__info__';
     var PROP = '\x0E__prop__'; // 为了避免错误的编码方式：扩展时访问私有变量
     var DEFAULT_EVENT = 'change';
     var ARRAY_CHANGE_EVENT = 'arrayChange';
@@ -284,6 +283,7 @@ define(function (require) {
             observable.validateAuthKey(options ? options.authKey : null);
 
             // value info 每次都会写入
+            base.assert(valueInfo == null || $.isPlainObject(valueInfo));
             observable[PROP + 'currValueInfo'] = valueInfo;
 
             // 如果值没有变化，则不会设值，除非extend了always
@@ -335,7 +335,11 @@ define(function (require) {
          */
         peekValueInfo: function (key) {
             if (arguments.length === 0) {
-                return this[PROP + 'currValueInfo'];
+                var obj = this[PROP + 'currValueInfo'];
+                if (obj) {
+                    obj = $.extend({}, obj);
+                }
+                return obj;
             }
             else if (base.isObject(this[PROP + 'currValueInfo'])) {
                 return this[PROP + 'currValueInfo'][key];
@@ -747,19 +751,6 @@ define(function (require) {
      */
     lib.peek = function (target) {
         return obTypeOf(target) ? target.peek() : target;
-    };
-
-    /**
-     * 得到ob的value info。
-     * 例如：可以用value info标示value变化的触发者。
-     *
-     * @param {*} target 目标ob
-     * @return {*} value raw value
-     */
-    lib.peekValueInfo = function (target) {
-        if (obTypeOf(target)) {
-            return target[OB_VALUE_INFO_PROP];
-        }
     };
 
     /**
