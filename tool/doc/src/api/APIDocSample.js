@@ -8,15 +8,14 @@ define(function (require) {
     var schemaHelper = require('../common/schemaHelper');
     var dtLib = require('dt/lib');
 
-    require('../common/componentConfig');
+    require('dt/componentConfig');
 
     var SCHEMA_URL = '../../optionSchema.json';
     var TPL_TARGET = 'APIDocSample';
     var SELECTOR_TYPE = '.ecdoc-api-type div';
     var SELECTOR_DESC_CN = '.ecdoc-api-desc-cn div';
     var SELECTOR_DESC_EN = '.ecdoc-api-desc-en div';
-    var SELECTOR_DEFAULT = '.ecdoc-api-default div';
-    var SELECTOR_DEFAULT_EXPLANATION = '.ecdoc-api-default-explanation div';
+    var SELECTOR_DEFAULT = '.ecdoc-api-default pre';
     var SELECTOR_QUERY_AREA = '.ecdoc-api-query-area';
     var SELECTOR_QUERY_TAB = '.query-tab';
     var CSS_QUERY_TAB_ACTIVE = 'query-tab-active';
@@ -121,7 +120,7 @@ define(function (require) {
                     type: treeItem.type || [],
                     cnDesc: treeItem.descriptionCN || '无说明',
                     enDesc: treeItem.descriptionEN || 'No description',
-                    defaultValue: dtLib.encodeHTML(stringifyValue(treeItem.defaultValue)) || '',
+                    defaultValueText: dtLib.encodeHTML(treeItem.defaultValueText),
                     defaultExplanation: treeItem.defaultExplanation || ''
                 };
 
@@ -139,8 +138,7 @@ define(function (require) {
                 $el.find(SELECTOR_TYPE)[0].innerHTML = desc.type;
                 $el.find(SELECTOR_DESC_CN)[0].innerHTML = desc.cnDesc;
                 $el.find(SELECTOR_DESC_EN)[0].innerHTML = desc.enDesc;
-                $el.find(SELECTOR_DEFAULT)[0].innerHTML = desc.defaultValue;
-                $el.find(SELECTOR_DEFAULT_EXPLANATION)[0].innerHTML = desc.defaultExplanation;
+                $el.find(SELECTOR_DEFAULT)[0].innerHTML = desc.defaultValueText;
             }
         },
 
@@ -212,15 +210,6 @@ define(function (require) {
             console.log(result);
         }
     });
-
-    function stringifyValue(value) {
-        try {
-            return JSON.stringify(value);
-        }
-        catch (e) {
-        }
-        return value + '';
-    }
 
     return APIDocSample;
 });

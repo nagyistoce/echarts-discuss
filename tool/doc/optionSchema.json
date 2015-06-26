@@ -1065,6 +1065,7 @@
                     "type": "Object",
                     "descriptionCN": "文本样式，默认为白色字体",
                     "descriptionEN": "style for the tooltip text. Defaults to white.",
+                    "setApplicable": "tooltip/textStyle",
                     "$ref": "#definitions/textStyle",
                     "default": {
                         "color": "#fff"
@@ -1859,18 +1860,14 @@
                 },
                 "logLabelBase": {
                     "type": "number",
-                    "applicable": [
-                        "value"
-                    ],
+                    "applicable": "log",
                     "descriptionCN": "axis.type === 'log'时生效。指定时，axisLabel显示为指数形式，如指定为4时，axisLabel可显示为4²、4³。不指定时，显示为普通形式，如 1,000,000",
                     "descriptionEN": "This option works when axis.type === 'log'. If specified, axisLabel is drawn as exponent style. For example, when logLabelBase = 4, axisLabel is drawn like 4², 4³. If not specified, axisLabel is drawn like 1,000,000 as usual.",
                     "default": null
                 },
                 "logPositive": {
                     "type": "Object",
-                    "applicable": [
-                        "value"
-                    ],
+                    "applicable": "log",
                     "descriptionCN": "axis.type === 'log'时生效。指明是否使用反向log数轴（从而支持value为负值）。默认自适应，即如果value全为负值，则logPositive自动设为false，否则为true。",
                     "descriptionEN": "This option works when axis.type === 'log'. If set to false, negative value is supported. It is self-adapting by default, which means that if all of the data is negative, logPositive will be set to false, otherwise true.",
                     "default": null
@@ -2409,27 +2406,6 @@
                             "descriptionCN": "参见<a href=\"#ItemStyle\" title=\"\">itemStyle</a>，以下是treemap独有属性\n                                <table cellspacing=\"0\" class=\"ADoc_table full\">\n                                    <tbody><tr>\n                                        <th> 名称 </th>\n                                        <th> 默认值 </th>\n                                        <th> 描述 </th>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{Object}</b> breadcrumb </td>\n                                        <td> <pre>{\n    show: true,\n    textStyle: {}\n} </pre>\n                                        </td>\n                                        <td> 面包屑\n                                            <table cellspacing=\"0\" class=\"ADoc_table full\">\n                                                <tbody><tr>\n                                                    <th> 名称 </th>\n                                                    <th> 默认值 </th>\n                                                    <th> 描述 </th>\n                                                </tr>\n                                                <tr>\n                                                    <td> <b>{Boolean}</b> show </td>\n                                                    <td> true </td>\n                                                    <td> 是否展示面包屑 </td>\n                                                </tr>\n                                                <tr>\n                                                    <td> <b>{Object}</b> textStyle </td>\n                                                    <td> null </td>\n                                                    <td> 参见<a href=\"#TextStyle\" title=\"\">textStyle</a> </td>\n                                                </tr>\n\n                                                \n                                            </tbody></table>\n\n                                        </td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{number}</b> childBorderWidth </td>\n                                        <td> 1 </td>\n                                        <td> 二级边框宽度</td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{string}</b> childBorderColor </td>\n                                        <td> '' </td>\n                                        <td>\n                                            二级边框颜色\n                                        </td>\n                                    </tr>\n                                </tbody></table>",
                             "descriptionEN": "see <a href=\"#ItemStyle\" title=\"\">itemStyle</a>\n                                peculiar properties of treemap\n                                <table cellspacing=\"0\" class=\"ADoc_table full\">\n                                    <tbody><tr>\n                                        <th> Property </th>\n                                        <th> Default </th>\n                                        <th> Description </th>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{Object}</b> breadcrumb </td>\n                                        <td> <pre>{\n    show: true,\n    textStyle: {}\n} </pre>\n                                        </td>\n                                        <td> bread crumb\n                                            <table cellspacing=\"0\" class=\"ADoc_table full\">\n                                                <tbody><tr>\n                                                    <th> Property </th>\n                                                    <th> Default </th>\n                                                    <th> Description </th>\n                                                </tr>\n                                                <tr>\n                                                    <td> <b>{Boolean}</b> show </td>\n                                                    <td> true </td>\n                                                    <td> shown or not  </td>\n                                                </tr>\n                                                <tr>\n                                                    <td> <b>{Object}</b> textStyle </td>\n                                                    <td> null </td>\n                                                    <td>see <a href=\"#TextStyle\" title=\"\">textStyle</a> </td>\n                                                </tr>\n\n                                                \n                                            </tbody></table>\n\n                                        </td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{number}</b> childBorderWidth </td>\n                                        <td> 1 </td>\n                                        <td> width of borders of sub rectangles </td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{string}</b> childBorderColor </td>\n                                        <td> '' </td>\n                                        <td>\n                                            color of borders of sub rectangles\n                                        </td>\n                                    </tr>\n                                </tbody></table>",
                             "default": {}
-                        },
-                        {
-                            "type": "Object",
-                            "applicable": "tree",
-                            "descriptionCN": "参见<a href=\"#ItemStyle\" title=\"\">itemStyle</a>",
-                            "descriptionEN": "参见<a href=\"#ItemStyle\" title=\"\">itemStyle</a>",
-                            "default": {}
-                        },
-                        {
-                            "type": "Object",
-                            "applicable": "venn",
-                            "descriptionCN": "参见<a href=\"#ItemStyle\" title=\"\">itemStyle</a>",
-                            "descriptionEN": "see <a href=\"#ItemStyle\" title=\"\">itemStyle</a>",
-                            "default": {}
-                        },
-                        {
-                            "type": "Object",
-                            "applicable": "wordCloud",
-                            "descriptionCN": "参见<a href=\"#ItemStyle\" title=\"\">itemStyle</a>",
-                            "descriptionEN": "参见<a href=\"#ItemStyle\" title=\"\">itemStyle</a>",
-                            "default": {}
                         }
                     ]
                 },
@@ -2496,15 +2472,75 @@
                         {
                             "type": "Array",
                             "applicable": "tree",
-                            "descriptionCN": "只有一项的数组，为Object {}，内容如下：\n                                <table cellspacing=\"0\" class=\"ADoc_table full\">\n                                    <tbody><tr>\n                                        <th> 名称 </th>\n                                        <th> 默认值 </th>\n                                        <th> 描述 </th>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{string}</b> name </td>\n                                        <td> null </td>\n                                        <td> 数据名称 </td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{number}</b> value </td>\n                                        <td> null </td>\n                                        <td> 数据值 </td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{string}</b> symbol </td>\n                                        <td> 'circle' </td>\n                                        <td> 同<a href=\"#SeriesCartesian\" title=\"\">series（直角系）</a></td>\n                                    </tr>\n                                    <tr>\n                                        <td> {number|Array} symbolSize </td>\n                                        <td> 20</td>\n                                        <td> 所有该类目的节点的大小 </td>\n                                    </tr>\n                                    <tr>\n                                        <td> {Array} children </td>\n                                        <td> []</td>\n                                        <td> 子节点，每项的属性和父节点相同 </td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{Object}</b> itemStyle </td>\n                                        <td> {} </td>\n                                        <td>\n                                            参见\n                                            <a href=\"#ItemStyle\" title=\"\">\n                                                itemStyle\n                                            </a>\n                                            ，权重最高\n                                        </td>\n                                    </tr>\n                                </tbody></table>",
-                            "descriptionEN": "only one item，is Object {}，has properties：\n                                <table cellspacing=\"0\" class=\"ADoc_table full\">\n                                    <tbody><tr>\n                                        <th> Property </th>\n                                        <th> Default </th>\n                                        <th> Description </th>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{string}</b> name </td>\n                                        <td> null </td>\n                                        <td> name </td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{number}</b> value </td>\n                                        <td> null </td>\n                                        <td> value </td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{string}</b> symbol </td>\n                                        <td> 'circle' </td>\n                                        <td> see <a href=\"#SeriesCartesian\" title=\"\">series (Cartesian)</a></td>\n                                    </tr>\n                                    <tr>\n                                        <td> {number|Array} symbolSize </td>\n                                        <td> 20</td>\n                                        <td> size of the node </td>\n                                    </tr>\n                                    <tr>\n                                        <td> {Array} children </td>\n                                        <td> []</td>\n                                        <td> children nodes，same properties like parent's </td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{Object}</b> itemStyle </td>\n                                        <td> {} </td>\n                                        <td>\n                                            see\n                                            <a href=\"#ItemStyle\" title=\"\">\n                                                itemStyle\n                                            </a>\n                                            , highest weight\n                                        </td>\n                                    </tr>\n                                </tbody></table>",
+                            "descriptionCN": "只有一项的数组，为Object {}",
+                            "descriptionEN": "The array has only one item, which type is Object {}.",
+                            "items": {
+                                "type": "Object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "default": null,
+                                        "descriptionCN": "数据名称",
+                                        "descriptionEN": "name"
+                                    },
+                                    "value": {
+                                        "type": "number",
+                                        "default": null,
+                                        "descriptionCN": "数据值",
+                                        "descriptionEN": "value"
+                                    },
+                                    "symbol": {
+                                        "default": "circle",
+                                        "$ref": "#definitions/seriesItem/properties/symbol"
+                                    },
+                                    "symbolSize": {
+                                        "default": 20,
+                                        "$ref": "#definitions/seriesItem/properties/symbolSize",
+                                        "descriptionCN": "所有该类目的节点的大小",
+                                        "descriptionEN": "size of each node."
+                                    },
+                                    "children": {
+                                        "type": "Array",
+                                        "descriptionCN": "子节点，每项的属性和父节点相同",
+                                        "descriptionEN": "children",
+                                        "items": {
+                                            "type": "Object",
+                                            "descriptionCN": "子节点，每项的属性和父节点相同",
+                                            "descriptionEN": "Its structure is the same as its parent."
+                                        }
+                                    },
+                                    "itemStyle": {
+                                        "$ref": "#definitions/itemStyle"
+                                    }
+                                }
+                            },
                             "default": []
                         },
                         {
                             "type": "Array",
                             "applicable": "venn",
-                            "descriptionCN": "数据列表，长度为3，前两项分别表示两个集合，第三项表示交集。每一个数组项为Object {}，内容如下：\n                                <table cellspacing=\"0\" class=\"ADoc_table full\">\n                                    <tbody><tr>\n                                        <th> 名称 </th>\n                                        <th> 默认值 </th>\n                                        <th> 描述 </th>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{string}</b> name </td>\n                                        <td> null </td>\n                                        <td> 数据名称 </td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{Number}</b> value </td>\n                                        <td> null </td>\n                                        <td> 数据值 </td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{Object}</b> itemStyle </td>\n                                        <td> {} </td>\n                                        <td>\n                                            参见\n                                            <a href=\"#ItemStyle\" title=\"\">\n                                                itemStyle\n                                            </a>\n                                        </td>\n                                    </tr>\n                                </tbody></table>",
-                            "descriptionEN": "data list, contains 3 items, the first and second represent two collections, the third one is the intersection. Every item in the array is an object {}, as:\n                                <table cellspacing=\"0\" class=\"ADoc_table full\">\n                                    <tbody><tr>\n                                        <th> Property </th>\n                                        <th> Default </th>\n                                        <th> Description </th>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{string}</b> name </td>\n                                        <td> null </td>\n                                        <td> name </td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{Number}</b> value </td>\n                                        <td> null </td>\n                                        <td> value </td>\n                                    </tr>\n                                    <tr>\n                                        <td> <b>{Object}</b> itemStyle </td>\n                                        <td> {} </td>\n                                        <td>\n                                            see\n                                            <a href=\"#ItemStyle\" title=\"\">\n                                                itemStyle\n                                            </a>\n                                        </td>\n                                    </tr>\n                                </tbody></table>",
+                            "descriptionCN": "数据列表，长度为3，前两项分别表示两个集合，第三项表示交集。每一个数组项为Object {}",
+                            "descriptionEN": "data list, contains 3 items, the first and second represent two collections, the third one is the intersection. Every item in the array is an object {}",
+                            "items": {
+                                "type": "Object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "default": null,
+                                        "descriptionCN": "数据名称",
+                                        "descriptionEN": "name"
+                                    },
+                                    "value": {
+                                        "type": "number",
+                                        "default": null,
+                                        "descriptionCN": "数据值",
+                                        "descriptionEN": "value"
+                                    },
+                                    "itemStyle": {
+                                        "$ref": "#definitions/itemStyle"
+                                    }
+                                }
+                            },
                             "default": []
                         }
                     ]
@@ -3358,6 +3394,7 @@
                 "axisLine": {
                     "type": "Object",
                     "setApplicable": "gauge/axisLine",
+                    "applicable": "gauge",
                     "descriptionCN": "坐标轴线，默认显示",
                     "descriptionEN": "axis line. Defaults to show.",
                     "properties": {
@@ -3375,6 +3412,7 @@
                 "axisTick": {
                     "type": "Object",
                     "setApplicable": "gauge/axisTick",
+                    "applicable": "gauge",
                     "descriptionCN": "坐标轴小标记，默认显示 ",
                     "descriptionEN": "axis tick. Defaults to show. ",
                     "properties": {
@@ -3418,66 +3456,143 @@
                 "splitLine": {
                     "type": "Object",
                     "applicable": "gauge",
-                    "descriptionCN": "主分隔线，默认显示\n                                <br><br>属性show控制显示与否，\n                                <br><br>属性length控制线长\n                                <br><br>属性lineStyle（详见<a href=\"#LineStyle\" title=\"\">lineStyle</a>）控制线条样式，",
-                    "descriptionEN": "split line. Defaults to show.\n                                <br><br>The property \"show\" specifies whether to show splitLine or not.\n                                <br><br>The property \"length\" controls line length for splitLine.\n                                <br><br>The property \"lineStyle\" (see <a href=\"#LineStyle\" title=\"\">lineStyle</a>) controls line style for splitLine.",
-                    "default": {
-                        "show": true,
-                        "length": 30,
+                    "setApplicable": "gauge/splitLine",
+                    "descriptionCN": "主分隔线，默认显示 ",
+                    "descriptionEN": "split line. Defaults to show. ",
+                    "properties": {
+                        "show": {
+                            "type": "boolean",
+                            "default": true,
+                            "descriptionCN": "显示与否",
+                            "descriptionEN": "The property \"show\" specifies whether to show splitLine or not."
+                        },
+                        "length": {
+                            "type": "number",
+                            "default": 30,
+                            "descriptionCN": "控制线的长度",
+                            "descriptionEN": "The property \"length\" controls line length for splitLine."
+                        },
                         "lineStyle": {
-                            "color": "#eee",
-                            "width": 2,
-                            "type": "solid"
+                            "$ref": "#definitions/lineStyle"
                         }
                     }
                 },
                 "pointer": {
                     "type": "Object",
                     "applicable": "gauge",
-                    "descriptionCN": "指针样式\n                                <br>属性length控制线长，百分比相对的是仪表盘的外半径\n                                <br>属性width控制指针最宽处，\n                                <br>属性color控制指针颜色",
-                    "descriptionEN": "pointer style\n                                <br>The property \"length\" controls line length for pointer. If in percent, it is relative to the outer radius of the gauge.\n                                <br>The property \"width\" controls the widest point of the pointer.\n                                <br>The property \"color\" controls the color of the pointer.",
-                    "default": {
-                        "length": "80%",
-                        "width": 8,
-                        "color": "auto"
+                    "descriptionCN": "指针样式",
+                    "descriptionEN": "pointer style ",
+                    "properties": {
+                        "length": {
+                            "type": [
+                                "string",
+                                "number"
+                            ],
+                            "default": "80%",
+                            "descriptionCN": "属性length控制线长，百分比相对的是仪表盘的外半径 ",
+                            "descriptionEN": "The property \"length\" controls line length for pointer. If in percent, it is relative to the outer radius of the gauge."
+                        },
+                        "width": {
+                            "type": "number",
+                            "default": 8,
+                            "descriptionCN": "属性width控制指针最宽处",
+                            "descriptionEN": "The property \"width\" controls the widest point of the pointer. "
+                        },
+                        "color": {
+                            "type": "color",
+                            "default": "auto",
+                            "descriptionCN": "属性color控制指针颜色",
+                            "descriptionEN": "The property \"color\" controls the color of the pointer."
+                        }
                     }
                 },
                 "title": {
                     "type": "Object",
                     "applicable": "gauge",
-                    "descriptionCN": "仪表盘标题\n                                <br><br>属性show控制显示与否，\n                                <br><br>属性offsetCenter用于标题定位，数组为横纵相对仪表盘圆心坐标偏移，支持百分比（相对外半径），\n                                <br><br>属性textStyle（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>）控制文本样式",
-                    "descriptionEN": "gauge title\n                                <br><br>The property \"show\" specifies whether to show gauge title or not.\n                                <br><br>The property \"offsetCenter\" is used to locate title. Offset to the center coordinates if the array is x-axis. If in percent, it is relative to the outer radius of the gauge.\n                                <br><br>The property \"lineStyle\" (see <a href=\"#TextStyle\" title=\"\">textStyle</a>) controls line style for gauge title.",
-                    "default": {
-                        "show": true,
-                        "offsetCenter": [
-                            0,
-                            "-40%"
-                        ],
+                    "setApplicable": "gauge/title",
+                    "descriptionCN": "仪表盘标题",
+                    "descriptionEN": "title of gauge",
+                    "properties": {
+                        "show": {
+                            "type": "boolean",
+                            "default": true,
+                            "descriptionCN": "显示与否",
+                            "descriptionEN": "The property \"show\" specifies whether to show title or not."
+                        },
+                        "offsetCenter": {
+                            "type": "Array",
+                            "default": [
+                                0,
+                                "-40%"
+                            ],
+                            "descriptionCN": "属性offsetCenter用于标题定位，数组为横纵相对仪表盘圆心坐标偏移，支持百分比（相对外半径）",
+                            "descriptionEN": "The property \"offsetCenter\" is used to locate title. Offset to the center coordinates if the array is x-axis. If in percent, it is relative to the outer radius of the gauge. "
+                        },
                         "textStyle": {
-                            "color": "#333",
-                            "fontSize": 15
+                            "$ref": "#definitions/textStyle"
                         }
                     }
                 },
                 "detail": {
                     "type": "Object",
                     "applicable": "gauge",
-                    "descriptionCN": "仪表盘详情\n                                <br><br>属性show控制显示与否，\n                                <br>属性backgroundColor控制边框颜色，\n                                <br>属性borderWidth控制边框线宽，\n                                <br>属性borderColor控制边框颜色，\n                                <br>属性width控制详情宽度，\n                                <br>属性height控制详情高度，\n                                <br>属性offsetCenter用于详情定位，数组为横纵相对仪表盘圆心坐标偏移，支持百分比（相对外半径），\n                                <br>属性formatter可以格式化文本，\n                                <br>属性textStyle（详见<a href=\"#TextStyle\" title=\"\">textStyle</a>）控制文本样式",
-                    "descriptionEN": "gauge detail\n                                <br><br>The property \"show\" specifies whether to show detail or not.\n                                <br>The property \"backgroundColor\" controls the background color of the detail.\n                                <br>The property \"borderWidth\" controls the width of border around the detail.\n                                <br>The property \"borderColor\" controls the color of border around the detail.\n                                <br>The property \"width\" controls the width of the detail.\n                                <br>The property \"height\" controls the height of the detail.\n                                <br>The property \"offsetCenter\" is used to locate title. Offset to the center coordinates if the array is x-axis. If in percent, it is relative to the outer radius of the gauge;\n                                <br>The property \"formatter\" controls tooltip formatting;\n                                <br>The property \"lineStyle\" (see <a href=\"#TextStyle\" title=\"\">textStyle</a>) controls line style for tooltip.",
-                    "default": {
-                        "show": true,
-                        "backgroundColor": "rgba(0,0,0,0)",
-                        "borderWidth": 0,
-                        "borderColor": "#ccc",
-                        "width": 100,
-                        "height": 40,
-                        "offsetCenter": [
-                            0,
-                            "40%"
-                        ],
-                        "formatter": null,
+                    "setApplicable": "gauge/detail",
+                    "descriptionCN": "仪表盘详情",
+                    "descriptionEN": "detail of gauge",
+                    "properties": {
+                        "show": {
+                            "type": "boolean",
+                            "default": true,
+                            "descriptionCN": "显示与否",
+                            "descriptionEN": "The property \"show\" specifies whether to show detail or not."
+                        },
+                        "backgroundColor": {
+                            "type": "color",
+                            "default": "rgba(0,0,0,0)",
+                            "descriptionCN": "背景颜色",
+                            "descriptionEN": "background color"
+                        },
+                        "borderWidth": {
+                            "type": "number",
+                            "default": 0,
+                            "descriptionCN": "边框线宽",
+                            "descriptionEN": "border width"
+                        },
+                        "borderColor": {
+                            "type": "color",
+                            "default": "#ccc",
+                            "descriptionCN": "边框颜色",
+                            "descriptionEN": "border color"
+                        },
+                        "width": {
+                            "type": "number",
+                            "default": 100,
+                            "descriptionCN": "详情宽度",
+                            "descriptionEN": "width of detail"
+                        },
+                        "height": {
+                            "type": "number",
+                            "default": 40,
+                            "descriptionCN": "详情高度",
+                            "descriptionEN": "height of detail"
+                        },
+                        "offsetCenter": {
+                            "type": "Array",
+                            "default": [
+                                0,
+                                "-40%"
+                            ],
+                            "descriptionCN": "属性offsetCenter用于标题定位，数组为横纵相对仪表盘圆心坐标偏移，支持百分比（相对外半径）",
+                            "descriptionEN": "The property \"offsetCenter\" is used to locate title. Offset to the center coordinates if the array is x-axis. If in percent, it is relative to the outer radius of the gauge. "
+                        },
+                        "formatter": {
+                            "type": "Function",
+                            "default": null,
+                            "descriptionCN": "格式化文本",
+                            "descriptionEN": "formatter of detail."
+                        },
                         "textStyle": {
-                            "color": "auto",
-                            "fontSize": 30
+                            "$ref": "#definitions/textStyle"
                         }
                     }
                 },
@@ -4344,7 +4459,18 @@
                         },
                         {
                             "type": "color",
-                            "applicable": "gauge/axisTick",
+                            "applicable": [
+                                "gauge/axisTick"
+                            ],
+                            "default": "#eee",
+                            "descriptionCN": "颜色",
+                            "descriptionEN": "color"
+                        },
+                        {
+                            "type": "color",
+                            "applicable": [
+                                "gauge/splitLine"
+                            ],
                             "default": "#eee",
                             "descriptionCN": "颜色",
                             "descriptionEN": "color"
@@ -4376,6 +4502,13 @@
                             "type": "number",
                             "applicable": "gauge/axisTick",
                             "default": 1,
+                            "descriptionCN": "线宽",
+                            "descriptionEN": "width of the line."
+                        },
+                        {
+                            "type": "number",
+                            "applicable": "gauge/splitLine",
+                            "default": 2,
                             "descriptionCN": "线宽",
                             "descriptionEN": "width of the line."
                         }
@@ -4503,15 +4636,38 @@
             "type": "Object",
             "properties": {
                 "color": {
-                    "type": "color",
-                    "descriptionCN": "颜色",
-                    "descriptionEN": "color",
-                    "defaultExplanation": "各异"
+                    "oneOf": [
+                        {
+                            "type": "color",
+                            "descriptionCN": "颜色",
+                            "descriptionEN": "color",
+                            "defaultExplanation": "各异"
+                        },
+                        {
+                            "type": "color",
+                            "applicable": [
+                                "gauge/title"
+                            ],
+                            "default": "#333",
+                            "descriptionCN": "颜色",
+                            "descriptionEN": "color"
+                        },
+                        {
+                            "type": "color",
+                            "applicable": [
+                                "gauge/detail"
+                            ],
+                            "default": "auto",
+                            "descriptionCN": "颜色",
+                            "descriptionEN": "color"
+                        }
+                    ]
                 },
                 "decoration": {
                     "type": "string",
                     "descriptionCN": "修饰，仅对tooltip.textStyle生效",
                     "descriptionEN": "decoration. Applicable to tooltip.textStyle only.",
+                    "applicable": "tooltip/textStyle",
                     "default": "none"
                 },
                 "align": {
@@ -4533,10 +4689,32 @@
                     "default": "Arial, Verdana, sans-serif"
                 },
                 "fontSize": {
-                    "type": "number",
-                    "descriptionCN": "字号 ，单位px",
-                    "descriptionEN": "font size, in px.",
-                    "default": 12
+                    "oneOf": [
+                        {
+                            "type": "number",
+                            "descriptionCN": "字号 ，单位px",
+                            "descriptionEN": "font size, in px.",
+                            "default": 12
+                        },
+                        {
+                            "type": "number",
+                            "applicable": [
+                                "gauge/title"
+                            ],
+                            "default": 15,
+                            "descriptionCN": "字号，单位px",
+                            "descriptionEN": "font size, in px."
+                        },
+                        {
+                            "type": "number",
+                            "applicable": [
+                                "gauge/detail"
+                            ],
+                            "default": 30,
+                            "descriptionCN": "字号，单位px",
+                            "descriptionEN": "font size, in px."
+                        }
+                    ]
                 },
                 "fontStyle": {
                     "type": "string",
@@ -4682,6 +4860,7 @@
                     "type": "string",
                     "descriptionCN": "同<a href=\"#SeriesCartesian\" title=\"\">series（直角系）</a>",
                     "descriptionEN": "See <a href=\"#SeriesCartesian\" title=\"\">series (Cartesian)</a>",
+                    "$ref": "#definitions/seriesItem/properties/symbol",
                     "default": "circle"
                 },
                 "symbolSize": {
@@ -4697,6 +4876,7 @@
                     "type": "Object",
                     "descriptionCN": "详见 <a href=\"#ItemStyle\">itemStyle</a>，注意力导向图单个 category 的 itemStyle 中没有 nodeStyle 的配置项，而是直接使用 normal(emphasis) 下的 color, borderWidth 和 borderColor",
                     "descriptionEN": "see <a href=\"#ItemStyle\">itemStyle</a>. Notice that itemStyle in thecategory of force has no nodeStyle under the normal(emphasis) option. Instead itemStyle.normal(emphasis).color|borderWidth|borderColor will be used",
+                    "$ref": "#definitions/itemStyle",
                     "defaultExplanation": ""
                 }
             }
@@ -4817,8 +4997,9 @@
                 },
                 "itemStyle": {
                     "type": "Object",
-                    "descriptionCN": "see <a href=\"#LinkStyle\">linkStyle</a>",
+                    "descriptionCN": "详见 <a href=\"#LinkStyle\">linkStyle</a>",
                     "descriptionEN": "see <a href=\"#LinkStyle\">linkStyle</a>",
+                    "$ref": "#definitions/linkStyle",
                     "defaultExplanation": ""
                 }
             }

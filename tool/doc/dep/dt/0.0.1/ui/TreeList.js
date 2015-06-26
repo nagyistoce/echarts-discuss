@@ -1,5 +1,5 @@
 /**
- * @file api doc tree
+ * @file Tree list (forest)
  * @author sushuang(sushuang@baidu.com)
  */
 define(function (require) {

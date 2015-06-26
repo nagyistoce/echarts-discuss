@@ -1,7 +1,6 @@
 /**
- * @file 单选或者多选器
+ * @file Check buttons and radio buttons.
  * @author sushuang(sushuang@baidu.com)
- * @date 2014-05
  */
 define(function (require) {
 

@@ -7,8 +7,9 @@ define(function (require) {
     var Component = require('dt/ui/Component');
     var schemaHelper = require('../common/schemaHelper');
     var dtLib = require('dt/lib');
+    var dialog = require('dt/ui/dialog');
 
-    require('../common/componentConfig');
+    require('dt/componentConfig');
 
     var SCHEMA_URL = '../../optionSchema.json';
     var TPL_TARGET = 'SchemaEditor';
@@ -20,6 +21,8 @@ define(function (require) {
     var SELECTOR_RESET_BUTTON = '.reset-btn';
     var SELECTOR_DESC_RENDERED_CN = '.desc-rendered-cn';
     var SELECTOR_DESC_RENDERED_EN = '.desc-rendered-en';
+    var SELECTOR_QUESTION = '.ecdoc-question';
+    var ATTR_TIP_TPL_TARGET = 'data-tip-tpl'
 
     /**
      * 编辑端入口
@@ -61,16 +64,6 @@ define(function (require) {
                 var item = schemaHelper.EC_OPTION_TYPE[i];
                 valueTypes.push({value: item, text: item});
             }
-
-            // Visiable control of edit block.
-            // var blockDefine = viewModel.blockDefine;
-            // for (var type in blockDefine) {
-            //     if (blockDefine.hasOwnProperty(type)) {
-            //         blockDefine[type].visiableOb.subscribe(
-            //             $.proxy(updateVisible, this, blockDefine[type].items)
-            //         );
-            //     }
-            // }
 
             $.getJSON(SCHEMA_URL, $.proxy(this._handleSchemaLoaded, this));
         },
@@ -114,6 +107,7 @@ define(function (require) {
 
             this._initDescViewHTML();
             this._initQuery();
+            this._initTip();
 
             this._disposable(
                 this._sub('schemaTree').viewModel('selected')
@@ -121,6 +115,16 @@ define(function (require) {
             );
 
             this._initQueryArea();
+        },
+
+        _initTip: function () {
+            var that = this;
+            this.$el().find(SELECTOR_QUESTION).on('click', function () {
+                dialog.alert({
+                    content: that._renderTpl($(this).attr(ATTR_TIP_TPL_TARGET)),
+                    encodeHTML: false
+                });
+            });
         },
 
         _initQuery: function () {

@@ -1,7 +1,6 @@
 /**
- * @file 小文本输入器
+ * @file Text input and textarea input.
  * @author sushuang(sushuang@baidu.com)
- * @date 2014-05
  */
 
 define(function (require) {

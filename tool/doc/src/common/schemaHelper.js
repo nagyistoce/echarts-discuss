@@ -61,6 +61,8 @@ define(function (require) {
     // Inner constants
     var CODE_INDENT_BASE = 4;
     var LINE_BREAK = '\n';
+    var UNDEFINED;
+    var DEFAULT_VALUE_BRIEF_LENGTH = 20;
 
     /**
      * @public
@@ -101,16 +103,9 @@ define(function (require) {
     );
 
     /**
-     * option path 用于在 docJsonRenderer 绘制出的doctree中检索定义内容。
+     * 用于在 docJsonRenderer 绘制出的doctree中检索定义内容。
      * 可以返回多个检索结果。
-     * option path 是类似于这样的东西：
-     *
-     * 'tooltip.formatter'
-     * 'axis[i].symbol'
-     *     当路途中有数组时，[i]表示直接进入数组元素定义继续检索。
-     * 'series[i](pie,line).itemStyle.normal.borderColor'
-     *     表示，解析到series[i]将当前context中applicable设置成pie。
-     *     context中的applicable用于oneOf的选取和properties限定。
+     * optionPath和fuzzyPath的解释，参见 parseOptionPath。
      *
      * @public
      * @param {Object} docTree
@@ -131,8 +126,10 @@ define(function (require) {
         var context = {
             originalDocTree: docTree,
             result: [],
-            optionPath: args.optionPath ? parseOptionPath(args.optionPath, true) : null,
-            fuzzyPath: args.fuzzyPath ? parseOptionPath(args.fuzzyPath, true) : null,
+            optionPath: args.optionPath
+                ? schemaHelper.parseOptionPath(args.optionPath, true) : null,
+            fuzzyPath: args.fuzzyPath
+                ? schemaHelper.parseOptionPath(args.fuzzyPath, true) : null,
             anyText: args.anyText && $.trim(args.anyText) || null
         };
 
@@ -159,15 +156,19 @@ define(function (require) {
             }
 
             var pathItem = (context.optionPath || context.fuzzyPath)[pathIndex];
+
             if (!pathItem) {
                 context.result.push(docTree);
-                return;
+
+                if (!docTree.isEnumParent) {
+                    // Enum children can be matched togather with their parent.
+                    return;
+                }
             }
 
             var subApplicable = applicable;
-            var pathItemApp = pathItem.applicable;
-            if (pathItemApp) {
-                subApplicable = new dtLib.Set(pathItemApp);
+            if (pathItem && pathItem.applicable) {
+                subApplicable = new dtLib.Set(pathItem.applicable);
             }
 
             for (var i = 0, len = (docTree.children || []).length; i < len; i++) {
@@ -257,15 +258,7 @@ define(function (require) {
 
     /**
      * option path 用于在echarts option schema中检索定义内容。
-     * 可以返回多个检索结果。
-     * option path 是类似于这样的东西：
-     *
-     * 'tooltip.formatter'
-     * 'axis[i].symbol'
-     *     当路途中有数组时，[i]表示直接进入数组元素定义继续检索。
-     * 'series[i](applicable:pie,line).itemStyle.normal.borderColor'
-     *     表示，解析到series[i]将当前context中applicable设置成pie。
-     *     context中的applicable用于oneOf的选取和properties限定。
+     * 可以返回多个检索结果。optionPath的解释，参见 parseOptionPath。
      *
      * 为何不使用json ref？因为这些原因，ref不合适用使用。
      * ref中需要有oneOf、properties、items等辅助结构；
@@ -280,7 +273,7 @@ define(function (require) {
      * @throws {Error}
      */
     schemaHelper.querySchema = function (schema, optionPath) {
-        var pathArr = parseOptionPath(optionPath);
+        var pathArr = schemaHelper.parseOptionPath(optionPath);
         var result = [];
         var context = {
             originalSchema: schema,
@@ -376,6 +369,15 @@ define(function (require) {
     }
 
     /**
+     * option path 是类似于这样的东西：
+     *
+     * 'tooltip.formatter'
+     * 'axis[i].symbol'
+     *     当路途中有数组时，[i]表示直接进入数组元素定义继续检索。
+     * 'series[i](applicable:pie,line).itemStyle.normal.borderColor'
+     *     表示，解析到series[i]将当前context中applicable设置成pie。
+     *     context中的applicable用于oneOf的选取和properties限定。
+     *
      * Input: 'asdf(bb,cc)[i](dd,ee).zzz[i][i]. ee() .ff',
      * Output:
      * When arrayOnlyAtom is false: [
@@ -394,9 +396,9 @@ define(function (require) {
      *     {propertyName: 'ff'}
      * ]
      *
-     * @inner
+     * @public
      */
-    function parseOptionPath(optionPath, arrayOnlyAtom) {
+    schemaHelper.parseOptionPath = function (optionPath, arrayOnlyAtom) {
         var errorInfo = 'Path is illegal: \'' + optionPath + '\'';
         dtLib.assert(
             optionPath && (optionPath = $.trim(optionPath)), errorInfo
@@ -445,7 +447,7 @@ define(function (require) {
         }
 
         return retArr;
-    }
+    };
 
     /**
      * Build doc by schema.
@@ -530,7 +532,7 @@ define(function (require) {
                     handleObject(renderBase, schemaItem, context);
                 }
                 else {
-                    handlePrimary(renderBase, schemaItem, context);
+                    handleAtom(renderBase, schemaItem, context);
                 }
             }
             else { // context.mode === 'schema'
@@ -550,7 +552,7 @@ define(function (require) {
                     handleObject(renderBase, schemaItem, context);
                 }
                 else {
-                    handlePrimary(renderBase, schemaItem, context);
+                    handleAtom(renderBase, schemaItem, context);
                 }
             }
 
@@ -576,8 +578,8 @@ define(function (require) {
                         itemName: context.itemName,
                         relationInfo: context.relationInfo,
                         enumInfo: BuildDocInfo.IS_ENUM_ITEM,
-                        refFrom: context.refFrom,
-                        arrayFrom: context.arrayFrom
+                        refFrom: context.refFrom ? context.refFrom.slice() : UNDEFINED,
+                        arrayFrom: context.arrayFrom ? context.arrayFrom.slice() : UNDEFINED
                     })
                 );
 
@@ -658,9 +660,9 @@ define(function (require) {
                     makeContext({
                         itemName: context.itemName,
                         relationInfo: context.relationInfo,
-                        refFrom: context.refFrom,
                         oneOfInfo: BuildDocInfo.IS_ONE_OF_ITEM,
-                        arrayFrom: context.arrayFrom
+                        refFrom: context.refFrom ? context.refFrom.slice() : UNDEFINED,
+                        arrayFrom: context.arrayFrom ? context.arrayFrom.slice() : UNDEFINED
                     })
                 );
             }
@@ -689,7 +691,7 @@ define(function (require) {
         }
 
         function handleArray(renderBase, schemaItem, context) {
-            context.selfInfo = BuildDocInfo.IS_ARRAY;
+            context.selfInfo = BuildDocInfo.HAS_ARRAY_ITEMS;
             var subRenderBase = context.docRenderer(renderBase, schemaItem, context);
             var arrayFrom = context.arrayFrom;
 
@@ -699,7 +701,7 @@ define(function (require) {
                 makeContext({
                     itemName: context.itemName, // Actually this is array base item name.
                     relationInfo: BuildDocInfo.IS_ARRAY_ITEM,
-                    refFrom: null,
+                    refFrom: UNDEFINED,
                     arrayFrom: arrayFrom
                         ? (arrayFrom.push(schemaItem), arrayFrom)
                         : [schemaItem]
@@ -708,7 +710,7 @@ define(function (require) {
         }
 
         function handleObject(renderBase, schemaItem, context) {
-            context.selfInfo = BuildDocInfo.IS_OBJECT;
+            context.selfInfo = BuildDocInfo.HAS_OBJECT_PROPERTIES;
             var subRenderBase = context.docRenderer(renderBase, schemaItem, context);
 
             var properties = schemaItem.properties;
@@ -720,16 +722,16 @@ define(function (require) {
                         makeContext({
                             itemName: propertyName,
                             relationInfo: BuildDocInfo.IS_OBJECT_ITEM,
-                            refFrom: null,
-                            arrayFrom: null
+                            refFrom: UNDEFINED,
+                            arrayFrom: UNDEFINED
                         })
                     );
                 }
             }
         }
 
-        function handlePrimary(renderBase, schemaItem, context) {
-            context.selfInfo = BuildDocInfo.IS_PRIMARY;
+        function handleAtom(renderBase, schemaItem, context) {
+            context.selfInfo = BuildDocInfo.IS_ATOM;
             context.docRenderer(renderBase, schemaItem, context);
         }
     };
@@ -739,19 +741,25 @@ define(function (require) {
      * @type {Enum}
      */
     var BuildDocInfo = schemaHelper.buildDoc.BuildDocInfo = {
+
         // relation info
         IS_OBJECT_ITEM: 'isPropertyItem',
         IS_ARRAY_ITEM: 'isArrayItem',
         IS_DEFINITION_ITEM: 'isDefinitionItem',
+
         // self info
-        IS_OBJECT: 'isObject',
-        IS_ARRAY: 'isArray',
-        IS_PRIMARY: 'isPrimary',
+        HAS_OBJECT_PROPERTIES: 'hasObjectProperties', // An schemaItem with type of object and no properties defined
+                                          // belongs to atom.
+        HAS_ARRAY_ITEMS: 'hasArrayItems',
+        IS_ATOM: 'isAtom', // SchemaItem with type of neither 'object' or 'array',
+                           // and schemaItem with type of 'object' but do not has properties defined.
         IS_REF: 'isRef',
         IS_DEFINITION_PARENT: 'isDefinitionParent',
+
         // oneOf info (only for 'schema' mode)
         IS_ONE_OF_PARENT: 'isOneOfParent',
         IS_ONE_OF_ITEM: 'isOneOfItem',
+
         // enum info
         IS_ENUM_ITEM: 'isEnumItem',
         IS_ENUM_PARENT: 'isEnumParent'
@@ -765,11 +773,6 @@ define(function (require) {
         var enumInfo = context.enumInfo;
         var children = [];
         var subRenderBase;
-
-        // TODO
-        // ref description merge. i.e.
-        // { "$ref": ..., descriptionCN: "特殊的描述" }, which should be displayed.
-
         var prefix = '';
         var suffix = '';
         var childrenBrief = ' ... ';
@@ -790,29 +793,29 @@ define(function (require) {
             childrenBrief = ' type: \'' + context.applicable.list()[0] + '\', ... ';
         }
 
-        if (selfInfo === BuildDocInfo.IS_OBJECT) {
-            subRenderBase = makeSubRenderBase(schemaItem, context, {
-                childrenPre: prefix + '{',
-                childrenPost: '}' + suffix + ',',
-                childrenBrief: childrenBrief
-            });
+        if (selfInfo === BuildDocInfo.HAS_OBJECT_PROPERTIES) {
+            subRenderBase = makeSubRenderBase(schemaItem, context);
+            subRenderBase.childrenPre = prefix + '{';
+            subRenderBase.childrenPost = '}' + suffix + ',';
+            subRenderBase.childrenBrief = childrenBrief;
             children.push(subRenderBase);
         }
-        else if (selfInfo === BuildDocInfo.IS_ARRAY) {
+        else if (selfInfo === BuildDocInfo.HAS_ARRAY_ITEMS) {
             subRenderBase = renderBase;
         }
-        else if (selfInfo === BuildDocInfo.IS_PRIMARY) {
-            subRenderBase = makeSubRenderBase(schemaItem, context, {
-                text: prefix + schemaHelper.getDefaultValueBrief(schemaItem, context) + ','
-            });
+        else if (selfInfo === BuildDocInfo.IS_ATOM) {
+            subRenderBase = makeSubRenderBase(schemaItem, context);
+            subRenderBase.text = ''
+                + prefix
+                + schemaHelper.getDefaultValueText(subRenderBase.defau, {getBrief: true})
+                + suffix + ',';
             children.push(subRenderBase);
         }
         else if (enumInfo === BuildDocInfo.IS_ENUM_PARENT) { // selfInfo == undefined
-            subRenderBase = makeSubRenderBase(schemaItem, context, {
-                childrenPre: prefix,
-                childrenPost: suffix + ',',
-                childrenBrief: childrenBrief
-            });
+            subRenderBase = makeSubRenderBase(schemaItem, context);
+            subRenderBase.childrenPre = prefix;
+            subRenderBase.childrenPost = suffix + ',';
+            subRenderBase.childrenBrief = childrenBrief;
             children.push(subRenderBase);
         }
 
@@ -822,16 +825,17 @@ define(function (require) {
 
         return subRenderBase;
 
-        function makeSubRenderBase(schemaItem, context, props) {
+        function makeSubRenderBase(schemaItem, context) {
+            var result = mergeByRef(schemaItem, context);
             var sub = {
                 value: 'ecapidocid-' + dtLib.localUID(),
                 isEnumParent: context.enumInfo === BuildDocInfo.IS_ENUM_PARENT,
                 applicable: new dtLib.Set(context.applicable),
                 type: schemaItem.type,
-                descriptionCN: schemaItem.descriptionCN,
-                descriptionEN: schemaItem.descriptionEN,
-                defaultValue: schemaItem['default'],
-                defaultExplanation: schemaItem.defaultExplanation,
+                descriptionCN: result.descriptionCN,
+                descriptionEN: result.descriptionEN,
+                defau: result.defau,
+                defaultValueText: schemaHelper.getDefaultValueText(result.defau),
                 tooltipEncodeHTML: false
             };
 
@@ -842,7 +846,36 @@ define(function (require) {
                 sub.propertyName = context.itemName; // For query.
             }
 
-            return $.extend(sub, props);
+            return sub;
+        }
+
+        function mergeByRef(schemaItem, context) {
+            var refFrom = (context.refFrom || []).slice();
+            refFrom.push(schemaItem);
+            var arrCN = [];
+            var arrEN = [];
+            var defau = {type: schemaItem.type};
+
+            for (var i = refFrom.length - 1; i >= 0; i--) {
+                if (refFrom[i].descriptionCN) {
+                    arrCN.push(refFrom[i].descriptionCN);
+                }
+                if (refFrom[i].descriptionEN) {
+                    arrEN.push(refFrom[i].descriptionEN);
+                }
+                if (refFrom[i].hasOwnProperty('default')) {
+                    defau['default'] = refFrom[i]['default'];
+                }
+                if (refFrom[i].hasOwnProperty('defaultExplanation')) {
+                    defau.defaultExplanation = refFrom[i].defaultExplanation;
+                }
+            }
+
+            return {
+                descriptionCN: arrCN.join('<br>\n'),
+                descriptionEN: arrEN.join('<br>\n'),
+                defau: defau
+            };
         }
     };
 
@@ -858,9 +891,9 @@ define(function (require) {
             type: schemaItem.type,
             ref: schemaItem['$ref'],
             applicable: new dtLib.Set(schemaItem.applicable),
-            defaultValue: schemaItem['default'],
             enumerateBy: schemaItem.enumerateBy,
             setApplicable: schemaItem.setApplicable,
+            defaultValue: schemaItem['default'],
             defaultExplanation: schemaItem.defaultExplanation,
             tooltipEncodeHTML: false
         };
@@ -872,7 +905,9 @@ define(function (require) {
             'function': 'function () {...}',
             '?': ''
         };
-        var defualtValue = schemaHelper.getDefaultValueBrief(schemaItem, context, mapping);
+        var defualtValue = schemaHelper.getDefaultValueText(
+            schemaItem, {getBrief: true, briefMapping: mapping}
+        );
         defualtValue = defualtValue ? (': ' + defualtValue) : '';
 
         var applicable = subRenderBase.applicable.list();
@@ -887,7 +922,7 @@ define(function (require) {
         else if (context.relationInfo === BuildDocInfo.IS_ARRAY_ITEM) {
             subRenderBase.text = '[ArrayItem] ' + context.itemName + defualtValue + applicable + ref;
         }
-        else if (context.selfInfo === BuildDocInfo.IS_PRIMARY) {
+        else if (context.selfInfo === BuildDocInfo.IS_ATOM) {
             subRenderBase.text = context.itemName + defualtValue + applicable + ref;
         }
         else {
@@ -1058,13 +1093,21 @@ define(function (require) {
     };
 
     /**
-     * 得到默认值的简写，在一行之内显示
+     * 得到默认值的简写，在一行之内显示。
+     * defau中，设置了default但值是undefined，和没有设置default，是不一样的。
      *
      * @public
-     * @return {strting}
+     * @param {Object} defau
+     * @param {Object} [defau.default]
+     * @param {Object} [defau.defaultExplanation]
+     * @param {Object} options
+     * @param {boolean} [options.getBrief] default false, otherwise return full text.
+     * @param {Object} [options.briefMapping]
+     * @return {strting} default value text
      */
-    schemaHelper.getDefaultValueBrief = function (schemaItem, context, mapping) {
-        mapping = $.extend(
+    schemaHelper.getDefaultValueText = function (defau, options) {
+        options = options || {};
+        var briefMapping = $.extend(
             {
                 'object': '{ ... }',
                 'array': '[ ... ]',
@@ -1072,27 +1115,64 @@ define(function (require) {
                 'function': 'function () { ... }',
                 '?': ' ... '
             },
-            mapping
+            options.briefMapping
         );
 
-        if (schemaItem.hasOwnProperty('default')) {
-            var defaultValue = schemaItem['default'];
+        if (defau.hasOwnProperty('default')) {
+            var defaultValue = defau['default'];
             var type = $.type(defaultValue);
+
             if ('null,undefined,number,boolean'.indexOf(type) >= 0) {
                 return defaultValue + '';
             }
             else if (type === 'string') {
-                return '\'' + defaultValue + '\'';
+                return '\'' + (
+                    options.getBrief
+                        ? cutString(defaultValue, DEFAULT_VALUE_BRIEF_LENGTH)
+                        : defaultValue
+                ) + '\'';
             }
-            else if (mapping[type]) {
-                return mapping[type];
+            else {
+                if (options.getBrief) {
+                    return briefMapping[type] || briefMapping['?'];
+                }
+                else {
+                    try {
+                        // FIXME
+                        // json2?
+                        return JSON.stringify(defaultValue, null, 4);
+                    }
+                    catch (e) {
+                        return defaultValue + '';
+                    }
+                }
             }
         }
-        else if (schemaItem.hasOwnProperty('defaultExplanation')) {
-            return '<' + schemaItem.defaultExplanation + '>';
+        else if (defau.hasOwnProperty('defaultExplanation') && defau.defaultExplanation) {
+            var exp = defau.defaultExplanation ? defau.defaultExplanation : '';
+            return options.getBrief
+                ? ('<' + cutString(exp, DEFAULT_VALUE_BRIEF_LENGTH) + '>')
+                : exp;
         }
-        return mapping['?'];
+        else {
+            if (options.getBrief) {
+                var type = schemaHelper.normalizeSchemaItemType(defau.type);
+                return type.length === 1 // Only one type, can be sure what the brief looks like.
+                    && briefMapping[type[0].toLowerCase()]
+                    || briefMapping['?'];
+            }
+            else {
+                return '';
+            }
+        }
     };
+
+    /**
+     * @inner
+     */
+    function cutString(str, length) {
+        return str.length > length ? (str.slice(0, length) + '...') : str;
+    }
 
     /**
      * @public
@@ -1114,6 +1194,19 @@ define(function (require) {
             dtLib.assert(refArr.length);
             return refArr;
         }
+    };
+
+    /**
+     * @public
+     */
+    schemaHelper.normalizeSchemaItemType = function (type) {
+        if (!type) {
+            return [];
+        }
+        if (!$.isArray(type)) {
+            return [type];
+        }
+        return type;
     };
 
     /**

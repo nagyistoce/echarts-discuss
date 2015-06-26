@@ -11,8 +11,38 @@ body {
 }
 .ecdoc-api-link {
     margin: 10px 0 20px 0;
+    & a {
+        color: #fff;
+    }
     & a:visited {
         color: #fff;
+    }
+}
+.ecdoc-app-desc {
+    h2, h3, strong {
+        color: yellow;
+    }
+    strong {
+        margin: 0 3px;
+    }
+}
+.ecdoc-question {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    vertical-align: middle;
+    text-align: center;
+    background: #999;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-weight: 700;
+    font-size: 16px;
+    .border-radius(10px);
+    cursor: pointer;
+
+    &:before {
+        content: '?'
     }
 }
 .ecdoc-scmedt-head-desc {
@@ -61,6 +91,10 @@ body {
         rgba(255, 255, 255, 0.1) 0px 1px 0px inset,
         rgba(0, 0, 0, 0.2) 0px -1px 0px inset
     );
+    & a,
+    & a:visited {
+        color: #99D0FF;
+    }
 }
 .ecdoc-scmedt-query-box {
     top: 20px;
@@ -160,11 +194,17 @@ body {
         color: #000;
         margin: 5px;
         padding: 5px;
+        overflow: auto;
 
         td {
             border: 1px solid #222;
             padding: 2px;
         }
+        & a,
+        & a:visited {
+            color: blue;
+        }
+
     }
 }
 

@@ -396,6 +396,7 @@ define(function (require) {
         completeMarkLine(schema);
         completeLineStyle(schema);
         completeItemStyle(schema);
+        completeTextStyle(schema);
         completeOthers(schema);
         setDefault(schema);
         resetDescForRef(schema);
@@ -476,7 +477,7 @@ define(function (require) {
                 }
             }
 
-            if (o.defaultValueHTML == null) {
+            if (o.defaultValueHTML == null) { // 手动设置的已经有default
                 return;
             }
             dtLib.assert(o.type);
@@ -859,6 +860,9 @@ define(function (require) {
 
     function completeTooltip(schema) {
         var properties = schema.definitions.tooltip.properties;
+
+        schema.definitions.tooltip.properties.textStyle.setApplicable = 'tooltip/textStyle';
+
         addRef(properties.textStyle, '#definitions/textStyle');
         properties.axisPointer.properties = {
             type: {
@@ -966,6 +970,9 @@ define(function (require) {
         addRef(axisProperties.axisLabel, '#definitions/axisAxisLabel');
         addRef(axisProperties.splitLine, '#definitions/axisSplitLine');
         addRef(axisProperties.splitArea, '#definitions/axisSplitArea');
+
+        axisProperties.logLabelBase.applicable = 'log';
+        axisProperties.logPositive.applicable = 'log';
 
         // axis others
         var properties;
@@ -1082,7 +1089,10 @@ define(function (require) {
 
         // chord and force
         addRef(seriesProperties.categories, '#definitions/dataCategories');
+        addRef(schema.definitions.dataCategories.properties.itemStyle, '#definitions/itemStyle');
+        addRef(schema.definitions.dataCategories.properties.symbol, '#definitions/seriesItem/properties/symbol');
         addRef(seriesProperties.links, '#definitions/dataGraphLinks');
+        addRef(schema.definitions.dataGraphLinks.properties.itemStyle, '#definitions/linkStyle');
         setProp(seriesProperties.matrix, 'descriptionCN', '邻接矩阵, 和links二选一。关系数据，用二维数组表示，项 [i][j] 的数值表示 i 到 j 的关系数据');
         setProp(seriesProperties.matrix, 'descriptionEN', 'Adjacency matrix. Only one of links and matrix can exist. Matrix is a two-dimensional array, where [i][j] means data relationship from i to j');
 
@@ -1120,13 +1130,11 @@ define(function (require) {
             nodeDataProp.itemStyle['$ref'] = '#definitions/itemStyle';
         }
 
-// FIXME
-// 还有好几个gauge的属性没有拆，麻烦。
-
         // gauge
         seriesProperties.axisLine = {
             type: 'Object',
             setApplicable: 'gauge/axisLine',
+            applicable: 'gauge',
             descriptionCN: '坐标轴线，默认显示',
             descriptionEN: 'axis line. Defaults to show.',
             properties: {
@@ -1144,6 +1152,7 @@ define(function (require) {
         seriesProperties.axisTick = {
             type: 'Object',
             setApplicable: 'gauge/axisTick',
+            applicable: 'gauge',
             descriptionCN: '坐标轴小标记，默认显示 ',
             descriptionEN: 'axis tick. Defaults to show. ',
             properties: {
@@ -1173,6 +1182,7 @@ define(function (require) {
         seriesProperties.axisLabel['$ref'] = '#definitions/axisAxisLabel';
         seriesProperties.splitLine = {
             type: 'Object',
+            applicable: 'gauge',
             setApplicable: 'gauge/splitLine',
             descriptionCN: '主分隔线，默认显示 ',
             descriptionEN: 'split line. Defaults to show. ',
@@ -1194,6 +1204,116 @@ define(function (require) {
                 }
             }
         };
+        seriesProperties.pointer = {
+            type: 'Object',
+            applicable: 'gauge',
+            descriptionCN: '指针样式',
+            descriptionEN: 'pointer style ',
+            properties: {
+                length: {
+                    type: ['string', 'number'],
+                    'default': '80%',
+                    descriptionCN: '属性length控制线长，百分比相对的是仪表盘的外半径 ',
+                    descriptionEN: 'The property "length" controls line length for pointer. If in percent, it is relative to the outer radius of the gauge.'
+                },
+                width: {
+                    type: 'number',
+                    'default': 8,
+                    descriptionCN: '属性width控制指针最宽处',
+                    descriptionEN: 'The property "width" controls the widest point of the pointer. '
+                },
+                color: {
+                    type: 'color',
+                    'default': 'auto',
+                    descriptionCN: '属性color控制指针颜色',
+                    descriptionEN: 'The property "color" controls the color of the pointer.'
+                }
+            }
+        };
+        seriesProperties.title = {
+            type: 'Object',
+            applicable: 'gauge',
+            setApplicable: 'gauge/title',
+            descriptionCN: '仪表盘标题',
+            descriptionEN: 'title of gauge',
+            properties: {
+                show: {
+                    type: 'boolean',
+                    'default': true,
+                    descriptionCN: '显示与否',
+                    descriptionEN: 'The property "show" specifies whether to show title or not.'
+                },
+                offsetCenter: {
+                    type: 'Array',
+                    'default': [0, '-40%'],
+                    descriptionCN: '属性offsetCenter用于标题定位，数组为横纵相对仪表盘圆心坐标偏移，支持百分比（相对外半径）',
+                    descriptionEN: 'The property "offsetCenter" is used to locate title. Offset to the center coordinates if the array is x-axis. If in percent, it is relative to the outer radius of the gauge. '
+                },
+                textStyle: {
+                    '$ref': '#definitions/textStyle'
+                }
+            }
+        };
+        seriesProperties.detail = {
+            type: 'Object',
+            applicable: 'gauge',
+            setApplicable: 'gauge/detail',
+            descriptionCN: '仪表盘详情',
+            descriptionEN: 'detail of gauge',
+            properties: {
+                show: {
+                    type: 'boolean',
+                    'default': true,
+                    descriptionCN: '显示与否',
+                    descriptionEN: 'The property "show" specifies whether to show detail or not.'
+                },
+                backgroundColor: {
+                    type: 'color',
+                    'default': 'rgba(0,0,0,0)',
+                    descriptionCN: '背景颜色',
+                    descriptionEN: 'background color'
+                },
+                borderWidth: {
+                    type: 'number',
+                    'default': 0,
+                    descriptionCN: '边框线宽',
+                    descriptionEN: 'border width'
+                },
+                borderColor: {
+                    type: 'color',
+                    'default': '#ccc',
+                    descriptionCN: '边框颜色',
+                    descriptionEN: 'border color'
+                },
+                width: {
+                    type: 'number',
+                    'default': 100,
+                    descriptionCN: '详情宽度',
+                    descriptionEN: 'width of detail'
+                },
+                height: {
+                    type: 'number',
+                    'default': 40,
+                    descriptionCN: '详情高度',
+                    descriptionEN: 'height of detail'
+                },
+                offsetCenter: {
+                    type: 'Array',
+                    'default': [0, '-40%'],
+                    descriptionCN: '属性offsetCenter用于标题定位，数组为横纵相对仪表盘圆心坐标偏移，支持百分比（相对外半径）',
+                    descriptionEN: 'The property "offsetCenter" is used to locate title. Offset to the center coordinates if the array is x-axis. If in percent, it is relative to the outer radius of the gauge. '
+                },
+                formatter: {
+                    type: 'Function',
+                    'default': null,
+                    descriptionCN: '格式化文本',
+                    descriptionEN: 'formatter of detail.'
+                },
+                textStyle: {
+                    '$ref': '#definitions/textStyle'
+                }
+            }
+        };
 
         // linkSymbol for force
         seriesProperties.linkSymbol['$ref'] = '#definitions/option/properties/symbolList';
@@ -1207,6 +1327,14 @@ define(function (require) {
                 dtLib.assign(dtLib.clone(one), {'defaultValueHTML': app, applicable: app})
             );
         }
+
+
+        // itemStyle delete
+        var itemStyleOneOf = seriesProperties.itemStyle.oneOf;
+        dtLib.assert(itemStyleOneOf[2].applicable === 'tree');
+        dtLib.assert(itemStyleOneOf[3].applicable === 'venn');
+        dtLib.assert(itemStyleOneOf[4].applicable === 'wordCloud');
+        itemStyleOneOf.splice(2, 3);
 
         // re order
         dtLib.assert(seriesProperties.z);
@@ -1267,25 +1395,6 @@ define(function (require) {
         data.descriptionCN = descCN.mapDesc;
         data.descriptionEN = descEN.mapDesc;
 
-        // 事件河流图的data在表格中
-        var seriesEventRiverProperties = schema.definitions.seriesEventRiver.properties;
-        seriesProperties.data.oneOf.push(seriesEventRiverProperties.data);
-        seriesEventRiverProperties.data.applicable = 'eventRiver';
-
-        // treemap图的data在表格中
-        var seriesTreemapProperties = schema.definitions.seriesTreemap.properties;
-        seriesProperties.data.oneOf.push(seriesTreemapProperties.data);
-        seriesTreemapProperties.data.applicable = 'treemap';
-
-        // tree图的data在表格中
-        var seriesTreeProperties = schema.definitions.seriesTree.properties;
-        seriesProperties.data.oneOf.push(seriesTreeProperties.data);
-        seriesTreeProperties.data.applicable = 'tree';
-
-        // venn图的data在表格中
-        var seriesVennProperties = schema.definitions.seriesVenn.properties;
-        seriesProperties.data.oneOf.push(seriesVennProperties.data);
-        seriesVennProperties.data.applicable = 'venn';
 
         function findDesc(docMain) {
             var anchor = $(docMain.find('a[name=SeriesData]')[0]).parent();
@@ -1329,6 +1438,116 @@ define(function (require) {
                 ].join('')
             };
         }
+
+
+        // 事件河流图的data在表格中
+        var seriesEventRiverProperties = schema.definitions.seriesEventRiver.properties;
+        seriesProperties.data.oneOf.push(seriesEventRiverProperties.data);
+        seriesEventRiverProperties.data.applicable = 'eventRiver';
+
+        // treemap图的data在表格中
+        var seriesTreemapProperties = schema.definitions.seriesTreemap.properties;
+        seriesProperties.data.oneOf.push(seriesTreemapProperties.data);
+        seriesTreemapProperties.data.applicable = 'treemap';
+
+        // tree图的data在表格中
+        var seriesTreeProperties = schema.definitions.seriesTree.properties;
+        seriesProperties.data.oneOf.push(seriesTreeProperties.data);
+        seriesTreeProperties.data.applicable = 'tree';
+        seriesTreeProperties.data.type = 'Array';
+        seriesTreeProperties.data.descriptionCN = '只有一项的数组，为Object {}';
+        seriesTreeProperties.data.descriptionEN = 'The array has only one item, which type is Object {}.';
+        seriesTreeProperties.data.items = {
+            type: 'Object',
+            properties: {
+                name: {
+                    type: 'string',
+                    'default': null,
+                    descriptionCN: '数据名称',
+                    descriptionEN: 'name'
+                },
+                value: {
+                    type: 'number',
+                    'default': null,
+                    descriptionCN: '数据值',
+                    descriptionEN: 'value'
+                },
+                symbol: {
+                    'default': 'circle',
+                    '$ref': '#definitions/seriesItem/properties/symbol'
+                },
+                symbolSize: {
+                    'default': 20,
+                    '$ref': '#definitions/seriesItem/properties/symbolSize',
+                    descriptionCN: '所有该类目的节点的大小',
+                    descriptionEN: 'size of each node.'
+                },
+                children: {
+                    type: 'Array',
+                    descriptionCN: '子节点，每项的属性和父节点相同',
+                    descriptionEN: 'children',
+                    items: {
+                        type: 'Object',
+                        descriptionCN: '子节点，每项的属性和父节点相同',
+                        descriptionEN: 'children，Its structure is the same as its parent.'
+                    }
+                },
+                itemStyle: {
+                    '$ref': '#definitions/itemStyle'
+                }
+            }
+        };
+
+        // venn图的data在表格中
+        var seriesVennProperties = schema.definitions.seriesVenn.properties;
+        seriesProperties.data.oneOf.push(seriesVennProperties.data);
+        seriesVennProperties.data.applicable = 'venn';
+        seriesVennProperties.data.type = 'Array';
+        seriesVennProperties.data.descriptionCN = '数据列表，长度为3，前两项分别表示两个集合，第三项表示交集。每一个数组项为Object {}';
+        seriesVennProperties.data.descriptionEN = 'data list, contains 3 items, the first and second represent two collections, the third one is the intersection. Every item in the array is an object {}';
+        seriesVennProperties.data.items = {
+            type: 'Object',
+            properties: {
+                name: {
+                    type: 'string',
+                    'default': null,
+                    descriptionCN: '数据名称',
+                    descriptionEN: 'name'
+                },
+                value: {
+                    type: 'number',
+                    'default': null,
+                    descriptionCN: '数据值',
+                    descriptionEN: 'value'
+                },
+                itemStyle: {
+                    '$ref': '#definitions/itemStyle'
+                }
+            }
+        };
+
+        // function makeVennData(originalNodes) {
+        //     var nodeDescCN = originalNodes.oneOf[0].descriptionCN;
+        //     var nodeDescEN = originalNodes.oneOf[0].descriptionEN;
+        //     var el = document.createElement('div');
+        //     el.innerHTML = nodeDescCN;
+        //     var tableCN = $(el).find('table');
+        //     el.innerHTML = nodeDescEN;
+        //     var tableEN = $(el).find('table');
+        //     var tableInfo = parseTableByLang('forceNodeData', tableCN, tableEN);
+
+        //     var nodeDataProp = schema.definitions.dataNodeData.properties;
+
+        //     for (var name in tableInfo) {
+        //         if (tableInfo.hasOwnProperty(name)) {
+        //             var line = tableInfo[name];
+        //             line.applicable = 'force';
+        //             nodeDataProp[name] = line;
+        //         }
+        //     }
+
+        //     nodeDataProp.itemStyle['$ref'] = '#definitions/itemStyle';
+        // }
     }
 
     function completeMarkPoint(schema) {
@@ -1685,6 +1904,55 @@ define(function (require) {
 
         var labelLineProperties = schema.definitions.itemStyleLabelLine.properties;
         addRef(labelLineProperties.lineStyle, '#definitions/lineStyle');
+    }
+
+    function completeTextStyle(schema) {
+        var props = schema.definitions.textStyle.properties;
+        props.decoration.applicable = 'tooltip/textStyle';
+
+        var props = schema.definitions.textStyle.properties;
+        var origin;
+
+        origin = props.color;
+        props.color = {
+            oneOf: [
+                origin,
+                {
+                    type: 'color',
+                    applicable: ['gauge/title'],
+                    'default': '#333',
+                    descriptionCN: '颜色',
+                    descriptionEN: 'color'
+                },
+                {
+                    type: 'color',
+                    applicable: ['gauge/detail'],
+                    'default': 'auto',
+                    descriptionCN: '颜色',
+                    descriptionEN: 'color'
+                }
+            ]
+        };
+        origin = props.fontSize;
+        props.fontSize = {
+            oneOf: [
+                origin,
+                {
+                    type: 'number',
+                    applicable: ['gauge/title'],
+                    'default': 15,
+                    descriptionCN: '字号，单位px',
+                    descriptionEN: 'font size, in px.'
+                },
+                {
+                    type: 'number',
+                    applicable: ['gauge/detail'],
+                    'default': 30,
+                    descriptionCN: '字号，单位px',
+                    descriptionEN: 'font size, in px.'
+                }
+            ]
+        };
     }
 
     function completeOthers(schema) {
