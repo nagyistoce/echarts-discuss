@@ -1,3 +1,11 @@
+// TODO
+// (1) 从 resetLink 打印出点东西来看，还有些大块东西没有拆开，如timeLine中，
+// 还有些desc中有 <table> 继续整理下
+// (2) 从 resetLink 中，继续整理link。
+
+
+
+
 /**
  * 此文件只是从老doc提取schema的工具。用完即作废。所以代码混乱且有很多复制粘贴。
  * 之所以用js写，是为了能发现错误时重新生成。
@@ -400,6 +408,7 @@ define(function (require) {
         completeOthers(schema);
         setDefault(schema);
         resetDescForRef(schema);
+        resetLink(schema);
 
         schemaHelper.validateSchema(schema);
 
@@ -545,6 +554,16 @@ define(function (require) {
             }
             else {
                 o.defaultExplanation = defaultValueHTML;
+            }
+        });
+    }
+
+    function resetLink(schema) {
+        schemaHelper.travelSchema(schema, function (o) {
+            if (o.descriptionCN) {
+                if (o.descriptionCN.indexOf('<a') >= 0) {
+                    console.log('----------------' + o.descriptionCN);
+                }
             }
         });
     }
@@ -856,6 +875,266 @@ define(function (require) {
     function completeToolbox(schema) {
         var properties = schema.definitions.toolbox.properties;
         addRef(properties.textStyle, '#definitions/textStyle');
+
+        properties.feature.descriptionCN = '启用功能，目前支持feature见下，工具箱自定义功能回调处理，<a href="/doc/example/toolbox.html" target="_blank">try this »</a> <br> <img src="/doc/asset/img/doc/toolbox.png" title="" alt="工具箱">';
+        properties.feature.descriptionEN = 'Currently toolbox supports all the features listed below. For custom features, <a href="/doc/example/toolbox.html" target="_blank">try this »</a> <br> <img src="/doc/asset/img/doc/toolbox.png" title="" alt="工具箱">';
+        properties.feature.properties = {
+            mark : {
+                type: 'Object',
+                descriptionCN: '辅助线标志，上图icon左数1/2/3，分别是启用，删除上一条，删除全部，可设置更多属性',
+                descriptionEN: 'markLine icons. In the picture above, the first, second, and third icons from the left respectively represent markLine switch, undo markLine, and clear markLine. You can set more properties.',
+                properties: {
+                    show : {
+                        type: 'boolean',
+                        'default': false
+                    },
+                    title : {
+                        type: 'Object',
+                        properties: {
+                            mark : {
+                                type: 'string',
+                                'default': '辅助线开关'
+                            },
+                            markUndo : {
+                                type: 'string',
+                                'default': '删除辅助线'
+                            },
+                            markClear : {
+                                type: 'string',
+                                'default': '清空辅助线'
+                            }
+                        }
+                    },
+                    lineStyle : {
+                        type: 'Object',
+                        '$ref': '#definitions/lineStyle',
+                        setApplicable: 'toolbox/mark/lineStyle'
+                    }
+                }
+            },
+            dataZoom : {
+                type: 'Object',
+                descriptionCN: '框选区域缩放，自动与存在的dataZoom控件同步，上图icon左数4/5，分别是启用，缩放后退',
+                descriptionEN: 'dataZoom icons. Automatically synchronized with the dataZoom control. In the picture above, the fourth and fifth icons from the left respectively represent data zoom and data zoom reset.',
+                properties: {
+                    show : {
+                        type: 'boolean',
+                        'default': false
+                    },
+                    title : {
+                        type: 'Object',
+                        properties: {
+                            dataZoom : {
+                                type: 'string',
+                                'default': '区域缩放'
+                            },
+                            dataZoomReset : {
+                                type: 'string',
+                                'default': '区域缩放后退'
+                            }
+                        }
+                    }
+                }
+            },
+            dataView : {
+                type: 'Object',
+                descriptionCN: '数据视图，上图icon左数6，打开数据视图，可设置更多属性',
+                descriptionEN: 'dataView icon. In the picture above, the third icon from the right represents dataView, where You can set more properties.',
+                properties: {
+                    show : {
+                        type: 'boolean',
+                        'default': false
+                    },
+                    title : {
+                        type: 'string',
+                        'default': '数据视图'
+                    },
+                    readOnly: {
+                        type: 'boolean',
+                        'default': false,
+                        descriptionCN: 'readOnly 默认数据视图为只读，可指定readOnly为false打开编辑功能',
+                        descriptionEN: 'dataView is set to read-only by default. It can be edited when readOnly is false.'
+                    },
+                    optionToContent : {
+                        type: 'Function',
+                        'default': undefined,
+                        descriptionCN: '自主编排数据视图的显示内容',
+                        descriptionEN: 'custom display content of dataView.'
+                    },
+                    contentToOption : {
+                        type: 'Function',
+                        'default': undefined,
+                        descriptionCN: '当数据视图readOnly为false时，会出现刷新按钮，如果是自主编排的显示内容，如何翻转也请自理',
+                        descriptionEN: 'When the readOnly of dataView is set to false, the refresh button will appear. You can set the content and the way to display it yourself if you want.'
+                    },
+                    lang: {
+                        type: 'Array',
+                        'default': ['数据视图', '关闭', '刷新'],
+                        descriptionCN: '数据视图上有三个话术，默认是[\'数据视图\', \'关闭\', \'刷新\']，如需改写，可自定义',
+                        descriptionEN: 'DataView has three default texts: [\'Data View\', \'close\', \'refresh\'], you can change it if you want.'
+                    }
+                }
+            },
+            magicType: {
+                type: 'Object',
+                descriptionCN: '动态类型切换，支持直角系下的折线图、柱状图、堆积、平铺转换，上图icon左数6~14，分别是切换为堆积，切换为平铺，切换折线图，切换柱形图，切换为力导向布局图，切换为和弦图，切换为饼图，切换为漏斗图',
+                descriptionEN: 'magicType icons. So far magicType supports switch between bar and line, stack and tile. In the picture above, the sixth, seventh, eighth and ninth icons from the left respectively represent switch to stack, tile, line, bar, force, chord, pie and funnel.',
+                properties: {
+                    show : {
+                        type: 'boolean',
+                        'default': false,
+                        descriptionCN: '',
+                        descriptionEN: ''
+                    },
+                    title : {
+                        type: 'Object',
+                        properties: {
+                            line : {
+                                type: 'string',
+                                'default': '折线图切换',
+                                descriptionCN: '',
+                                descriptionEN: ''
+                            },
+                            bar : {
+                                type: 'string',
+                                'default': '柱形图切换',
+                                descriptionCN: '',
+                                descriptionEN: ''
+                            },
+                            stack : {
+                                type: 'string',
+                                'default': '堆积',
+                                descriptionCN: '',
+                                descriptionEN: ''
+                            },
+                            tiled : {
+                                type: 'string',
+                                'default': '平铺',
+                                descriptionCN: '',
+                                descriptionEN: ''
+                            },
+                            force: {
+                                type: 'string',
+                                'default': '力导向布局图切换',
+                                descriptionCN: '',
+                                descriptionEN: ''
+                            },
+                            chord: {
+                                type: 'string',
+                                'default': '和弦图切换',
+                                descriptionCN: '',
+                                descriptionEN: ''
+                            },
+                            pie: {
+                                type: 'string',
+                                'default': '饼图切换',
+                                descriptionCN: '',
+                                descriptionEN: ''
+                            },
+                            funnel: {
+                                type: 'string',
+                                'default': '漏斗图切换',
+                                descriptionCN: '',
+                                descriptionEN: ''
+                            }
+                        }
+                    },
+                    option: {
+                        type: 'Object',
+                        descriptionCN: '可传入切换是动态修改的配置，将复写series内的数组项',
+                        descriptionEN: 'Series\' option can be dynamically changed at the time of magic switch.',
+                        properties: {
+                            line: {
+                                type: 'Object',
+                                'default': undefined
+                            },
+                            bar: {
+                                type: 'Object',
+                                'default': undefined
+                            },
+                            stack: {
+                                type: 'Object',
+                                'default': undefined
+                            },
+                            tiled: {
+                                type: 'Object',
+                                'default': undefined
+                            },
+                            force: {
+                                type: 'Object',
+                                'default': undefined
+                            },
+                            chord: {
+                                type: 'Object',
+                                'default': undefined
+                            },
+                            pie: {
+                                type: 'Object',
+                                'default': undefined
+                            },
+                            funnel: {
+                                type: 'Object',
+                                'default': undefined
+                            }
+                        }
+                    },
+                    type : {
+                        type: 'Array',
+                        'default': [],
+                        descriptionCN: '\'line\', \'bar\', \'stack\', \'tiled\', \'force\', \'chord\', \'pie\', \'funnel\'',
+                        descriptionEN: '\'line\', \'bar\', \'stack\', \'tiled\', \'force\', \'chord\', \'pie\', \'funnel\''
+                    }
+                }
+            },
+            restore : {
+                type: 'Object',
+                descriptionCN: '还原，复位原始图表，上图icon右数2',
+                descriptionEN: 'restore icon. In the picture above, the second icon from the right represents restore the chart.',
+                properties: {
+                    show : {
+                        type: 'boolean',
+                        'default': false
+                    },
+                    title : {
+                        type: 'string',
+                        'default': '还原'
+                    }
+                }
+            },
+            saveAsImage : {
+                type: 'Object',
+                descriptionCN: '保存图片（IE8-不支持），上图icon最右，可设置更多属性',
+                descriptionEN: 'saveAsImage icon. In the picture above, the first icon from the right represents save as image(not supported on IE8-), where You can set more properties.',
+                properties: {
+                    show : {
+                        type: 'boolean',
+                        'default': false
+                    },
+                    title : {
+                        type: 'string',
+                        'default': '保存为图片'
+                    },
+                    type : {
+                        type: 'string',
+                        'default': 'png',
+                        descriptionCN: '默认保存图片类型为\'png\'，需改为\'jpeg\'',
+                        descriptionEN: 'the default type to save image is \'png\', change it to \'jpeg\'.'
+                    },
+                    name : {
+                        type: 'string',
+                        'default': 'ECharts',
+                        descriptionCN: '指定图片名称，如不指定，则用图表title标题，如无title标题则图片名称默认为“ECharts”',
+                        descriptionEN: 'specifies name of the image. If unspecified, use the chart title. If there is no title, defaults to “ECharts”.'
+                    },
+                    lang : {
+                        type: 'Array',
+                        'default': ['点击保存'],
+                        descriptionCN: '非IE浏览器支持点击下载，有保存话术，默认是“点击保存”，可修改',
+                        descriptionEN: 'you can click to save it in non-IE browsers. Save text is supported. Defaults to “click Save”, can be changed.'
+                    }
+                }
+            }
+        };
     }
 
     function completeTooltip(schema) {
@@ -1075,7 +1354,6 @@ define(function (require) {
             delete schema.definitions[sers[i]];
         }
 
-        // var symbols = schemaHelper.querySchema(schema, 'series[i](applicable=radar,force,chord)');
         // radar
         seriesProperties.symbol.oneOf[0].applicable.push('radar', 'force', 'chord', 'tree');
         seriesProperties.symbolSize.oneOf[0].applicable.push('radar');
@@ -1315,6 +1593,16 @@ define(function (require) {
             }
         };
 
+        // treemap itemStyle
+        var treemapItemStyle = seriesProperties.itemStyle.oneOf[1];
+        dtLib.assert(treemapItemStyle.applicable === 'treemap');
+        treemapItemStyle['$ref'] = '#definitions/itemStyle';
+        treemapItemStyle.setApplicable = 'treemap/itemStyle';
+        treemapItemStyle.descriptionCN = ' ';
+        treemapItemStyle.descriptionEN = ' ';
+
+
+
         // linkSymbol for force
         seriesProperties.linkSymbol['$ref'] = '#definitions/option/properties/symbolList';
 
@@ -1444,21 +1732,120 @@ define(function (require) {
         var seriesEventRiverProperties = schema.definitions.seriesEventRiver.properties;
         seriesProperties.data.oneOf.push(seriesEventRiverProperties.data);
         seriesEventRiverProperties.data.applicable = 'eventRiver';
+        delete seriesEventRiverProperties.data.descriptionCN;
+        delete seriesEventRiverProperties.data.descriptionEN;
+        seriesEventRiverProperties.data.items = {
+            type: 'Object',
+            descriptionCN: '数据列表，每一个数组项为Object {}',
+            descriptionEN: 'Array, each item is an Object',
+            properties: {
+                name: {
+                    type: 'string',
+                    'default': null,
+                    descriptionCN: '事件名称',
+                    descriptionEN: 'name of event'
+                },
+                weight: {
+                    type: 'string',
+                    'default': 1,
+                    descriptionCN: '事件权重',
+                    descriptionEN: 'weight of event'
+                },
+                evolution: {
+                    type: 'Array',
+                    items: {
+                        type: 'Object',
+                        descriptionCN: '同一事件的的演化过程，每一个数组项为Object {}',
+                        descriptionEN: 'Evolution of a single event, every item in the array is an object {}',
+                        properties: {
+                            time: {
+                                type: 'Date',
+                                descriptionCN: '事件发生的时间，Javascript中的Date类型',
+                                descriptionEN: 'When the event is taking place, should be Data type of Javascript.'
+                            },
+                            value: {
+                                type: 'number',
+                                descriptionCN: '事件的热度值，如该事件涉及到的新闻报道数量',
+                                descriptionEN: 'Popularity of the event, such as the number of news reports.'
+                            },
+                            detail: {
+                                type: 'Object',
+                                descriptionCN: '事件的详细信息',
+                                descriptionEN: 'Detail of the event.',
+                                properties: {
+                                    link: {
+                                        type: 'string',
+                                        descriptionCN: '该事件报道的新闻链接',
+                                        descriptionEN: 'Link of the news.'
+                                    },
+                                    text: {
+                                        type: 'string',
+                                        descriptionCN: '该事件的文字描述',
+                                        descriptionEN: 'Description of the news.'
+                                    },
+                                    img: {
+                                        type: 'string',
+                                        descriptionCN: '该事件的图片链接',
+                                        descriptionEN: 'Image of the news.'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
 
         // treemap图的data在表格中
         var seriesTreemapProperties = schema.definitions.seriesTreemap.properties;
         seriesProperties.data.oneOf.push(seriesTreemapProperties.data);
         seriesTreemapProperties.data.applicable = 'treemap';
+        delete seriesTreemapProperties.data.descriptionCN;
+        delete seriesTreemapProperties.data.descriptionEN;
+        seriesTreemapProperties.data.items = {
+            type: 'Object',
+            descriptionCN: '数据列表，每一个数组项为Object {}',
+            descriptionEN: 'Array, each item is an Object',
+            properties: {
+                name: {
+                    type: 'string',
+                    'default': null,
+                    descriptionCN: '数据名称',
+                    descriptionEN: 'name'
+                },
+                value: {
+                    type: 'number',
+                    'default': null,
+                    descriptionCN: '数据值',
+                    descriptionEN: 'value'
+                },
+                children: {
+                    type: 'Array',
+                    descriptionCN: '子节点，每项的属性和父节点相同',
+                    descriptionEN: 'children',
+                    items: {
+                        type: 'Object',
+                        descriptionCN: '子节点，每项的属性和父节点相同',
+                        descriptionEN: 'children，Its structure is the same as its parent.'
+                    }
+                },
+                itemStyle: {
+                    '$ref': '#definitions/itemStyle'
+                }
+            }
+        };
 
         // tree图的data在表格中
         var seriesTreeProperties = schema.definitions.seriesTree.properties;
         seriesProperties.data.oneOf.push(seriesTreeProperties.data);
         seriesTreeProperties.data.applicable = 'tree';
         seriesTreeProperties.data.type = 'Array';
-        seriesTreeProperties.data.descriptionCN = '只有一项的数组，为Object {}';
-        seriesTreeProperties.data.descriptionEN = 'The array has only one item, which type is Object {}.';
+        delete seriesTreeProperties.data.descriptionCN;
+        delete seriesTreeProperties.data.descriptionEN;
         seriesTreeProperties.data.items = {
             type: 'Object',
+            descriptionCN: '只有一项的数组，为Object {}',
+            descriptionEN: 'The array has only one item, which type is Object {}.',
             properties: {
                 name: {
                     type: 'string',
@@ -1503,10 +1890,12 @@ define(function (require) {
         seriesProperties.data.oneOf.push(seriesVennProperties.data);
         seriesVennProperties.data.applicable = 'venn';
         seriesVennProperties.data.type = 'Array';
-        seriesVennProperties.data.descriptionCN = '数据列表，长度为3，前两项分别表示两个集合，第三项表示交集。每一个数组项为Object {}';
-        seriesVennProperties.data.descriptionEN = 'data list, contains 3 items, the first and second represent two collections, the third one is the intersection. Every item in the array is an object {}';
+        delete seriesVennProperties.data.descriptionCN;
+        delete seriesVennProperties.data.descriptionEN;
         seriesVennProperties.data.items = {
             type: 'Object',
+            descriptionCN: '数据列表，长度为3，前两项分别表示两个集合，第三项表示交集。每一个数组项为Object {}',
+            descriptionEN: 'data list, contains 3 items, the first and second represent two collections, the third one is the intersection. Every item in the array is an object {}',
             properties: {
                 name: {
                     type: 'string',
@@ -1832,6 +2221,13 @@ define(function (require) {
                     'default': '#eee',
                     descriptionCN: '颜色',
                     descriptionEN: 'color'
+                },
+                {
+                    type: 'color',
+                    applicable: 'toolbox/mark/lineStyle',
+                    'default': '#1e90ff',
+                    descriptionCN: '颜色',
+                    descriptionEN: 'color'
                 }
             ]
         };
@@ -1860,6 +2256,27 @@ define(function (require) {
                     'default': 2,
                     descriptionCN: '线宽',
                     descriptionEN: 'width of the line.'
+                },
+                {
+                    type: 'number',
+                    applicable: 'toolbox/mark/lineStyle',
+                    'default': 2,
+                    descriptionCN: '线宽',
+                    descriptionEN: 'width of the line.'
+                }
+            ]
+        };
+
+        origin = props.type;
+        props.type = {
+            oneOf: [
+                origin,
+                {
+                    type: 'string',
+                    applicable: 'toolbox/mark/lineStyle',
+                    'default': 'dashed',
+                    descriptionCN: origin.descriptionCN,
+                    descriptionEN: origin.descriptionEN
                 }
             ]
         };
@@ -1904,6 +2321,38 @@ define(function (require) {
 
         var labelLineProperties = schema.definitions.itemStyleLabelLine.properties;
         addRef(labelLineProperties.lineStyle, '#definitions/lineStyle');
+
+
+        // treemap itemStyle
+        properties.breadcrumb = {
+            type: 'Object',
+            applicable: 'treemap/itemStyle',
+            descriptionCN: '面包屑',
+            descriptionEN: 'breadcrumb',
+            properties: {
+                show: {
+                    type: 'boolean',
+                    'default': true,
+                    descriptionCN: '显示与否',
+                    descriptionEN: 'show or not.'
+                },
+                textStyle: {
+                    '$ref': '#definitions/textStyle'
+                }
+            }
+        };
+        properties.childBorderWidth = {
+            type: 'number',
+            'default': 1,
+            descriptionCN: '二级边框宽度',
+            descriptionEN: 'width of second level border.'
+        };
+        properties.childBorderColor = {
+            type: 'color',
+            'default': '',
+            descriptionCN: '二级边框颜色',
+            descriptionEN: 'color of second level border.'
+        };
     }
 
     function completeTextStyle(schema) {

@@ -55,6 +55,79 @@ td {
 a img {
   border: none;
 }
+/**
+ * 基本按钮。写成mixin因为有的地方不方便设class。
+ */
+/**
+ * 按钮基本样式
+ */
+.dtui-btn {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: inline-block;
+  cursor: pointer;
+  color: #fff;
+  background: #3498DB;
+  text-align: center;
+  font-size: 14px;
+  min-width: 60px;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 8px;
+}
+.dtui-btn-hover {
+  background: #2980B9;
+}
+.dtui-btn-active {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+/**
+ * Close cross
+ */
+.dtui-close-cross {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  position: absolute;
+  text-align: center;
+  font-size: 13px;
+  top: -15px;
+  right: -15px;
+  cursor: pointer;
+  color: #fff;
+  background: #2a2a2a;
+}
+.dtui-close-cross:hover {
+  background: #333;
+}
+/**
+ * dialog panel
+ */
+.dtui-dlg {
+  min-width: 200px;
+  max-width: 600px;
+}
+.dtui-dlg .dtui-con {
+  padding: 10px;
+  font-size: 14px;
+}
+.dtui-dlg .dtui-btns {
+  text-align: right;
+  margin-top: 10px;
+}
+.dtui-dlg .dtui-btn {
+  margin: 0 2px;
+}
 .dtui-txipt {
   display: inline-block;
   padding: 0 6px;
@@ -198,6 +271,33 @@ a img {
   background: transparent;
   color: #828599;
 }
+.dtui-winpn {
+  background: #3f3f3f;
+  color: #efe;
+  padding: 5px 10px;
+  line-height: 25px;
+  z-index: 9999;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 3px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  -moz-box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 3px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 3px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left: -50%;
+  overflow: visible;
+  padding: 10px;
+}
+.dtui-winpn a,
+.dtui-winpn a:visited {
+  color: #99D0FF;
+}
+.dtui-winpn-con {
+  overflow: hidden;
+}
 body {
   padding: 21px;
   margin: 0;
@@ -207,6 +307,9 @@ body {
 }
 .ecdoc-api-link {
   margin: 10px 0 20px 0;
+}
+.ecdoc-api-link a {
+  color: #fff;
 }
 .ecdoc-api-link a:visited {
   color: #fff;
@@ -242,6 +345,10 @@ body {
   -webkit-box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 3px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
   -moz-box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 3px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
   box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 3px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
+}
+.ecdoc-scmedt-panel a,
+.ecdoc-scmedt-panel a:visited {
+  color: #99D0FF;
 }
 .ecdoc-scmedt-query-box {
   top: 20px;

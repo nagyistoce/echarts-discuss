@@ -226,6 +226,7 @@ serie
         检索字符串例如 'series(line, gauge).axisTick(gauge/axisTick).lineStyle' <br>
         小括号里面的内容指定了当前检索的context.applicable。（参见schemaHelper.parseOptionPath）<br>
         （每出现一次小括号，context.applicable都会被这个小括号reset。） <br>
+        （检索过程中每出现一次setApplicable，也会reset context.applicable。） <br>
         其匹配方式，参见schemaHelper.isApplicableLoosly <br>
     </p>
 

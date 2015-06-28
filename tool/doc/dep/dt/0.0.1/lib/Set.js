@@ -6,6 +6,9 @@ define(function (require) {
 
     var $ = require('jquery');
 
+    // 'instanceof' is not reliable (in crossing iframe and some postMessage scene).
+    var SET_MARK = '__\x06isDTLibSet';
+
     /**
      * A simple 'set'
      *
@@ -15,7 +18,33 @@ define(function (require) {
      */
     var Set = function (value) {
         this._valueSet = {};
+        this[SET_MARK] = true;
         this.reset(value);
+    };
+
+    /**
+     * If input is set, then return it, Otherwise create set.
+     *
+     *
+     * @public
+     * @static
+     * @param {*} value
+     * @return {Set}
+     */
+    Set.getSet = function (value) {
+        return Set.isSet(value) ? value : new Set(value);
+    };
+
+    /**
+     * Whether the input is an instance of Set.
+     *
+     * @public
+     * @static
+     * @param {*} value
+     * @return {boolean} is set
+     */
+    Set.isSet = function (value) {
+        return isObject(value) && !!value[SET_MARK];
     };
 
     Set.prototype = {
@@ -131,7 +160,7 @@ define(function (require) {
                 return set;
             }
 
-            if (value instanceof Set) {
+            if (Set.isSet(value)) {
                 value = value.list();
             }
             else if (type === 'string') {
@@ -150,6 +179,10 @@ define(function (require) {
             return set;
         }
     };
+
+    function isObject(value) {
+        return Object(value) === value;
+    }
 
     Set.prototype.constructor = Set;
 

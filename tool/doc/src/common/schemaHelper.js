@@ -76,7 +76,7 @@ define(function (require) {
      * @public
      */
     schemaHelper.EC_OPTION_TYPE = [
-        'Array', 'Object', 'string', 'number', 'boolean', 'color', 'Function'
+        'Array', 'Object', 'string', 'number', 'boolean', 'color', 'Function', 'Date'
     ];
     /**
      * ec option axis的适用类型枚举
@@ -149,9 +149,7 @@ define(function (require) {
         return context.result;
 
         function queryRecursivelyByPath(docTree, context, pathIndex, applicable) {
-            if (!dtLib.isObject(docTree)
-                || !isApplicableLoosely(new dtLib.Set(docTree.applicable), applicable)
-            ) {
+            if (!dtLib.isObject(docTree)) {
                 return;
             }
 
@@ -168,14 +166,19 @@ define(function (require) {
 
             var subApplicable = applicable;
             if (pathItem && pathItem.applicable) {
-                subApplicable = new dtLib.Set(pathItem.applicable);
+                var newSet = new dtLib.Set(pathItem.applicable);
+                if (newSet.count() > 0) {
+                    subApplicable = newSet;
+                }
             }
 
             for (var i = 0, len = (docTree.children || []).length; i < len; i++) {
                 var child = docTree.children[i];
-                var nextPathIndex;
+                var nextPathIndex = null;
 
-                if (docTree.isEnumParent) {
+                if (docTree.isEnumParent
+                    && isApplicableLoosely(child.applicable, subApplicable)
+                ) {
                     nextPathIndex = pathIndex;
                 }
                 else if (context.optionPath
@@ -272,6 +275,7 @@ define(function (require) {
      * @return {Array.<Object>} result
      * @throws {Error}
      */
+    /*
     schemaHelper.querySchema = function (schema, optionPath) {
         var pathArr = schemaHelper.parseOptionPath(optionPath);
         var result = [];
@@ -350,11 +354,14 @@ define(function (require) {
             context.applicable.reset(originalApplicableValue);
         }
     };
+    */
 
     /**
      * @inner
      */
     function isApplicableLoosely(itemApplicable, contextApplicable) {
+        itemApplicable = dtLib.Set.getSet(itemApplicable);
+        contextApplicable = dtLib.Set.getSet(contextApplicable);
         return itemApplicable.isEmpty()
             || contextApplicable.isEmpty()
             || contextApplicable.intersects(itemApplicable).count() > 0;
@@ -364,6 +371,8 @@ define(function (require) {
      * @inner
      */
     function isApplicableStrictly(itemApplicable, contextApplicable) {
+        itemApplicable = dtLib.Set.getSet(itemApplicable);
+        contextApplicable = dtLib.Set.getSet(contextApplicable);
         return itemApplicable.isEmpty()
             || contextApplicable.intersects(itemApplicable).count() > 0;
     }
@@ -478,6 +487,7 @@ define(function (require) {
     schemaHelper.buildDoc = function (schema, renderBase, docRenderer, mode) {
         var applicable = new dtLib.Set();
         docRenderer = docRenderer || schemaHelper.buildDoc.docJsonRenderer;
+        mode = mode || 'doc';
 
         buildRecursively(renderBase, schema, makeContext());
 
@@ -489,18 +499,20 @@ define(function (require) {
                     originalSchema: schema,
                     docRenderer: docRenderer,
                     applicable: applicable,
-                    mode: mode || 'doc',
-                    isApplicable: mode === 'schema'
-                        ? isApplicableLoosely : isApplicableStrictly
+                    mode: mode,
+                    isApplicable: mode === 'doc' ? isApplicableStrictly : null
                 },
                 props
             );
         }
 
         function buildRecursively(renderBase, schemaItem, context) {
-            if (!dtLib.isObject(schemaItem)
-                || !context.isApplicable(new dtLib.Set(schemaItem.applicable), context.applicable)
-            ) {
+            if (!dtLib.isObject(schemaItem)) {
+                return;
+            }
+            if (context.isApplicable && !context.isApplicable(
+                schemaItem.applicable, context.applicable
+            )) {
                 return;
             }
 
@@ -510,7 +522,12 @@ define(function (require) {
             // For simple, we use 'applicable.reset(...)'.
             // Thus context.applicable always only has zero or one value.
             if (schemaItem.setApplicable) {
-                context.applicable.reset(schemaItem.setApplicable);
+                var newSet = new dtLib.Set(schemaItem.setApplicable);
+                // Use '.count() > 0' to avoid being influenced
+                // by accidentally setting 'setApplicable' to [].
+                if (newSet.count() > 0) {
+                    context.applicable.reset(newSet);
+                }
             }
 
             if (context.mode === 'doc') {
@@ -623,7 +640,7 @@ define(function (require) {
             var applicableOne;
             for (var i = 0, len = oneOf.length; i < len; i++) {
                 // Only one can be applicable, otherwise schema is illegal.
-                if (context.isApplicable(new dtLib.Set(oneOf[i].applicable), context.applicable)) {
+                if (context.isApplicable(oneOf[i].applicable, context.applicable)) {
                     dtLib.assert(!applicableOne);
                     applicableOne = oneOf[i];
                 }
@@ -771,12 +788,16 @@ define(function (require) {
     schemaHelper.buildDoc.docJsonRenderer = function (renderBase, schemaItem, context) {
         var selfInfo = context.selfInfo;
         var enumInfo = context.enumInfo;
-        var children = [];
-        var subRenderBase;
+
+        // Make subRenderBase.
+        var subRenderBase = selfInfo === BuildDocInfo.HAS_ARRAY_ITEMS
+            ? renderBase
+            : makeSubRenderBase(schemaItem, context);
+
+        // Make prefix, suffix and childrenBrief.
         var prefix = '';
         var suffix = '';
         var childrenBrief = ' ... ';
-
         if (context.enumInfo !== BuildDocInfo.IS_ENUM_ITEM) {
             var itemName = context.itemName;
             if (itemName) {
@@ -793,18 +814,15 @@ define(function (require) {
             childrenBrief = ' type: \'' + context.applicable.list()[0] + '\', ... ';
         }
 
+        // Make tree item text and children.
+        var children = [];
         if (selfInfo === BuildDocInfo.HAS_OBJECT_PROPERTIES) {
-            subRenderBase = makeSubRenderBase(schemaItem, context);
             subRenderBase.childrenPre = prefix + '{';
             subRenderBase.childrenPost = '}' + suffix + ',';
             subRenderBase.childrenBrief = childrenBrief;
             children.push(subRenderBase);
         }
-        else if (selfInfo === BuildDocInfo.HAS_ARRAY_ITEMS) {
-            subRenderBase = renderBase;
-        }
         else if (selfInfo === BuildDocInfo.IS_ATOM) {
-            subRenderBase = makeSubRenderBase(schemaItem, context);
             subRenderBase.text = ''
                 + prefix
                 + schemaHelper.getDefaultValueText(subRenderBase.defau, {getBrief: true})
@@ -812,13 +830,13 @@ define(function (require) {
             children.push(subRenderBase);
         }
         else if (enumInfo === BuildDocInfo.IS_ENUM_PARENT) { // selfInfo == undefined
-            subRenderBase = makeSubRenderBase(schemaItem, context);
             subRenderBase.childrenPre = prefix;
             subRenderBase.childrenPost = suffix + ',';
             subRenderBase.childrenBrief = childrenBrief;
             children.push(subRenderBase);
         }
 
+        // Assign children.
         if (children.length) {
             renderBase.children = (renderBase.children || []).concat(children);
         }
@@ -827,9 +845,13 @@ define(function (require) {
 
         function makeSubRenderBase(schemaItem, context) {
             var result = mergeByRef(schemaItem, context);
+            var isEnumParent = context.enumInfo === BuildDocInfo.IS_ENUM_PARENT;
+            var isEnumItem = context.enumInfo === BuildDocInfo.IS_ENUM_ITEM;
             var sub = {
                 value: 'ecapidocid-' + dtLib.localUID(),
-                isEnumParent: context.enumInfo === BuildDocInfo.IS_ENUM_PARENT,
+                isEnumParent: isEnumParent,
+                enumerateBy: isEnumParent ? schemaItem.enumerateBy.slice() : UNDEFINED,
+                enumerateApplicable: isEnumItem ? context.applicable.clone() : null,
                 applicable: new dtLib.Set(context.applicable),
                 type: schemaItem.type,
                 descriptionCN: result.descriptionCN,
